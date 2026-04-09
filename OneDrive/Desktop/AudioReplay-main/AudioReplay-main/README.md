@@ -7,11 +7,15 @@ A web-based audio practice tool that helps you improve your interview skills by 
 
 ## ✨ Features
 
-- 🎙️ **Real-time Audio Recording** - Records your practice sessions
-- 🔄 **Delayed Playback** - Hear yourself with 1-10 second delay
+- 🎙️ **Real-time Audio Recording** - Records your practice sessions with high quality
+- 🔄 **Delayed Playback** - Hear yourself with 1-10 second delay to identify ums and pauses
+- 📊 **Live Performance Metrics** - Track WPM, filler words, pause duration and count
+- 📝 **Real-time Speech Recognition** - Live transcript as you speak
 - 📥 **Download Recordings** - Save and review your sessions later
+- 🎙️ **Recording History** - Store and manage multiple practice sessions
 - ⏱️ **Session Timer** - Track your practice duration
 - 🎚️ **Adjustable Volume** - Control playback volume (0-100%)
+- 📊 **Waveform Visualization** - See your audio levels in real-time
 - 🎨 **Clean UI** - Professional, distraction-free interface
 - 📱 **Mobile Friendly** - Works on desktop and mobile devices
 
@@ -182,18 +186,116 @@ Want to add more features? Here are prompts for GitHub Copilot:
 
 ## 🐛 Troubleshooting
 
-### Microphone not working?
-- Check browser permissions (camera icon in address bar)
-- Ensure no other app is using the microphone
-- Try a different browser
+### Microphone Not Working?
+- ✅ Check browser permissions (camera icon in address bar)
+- ✅ Ensure no other app is using the microphone
+- ✅ Try a different browser
+- ✅ Restart your browser
+- ✅ Check system audio settings
 
-### Audio feedback/echo?
-- Use headphones instead of speakers
-- Lower the playback volume
-- Ensure you're not too close to speakers
+### Audio Feedback/Echo?
+- ✅ Use headphones instead of speakers
+- ✅ Lower the playback volume
+- ✅ Ensure you're not too close to speakers
+- ✅ Enable echo cancellation (usually on by default)
 
-### Can't download recording?
-- Check browser's download settings
+### Can't Download Recording?
+- ✅ Check browser's download settings
+- ✅ Ensure you have enough disk space
+- ✅ Try a different browser
+
+### Transcript Not Working?
+- ✅ Speech Recognition requires browser support (Chrome, Firefox, Safari)
+- ✅ Check microphone permissions for speech recognition
+- ✅ Ensure you're speaking in English (or change language settings)
+
+## 📊 Performance Metrics Explained
+
+| Metric | What It Measures | How to Improve |
+|--------|------------------|----------------|
+| **Words Per Minute (WPM)** | Speaking speed/pace | Aim for 130-160 WPM in interviews |
+| **Filler Words** | "Um", "uh", "like", "you know" | Practice speaking with confidence, pause instead of filling |
+| **Pauses** | Total silent breaks and their duration | Natural pauses are good - shows thinking, avoid rushing |
+| **Avg Pause Duration** | Average length of each pause | 2-3 seconds is natural, under 1 second shows confidence |
+
+## 🚀 Deployment Options
+
+### GitHub Pages (Free & Easiest)
+1. Fork this repository
+2. Go to Settings → Pages
+3. Select "Deploy from a branch"
+4. Choose "master" branch
+5. Access your site at: `https://YOUR_USERNAME.github.io/AudioReplay`
+
+### Netlify
+1. Create Netlify account
+2. Connect your GitHub repository
+3. Deploy automatically on every push
+4. Get custom domain support
+
+### Vercel
+1. Import repository on vercel.com
+2. Automatic deployments after each push
+3. Free SSL and custom domains
+
+## 💡 Tips for Better Results
+
+### Before Recording
+- Use a quiet environment
+- Test audio levels
+- Close other applications
+- Use headphones/earbuds
+
+### During Recording
+- Speak naturally - don't rush
+- Don't hesitate between words
+- Make eye contact (even if at home!)
+- Use varied intonation
+
+### After Recording
+- Listen with fresh ears
+- Take notes on improvements
+- Compare with previous recordings
+- Practice the same question again
+
+## 🛟 Contributing
+
+Contributions are welcome! Here's how to help:
+
+1. **Report bugs** - Open an issue describing the problem
+2. **Suggest features** - Share your ideas for new features
+3. **Improve documentation** - Help make the README better
+4. **Submit code** - Create a pull request with improvements
+
+### Suggested Enhancements
+- [ ] Add sentiment analysis for confidence detection
+- [ ] Create analytics dashboard for progress tracking
+- [ ] Add PDF report generation
+- [ ] Support multiple languages
+- [ ] Add theme customization
+- [ ] Create video recording option
+- [ ] Add AI-powered feedback
+
+## 📄 License
+
+MIT License - feel free to use this project however you like!
+
+## 🎓 Learn More
+
+- [Web Audio API Documentation](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API)
+- [MediaRecorder API](https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder)
+- [Web Speech API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API)
+- [IndexedDB Guide](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API)
+
+## 📞 Support
+
+- **Issues**: Open an issue on GitHub for bug reports
+- **Feedback**: Share your suggestions for improvements
+- **Questions**: Check existing issues or create a new one
+
+---
+
+Made with 💙 by Prajwal Perugu | ⭐ Star this repo if you found it helpful!
 - Ensure popup blocker isn't active
 - Try a different browser
 
