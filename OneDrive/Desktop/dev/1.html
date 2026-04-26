@@ -1,0 +1,1416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DevPrep — Software Dev Basics & Interview Prep</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Dev<span>Prep</span></div>
+  <div class="nav-links">
+    <a href="#topics">Topics</a>
+    <a href="#cheatsheets">Cheat Sheets</a>
+    <a href="#problems">Problems</a>
+    <a href="#systemdesign">System Design</a>
+    <a href="#concepts">Deep-Dives</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-tag">Your personal learning hub</div>
+  <h1>
+    Master the basics.<br>
+    <span class="line2">Crush the interview.</span>
+    <span class="line3">69 topics · 8 cheat sheets · 16 problems · 9 system designs · 4 deep-dives</span>
+  </h1>
+  <p class="hero-sub">A growing knowledge base of software development fundamentals — built for daily practice and interview prep. Skim topics, drill cheat sheets, solve real problems, study system design walkthroughs.</p>
+  <div class="hero-ctas">
+    <a href="#topics" class="btn-primary">Browse Topics →</a>
+    <a href="#cheatsheets" class="btn-outline">Cheat Sheets</a>
+  </div>
+  <svg class="hero-grid" viewBox="0 0 380 380" xmlns="http://www.w3.org/2000/svg">
+    <line x1="0" y1="0" x2="380" y2="380"/><line x1="40" y1="0" x2="380" y2="340"/><line x1="80" y1="0" x2="380" y2="300"/>
+    <line x1="120" y1="0" x2="380" y2="260"/><line x1="160" y1="0" x2="380" y2="220"/><line x1="200" y1="0" x2="380" y2="180"/>
+    <line x1="0" y1="40" x2="340" y2="380"/><line x1="0" y1="80" x2="300" y2="380"/><line x1="0" y1="120" x2="260" y2="380"/>
+    <line x1="0" y1="160" x2="220" y2="380"/><line x1="0" y1="200" x2="180" y2="380"/>
+    <line x1="0" y1="0" x2="0" y2="380"/><line x1="40" y1="0" x2="40" y2="380"/><line x1="80" y1="0" x2="80" y2="380"/>
+    <line x1="120" y1="0" x2="120" y2="380"/><line x1="160" y1="0" x2="160" y2="380"/><line x1="200" y1="0" x2="200" y2="380"/>
+    <line x1="240" y1="0" x2="240" y2="380"/><line x1="280" y1="0" x2="280" y2="380"/><line x1="320" y1="0" x2="320" y2="380"/>
+    <line x1="0" y1="0" x2="380" y2="0"/><line x1="0" y1="40" x2="380" y2="40"/><line x1="0" y1="80" x2="380" y2="80"/>
+    <line x1="0" y1="120" x2="380" y2="120"/><line x1="0" y1="160" x2="380" y2="160"/><line x1="0" y1="200" x2="380" y2="200"/>
+    <line x1="0" y1="240" x2="380" y2="240"/><line x1="0" y1="280" x2="380" y2="280"/><line x1="0" y1="320" x2="380" y2="320"/>
+  </svg>
+</div>
+
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat"><div class="stat-num">69</div><div class="stat-label">Core Topics</div></div>
+    <div class="stat"><div class="stat-num">8</div><div class="stat-label">Cheat Sheets</div></div>
+    <div class="stat"><div class="stat-num">16</div><div class="stat-label">Problems</div></div>
+    <div class="stat"><div class="stat-num">9</div><div class="stat-label">System Designs</div></div>
+  </div>
+</div>
+
+<div class="section" id="topics">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2 class="section-title">Core Topics</h2>
+    <span class="section-sub">69 areas across 10 categories</span>
+  </div>
+  <div class="cat-header">CS Fundamentals</div>
+  <div class="topics-grid">
+    <div class="topic-card"><div class="topic-icon">⚙️</div><div class="topic-name">Data Structures</div><div class="topic-desc">Arrays, lists, stacks, queues, trees, graphs, hash maps.</div><div class="topic-tags"><span class="tag hot">interview fav</span><span class="tag">arrays</span></div></div>
+    <div class="topic-card"><div class="topic-icon">🔁</div><div class="topic-name">Algorithms</div><div class="topic-desc">Sorting, searching, recursion, DP, BFS/DFS.</div><div class="topic-tags"><span class="tag hot">must know</span><span class="tag">Big-O</span></div></div>
+    <div class="topic-card"><div class="topic-icon">🧩</div><div class="topic-name">OOP & Patterns</div><div class="topic-desc">Classes, SOLID, Singleton, Factory, Observer.</div><div class="topic-tags"><span class="tag hot">must know</span></div></div>
+    <div class="topic-card"><div class="topic-icon">🧵</div><div class="topic-name">Concurrency</div><div class="topic-desc">Threads, locks, deadlocks, async/await, race conditions.</div><div class="topic-tags"><span class="tag hot">tricky</span></div></div>
+    <div class="topic-card"><div class="topic-icon">🧠</div><div class="topic-name">Memory Management</div><div class="topic-desc">Stack vs heap, garbage collection, leaks, references.</div><div class="topic-tags"><span class="tag">low-level</span></div></div>
+    <div class="topic-card"><div class="topic-icon">🌐</div><div class="topic-name">Networking & Web</div><div class="topic-desc">HTTP/S, TCP/IP, DNS, REST, WebSockets.</div><div class="topic-tags"><span class="tag">HTTP</span><span class="tag">REST</span></div></div>
+  </div>
+
+  <div class="cat-header">Backend & Architecture</div>
+  <div class="topics-grid">
+    <div class="topic-card"><div class="topic-icon">🏗️</div><div class="topic-name">System Design</div><div class="topic-desc">Load balancers, caching, queues, microservices.</div><div class="topic-tags"><span class="tag hot">senior roles</span></div></div>
+    <div class="topic-card"><div class="topic-icon">🗄️</div><div class="topic-name">Databases & SQL</div><div class="topic-desc">Joins, indexing, transactions, ACID, NoSQL.</div><div class="topic-tags"><span class="tag hot">interview fav</span></div></div>
+    <div class="topic-card"><div class="topic-icon">📡</div><div class="topic-name">APIs</div><div class="topic-desc">REST, GraphQL, gRPC, versioning, rate limiting, auth.</div><div class="topic-tags"><span class="tag">backend</span></div></div>
+    <div class="topic-card"><div class="topic-icon">📊</div><div class="topic-name">Caching</div><div class="topic-desc">Redis, Memcached, TTL, LRU, cache invalidation.</div><div class="topic-tags"><span class="tag">scale</span></div></div>
+    <div class="topic-card"><div class="topic-icon">📨</div><div class="topic-name">Message Queues</div><div class="topic-desc">Kafka, RabbitMQ, SQS, pub/sub, event-driven design.</div><div class="topic-tags"><span class="tag">scale</span></div></div>
+    <div class="topic-card"><div class="topic-icon">📐</div><div class="topic-name">Software Architecture</div><div class="topic-desc">Monolith vs microservices, DDD, event sourcing, CQRS.</div><div class="topic-tags"><span class="tag">senior</span></div></div>
+  </div>
+
+  <div class="cat-header">DevOps & Cloud</div>
+  <div class="topics-grid">
+    <div class="topic-card"><div class="topic-icon">🌳</div><div class="topic-name">Git</div><div class="topic-desc">Branching, rebasing, merging, conflict resolution, workflows.</div><div class="topic-tags"><span class="tag devops">daily use</span></div></div>
+    <div class="topic-card"><div class="topic-icon">🐧</div><div class="topic-name">Linux & Bash</div><div class="topic-desc">File system, permissions, pipes, grep, sed, awk, processes.</div><div class="topic-tags"><span class="tag devops">essential</span></div></div>
+    <div class="topic-card"><div class="topic-icon">🐳</div><div class="topic-name">Docker</div><div class="topic-desc">Containers, images, Dockerfile, volumes, networking, compose.</div><div class="topic-tags"><span class="tag devops">DevOps</span></div></div>
+    <div class="topic-card"><div class="topic-icon">☸️</div><div class="topic-name">Kubernetes</div><div class="topic-desc">Pods, deployments, services, ingress, scaling, helm.</div><div class="topic-tags"><span class="tag devops">advanced</span></div></div>
+    <div class="topic-card"><div class="topic-icon">☁️</div><div class="topic-name">Cloud (AWS/GCP/Azure)</div><div class="topic-desc">EC2, S3, IAM, VPC, Lambda, BigQuery, GKE, AKS.</div><div class="topic-tags"><span class="tag devops">in-demand</span></div></div>
+    <div class="topic-card"><div class="topic-icon">🚀</div><div class="topic-name">CI/CD</div><div class="topic-desc">Pipelines, GitHub Actions, Jenkins, deployment strategies.</div><div class="topic-tags"><span class="tag devops">DevOps</span></div></div>
+    <div class="topic-card"><div class="topic-icon">📉</div><div class="topic-name">Observability</div><div class="topic-desc">Logging, metrics, tracing, Prometheus, Grafana, OpenTelemetry.</div><div class="topic-tags"><span class="tag devops">SRE</span></div></div>
+    <div class="topic-card"><div class="topic-icon">🧪</div><div class="topic-name">Testing</div><div class="topic-desc">Unit, integration, e2e, mocking, TDD, coverage.</div><div class="topic-tags"><span class="tag">quality</span></div></div>
+  </div>
+
+  <div class="cat-header">Programming Languages</div>
+  <div class="topics-grid">
+    <div class="topic-card"><div class="topic-icon">🐍</div><div class="topic-name">Python Deep-Dive</div><div class="topic-desc">Decorators, generators, GIL, async/await, context managers, dunder methods.</div><div class="topic-tags"><span class="tag hot">your stack</span></div></div>
+    <div class="topic-card"><div class="topic-icon">🟨</div><div class="topic-name">JavaScript</div><div class="topic-desc">Closures, hoisting, event loop, promises, prototypes, this binding.</div><div class="topic-tags"><span class="tag hot">essential</span></div></div>
+    <div class="topic-card"><div class="topic-icon">🔷</div><div class="topic-name">TypeScript</div><div class="topic-desc">Types, generics, interfaces, utility types, narrowing, declaration files.</div><div class="topic-tags"><span class="tag">modern web</span></div></div>
+    <div class="topic-card"><div class="topic-icon">☕</div><div class="topic-name">Java</div><div class="topic-desc">JVM, generics, streams, collections, multithreading, garbage collection.</div><div class="topic-tags"><span class="tag">enterprise</span></div></div>
+    <div class="topic-card"><div class="topic-icon">🐹</div><div class="topic-name">Go</div><div class="topic-desc">Goroutines, channels, interfaces, structs, defer, error handling.</div><div class="topic-tags"><span class="tag">trending</span></div></div>
+    <div class="topic-card"><div class="topic-icon">🦀</div><div class="topic-name">Rust</div><div class="topic-desc">Ownership, borrowing, lifetimes, traits, pattern matching, no GC.</div><div class="topic-tags"><span class="tag">trending</span></div></div>
+    <div class="topic-card"><div class="topic-icon">⚡</div><div class="topic-name">C++</div><div class="topic-desc">Pointers, references, RAII, templates, STL, smart pointers, move semantics.</div><div class="topic-tags"><span class="tag">low-level</span></div></div>
+    <div class="topic-card"><div class="topic-icon">💎</div><div class="topic-name">SQL Variants</div><div class="topic-desc">PostgreSQL, MySQL, T-SQL differences, dialect-specific features.</div><div class="topic-tags"><span class="tag">data</span></div></div>
+  </div>
+
+  <div class="cat-header">ML / AI Engineering · your edge</div>
+  <div class="topics-grid">
+    <div class="topic-card"><div class="topic-icon">🤖</div><div class="topic-name">LLM Fundamentals</div><div class="topic-desc">Transformers, attention mechanism, tokenization, context windows, decoding.</div><div class="topic-tags"><span class="tag ml">core</span></div></div>
+    <div class="topic-card"><div class="topic-icon">📚</div><div class="topic-name">RAG Architecture</div><div class="topic-desc">Retrieval-augmented generation, chunking, retrieval, re-ranking, generation.</div><div class="topic-tags"><span class="tag ml">in demand</span></div></div>
+    <div class="topic-card"><div class="topic-icon">🔢</div><div class="topic-name">Vector Databases</div><div class="topic-desc">Pinecone, Weaviate, Chroma, FAISS, Qdrant. Indexing strategies (HNSW, IVF).</div><div class="topic-tags"><span class="tag ml">RAG</span></div></div>
+    <div class="topic-card"><div class="topic-icon">🦜</div><div class="topic-name">LangChain / LlamaIndex</div><div class="topic-desc">Chains, agents, tools, memory, document loaders, query engines.</div><div class="topic-tags"><span class="tag ml">your stack</span></div></div>
+    <div class="topic-card"><div class="topic-icon">✍️</div><div class="topic-name">Prompt Engineering</div><div class="topic-desc">Few-shot, CoT, ReAct, role prompting, structured output, prompt injection defense.</div><div class="topic-tags"><span class="tag ml">essential</span></div></div>
+    <div class="topic-card"><div class="topic-icon">🎯</div><div class="topic-name">Fine-tuning vs RAG</div><div class="topic-desc">When to use each, LoRA, QLoRA, PEFT, instruction tuning, RLHF basics.</div><div class="topic-tags"><span class="tag ml">decision</span></div></div>
+    <div class="topic-card"><div class="topic-icon">🧬</div><div class="topic-name">Embeddings</div><div class="topic-desc">Semantic search, similarity (cosine, dot product), embedding models.</div><div class="topic-tags"><span class="tag ml">search</span></div></div>
+    <div class="topic-card"><div class="topic-icon">📏</div><div class="topic-name">LLM Evaluation</div><div class="topic-desc">RAGAS, hallucination metrics, BLEU/ROUGE, LLM-as-judge, guardrails.</div><div class="topic-tags"><span class="tag ml">advanced</span></div></div>
+    <div class="topic-card"><div class="topic-icon">🛡️</div><div class="topic-name">AI Safety & Guardrails</div><div class="topic-desc">Output filtering, PII redaction, prompt injection, jailbreak defense.</div><div class="topic-tags"><span class="tag ml">production</span></div></div>
+  </div>
+
+  <div class="cat-header">Data Engineering</div>
+  <div class="topics-grid">
+    <div class="topic-card"><div class="topic-icon">🔄</div><div class="topic-name">ETL vs ELT</div><div class="topic-desc">Pipelines, transformation strategies, when each pattern wins.</div><div class="topic-tags"><span class="tag data">core</span></div></div>
+    <div class="topic-card"><div class="topic-icon">⚡</div><div class="topic-name">Apache Spark</div><div class="topic-desc">RDDs, DataFrames, transformations vs actions, partitioning, shuffling.</div><div class="topic-tags"><span class="tag data">big data</span></div></div>
+    <div class="topic-card"><div class="topic-icon">🌬️</div><div class="topic-name">Airflow / Prefect / Dagster</div><div class="topic-desc">DAGs, operators, scheduling, retries, sensors, dependencies.</div><div class="topic-tags"><span class="tag data">orchestration</span></div></div>
+    <div class="topic-card"><div class="topic-icon">🏔️</div><div class="topic-name">Data Warehousing</div><div class="topic-desc">Snowflake, BigQuery, Redshift. Star schema, slowly changing dimensions.</div><div class="topic-tags"><span class="tag data">analytics</span></div></div>
+    <div class="topic-card"><div class="topic-icon">🏠</div><div class="topic-name">Lakes vs Lakehouses</div><div class="topic-desc">S3 + Delta/Iceberg, Databricks, schema-on-read, ACID on object stores.</div><div class="topic-tags"><span class="tag data">modern</span></div></div>
+    <div class="topic-card"><div class="topic-icon">🌊</div><div class="topic-name">Streaming</div><div class="topic-desc">Kafka, Flink, exactly-once, watermarks, windowing, stream vs batch.</div><div class="topic-tags"><span class="tag data">real-time</span></div></div>
+    <div class="topic-card"><div class="topic-icon">🛠️</div><div class="topic-name">dbt & Data Modeling</div><div class="topic-desc">Models, tests, refs, sources, materialization, dimensional modeling.</div><div class="topic-tags"><span class="tag data">analytics</span></div></div>
+  </div>
+
+  <div class="cat-header">Distributed Systems</div>
+  <div class="topics-grid">
+    <div class="topic-card"><div class="topic-icon">🎭</div><div class="topic-name">CAP Theorem</div><div class="topic-desc">Consistency, Availability, Partition tolerance — pick 2. PACELC extension.</div><div class="topic-tags"><span class="tag hot">classic</span></div></div>
+    <div class="topic-card"><div class="topic-icon">🤝</div><div class="topic-name">Consensus Algorithms</div><div class="topic-desc">Raft, Paxos, leader election, log replication, split-brain.</div><div class="topic-tags"><span class="tag">advanced</span></div></div>
+    <div class="topic-card"><div class="topic-icon">🔪</div><div class="topic-name">Sharding & Partitioning</div><div class="topic-desc">Range, hash, geo. Hot spots, rebalancing, consistent hashing.</div><div class="topic-tags"><span class="tag">scale</span></div></div>
+    <div class="topic-card"><div class="topic-icon">🪞</div><div class="topic-name">Replication</div><div class="topic-desc">Master-slave, multi-master, sync vs async, read replicas.</div><div class="topic-tags"><span class="tag">availability</span></div></div>
+    <div class="topic-card"><div class="topic-icon">⏳</div><div class="topic-name">Eventual Consistency</div><div class="topic-desc">Strong vs eventual, CRDTs, vector clocks, last-write-wins.</div><div class="topic-tags"><span class="tag">tradeoff</span></div></div>
+    <div class="topic-card"><div class="topic-icon">🔗</div><div class="topic-name">Distributed Transactions</div><div class="topic-desc">2PC, 3PC, Saga pattern, idempotency, compensating actions.</div><div class="topic-tags"><span class="tag">tricky</span></div></div>
+    <div class="topic-card"><div class="topic-icon">👑</div><div class="topic-name">Leader Election</div><div class="topic-desc">ZooKeeper, etcd, bully algorithm, ring algorithm.</div><div class="topic-tags"><span class="tag">coordination</span></div></div>
+  </div>
+
+  <div class="cat-header">Security Deep-Dive</div>
+  <div class="topics-grid">
+    <div class="topic-card"><div class="topic-icon">🔐</div><div class="topic-name">Security Basics</div><div class="topic-desc">OWASP top 10, SQL injection, XSS, hashing, JWT, OAuth.</div><div class="topic-tags"><span class="tag">critical</span></div></div>
+    <div class="topic-card"><div class="topic-icon">🔒</div><div class="topic-name">TLS / SSL</div><div class="topic-desc">Handshake, cipher suites, cert chains, mTLS, perfect forward secrecy.</div><div class="topic-tags"><span class="tag">crypto</span></div></div>
+    <div class="topic-card"><div class="topic-icon">🎟️</div><div class="topic-name">OAuth 2.0 & OIDC</div><div class="topic-desc">Auth code, PKCE, refresh tokens, scopes, OpenID Connect, JWT claims.</div><div class="topic-tags"><span class="tag hot">standard</span></div></div>
+    <div class="topic-card"><div class="topic-icon">🚫</div><div class="topic-name">Zero Trust</div><div class="topic-desc">Never trust, always verify. Identity-aware proxies, BeyondCorp model.</div><div class="topic-tags"><span class="tag">modern</span></div></div>
+    <div class="topic-card"><div class="topic-icon">🗝️</div><div class="topic-name">Secrets Management</div><div class="topic-desc">Vault, AWS Secrets Manager, sealed secrets, rotation, KMS.</div><div class="topic-tags"><span class="tag">essential</span></div></div>
+    <div class="topic-card"><div class="topic-icon">🔍</div><div class="topic-name">SAST / DAST / SCA</div><div class="topic-desc">Static, dynamic, software composition analysis. Snyk, Semgrep, SonarQube.</div><div class="topic-tags"><span class="tag">DevSecOps</span></div></div>
+    <div class="topic-card"><div class="topic-icon">🏰</div><div class="topic-name">Container Security</div><div class="topic-desc">Image scanning, distroless, non-root users, Trivy, runtime security.</div><div class="topic-tags"><span class="tag">cloud</span></div></div>
+    <div class="topic-card"><div class="topic-icon">📜</div><div class="topic-name">IaC Security</div><div class="topic-desc">Checkov, tfsec, policy-as-code, OPA, drift detection.</div><div class="topic-tags"><span class="tag">terraform</span></div></div>
+  </div>
+
+  <div class="cat-header">Frontend & Mobile</div>
+  <div class="topics-grid">
+    <div class="topic-card"><div class="topic-icon">⚛️</div><div class="topic-name">React</div><div class="topic-desc">Hooks, state, props, context, refs, suspense, server components.</div><div class="topic-tags"><span class="tag hot">popular</span></div></div>
+    <div class="topic-card"><div class="topic-icon">💚</div><div class="topic-name">Vue / Angular</div><div class="topic-desc">Composition API, directives, reactive systems, dependency injection.</div><div class="topic-tags"><span class="tag">alternatives</span></div></div>
+    <div class="topic-card"><div class="topic-icon">🗃️</div><div class="topic-name">State Management</div><div class="topic-desc">Redux, Zustand, Jotai, Pinia, React Query — when each makes sense.</div><div class="topic-tags"><span class="tag">frontend</span></div></div>
+    <div class="topic-card"><div class="topic-icon">🖥️</div><div class="topic-name">SSR vs CSR vs SSG</div><div class="topic-desc">Next.js, Remix, Astro. Hydration, streaming, ISR, edge rendering.</div><div class="topic-tags"><span class="tag">rendering</span></div></div>
+    <div class="topic-card"><div class="topic-icon">⚡</div><div class="topic-name">Web Performance</div><div class="topic-desc">Core Web Vitals (LCP, FID/INP, CLS), bundle size, code splitting.</div><div class="topic-tags"><span class="tag">UX</span></div></div>
+    <div class="topic-card"><div class="topic-icon">📱</div><div class="topic-name">Mobile Architecture</div><div class="topic-desc">iOS (Swift, SwiftUI), Android (Kotlin, Compose), React Native, Flutter.</div><div class="topic-tags"><span class="tag">mobile</span></div></div>
+  </div>
+
+  <div class="cat-header">Math for CS</div>
+  <div class="topics-grid">
+    <div class="topic-card"><div class="topic-icon">🎲</div><div class="topic-name">Probability & Statistics</div><div class="topic-desc">Distributions, Bayes' theorem, hypothesis testing, A/B testing.</div><div class="topic-tags"><span class="tag">ML foundation</span></div></div>
+    <div class="topic-card"><div class="topic-icon">📐</div><div class="topic-name">Linear Algebra</div><div class="topic-desc">Vectors, matrices, eigenvalues, dot products — the math behind ML/embeddings.</div><div class="topic-tags"><span class="tag">ML foundation</span></div></div>
+    <div class="topic-card"><div class="topic-icon">🔢</div><div class="topic-name">Discrete Math</div><div class="topic-desc">Combinatorics, graph theory, logic, set theory, recurrences.</div><div class="topic-tags"><span class="tag">CS theory</span></div></div>
+    <div class="topic-card"><div class="topic-icon">📡</div><div class="topic-name">Information Theory</div><div class="topic-desc">Entropy, mutual information, compression, error correction.</div><div class="topic-tags"><span class="tag">advanced</span></div></div>
+  </div>
+</div>
+
+<!-- CHEAT SHEETS -->
+<div class="cs-section" id="cheatsheets">
+  <div class="cs-inner">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Cheat Sheets</h2>
+      <span class="section-sub">printable quick-reference</span>
+    </div>
+    <div class="cs-tabs">
+      <button class="cs-tab active" onclick="switchCS('bigo', this)">Big-O</button>
+      <button class="cs-tab" onclick="switchCS('sql', this)">SQL</button>
+      <button class="cs-tab" onclick="switchCS('git', this)">Git</button>
+      <button class="cs-tab" onclick="switchCS('regex', this)">Regex</button>
+      <button class="cs-tab" onclick="switchCS('linux', this)">Linux</button>
+      <button class="cs-tab" onclick="switchCS('docker', this)">Docker</button>
+      <button class="cs-tab" onclick="switchCS('k8s', this)">Kubernetes</button>
+      <button class="cs-tab" onclick="switchCS('http', this)">HTTP</button>
+    </div>
+
+    <div class="cs-content active" id="cs-bigo">
+      <button class="cs-print-btn" onclick="window.print()">Print &rarr;</button>
+      <div class="cs-title">Big-O Complexity</div>
+      <div class="cs-desc">Time and space complexity for common operations and algorithms.</div>
+      <table class="cs-table">
+        <thead><tr><th>Operation</th><th>Best</th><th>Average</th><th>Worst</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Array access</td><td><code>O(1)</code></td><td><code>O(1)</code></td><td><code>O(1)</code></td><td>By index</td></tr>
+          <tr><td>Array search</td><td><code>O(1)</code></td><td><code>O(n)</code></td><td><code>O(n)</code></td><td>Linear scan</td></tr>
+          <tr><td>Hash map lookup</td><td><code>O(1)</code></td><td><code>O(1)</code></td><td><code>O(n)</code></td><td>Worst = collisions</td></tr>
+          <tr><td>Binary search</td><td><code>O(1)</code></td><td><code>O(log n)</code></td><td><code>O(log n)</code></td><td>Sorted array</td></tr>
+          <tr><td>BST search (balanced)</td><td><code>O(1)</code></td><td><code>O(log n)</code></td><td><code>O(n)</code></td><td>Worst = skewed tree</td></tr>
+          <tr><td>Bubble sort</td><td><code>O(n)</code></td><td><code>O(n&sup2;)</code></td><td><code>O(n&sup2;)</code></td><td>Don't use in prod</td></tr>
+          <tr><td>Quick sort</td><td><code>O(n log n)</code></td><td><code>O(n log n)</code></td><td><code>O(n&sup2;)</code></td><td>Avg fast, worst = sorted</td></tr>
+          <tr><td>Merge sort</td><td><code>O(n log n)</code></td><td><code>O(n log n)</code></td><td><code>O(n log n)</code></td><td>Stable, O(n) space</td></tr>
+          <tr><td>Heap sort</td><td><code>O(n log n)</code></td><td><code>O(n log n)</code></td><td><code>O(n log n)</code></td><td>In-place, not stable</td></tr>
+          <tr><td>BFS / DFS</td><td><code>O(V+E)</code></td><td><code>O(V+E)</code></td><td><code>O(V+E)</code></td><td>V=vertices, E=edges</td></tr>
+          <tr><td>Dijkstra (heap)</td><td>—</td><td><code>O((V+E) log V)</code></td><td>—</td><td>Shortest path</td></tr>
+        </tbody>
+      </table>
+      <table class="cs-table">
+        <thead><tr><th>Notation</th><th>Name</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td><code>O(1)</code></td><td>Constant</td><td>Hash map get</td></tr>
+          <tr><td><code>O(log n)</code></td><td>Logarithmic</td><td>Binary search</td></tr>
+          <tr><td><code>O(n)</code></td><td>Linear</td><td>Array scan</td></tr>
+          <tr><td><code>O(n log n)</code></td><td>Linearithmic</td><td>Merge sort</td></tr>
+          <tr><td><code>O(n&sup2;)</code></td><td>Quadratic</td><td>Nested loops</td></tr>
+          <tr><td><code>O(2&sup;n)</code></td><td>Exponential</td><td>Recursive subsets</td></tr>
+          <tr><td><code>O(n!)</code></td><td>Factorial</td><td>All permutations</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="cs-content" id="cs-sql">
+      <button class="cs-print-btn" onclick="window.print()">Print &rarr;</button>
+      <div class="cs-title">SQL Quick Reference</div>
+      <div class="cs-desc">The queries you'll write 90% of the time.</div>
+      <table class="cs-table">
+        <thead><tr><th>Operation</th><th>Syntax</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Select all</td><td><code>SELECT * FROM users;</code></td><td>Avoid * in prod</td></tr>
+          <tr><td>Filter</td><td><code>WHERE age &gt; 25 AND city = 'NYC'</code></td><td>Indexed cols are fastest</td></tr>
+          <tr><td>Sort</td><td><code>ORDER BY created_at DESC</code></td><td>DESC or ASC</td></tr>
+          <tr><td>Limit</td><td><code>LIMIT 10 OFFSET 20</code></td><td>Pagination</td></tr>
+          <tr><td>Inner join</td><td><code>FROM a JOIN b ON a.id = b.a_id</code></td><td>Only matching rows</td></tr>
+          <tr><td>Left join</td><td><code>FROM a LEFT JOIN b ON ...</code></td><td>All from left + matches</td></tr>
+          <tr><td>Group + count</td><td><code>SELECT city, COUNT(*) GROUP BY city</code></td><td>Aggregation</td></tr>
+          <tr><td>Filter groups</td><td><code>HAVING COUNT(*) &gt; 5</code></td><td>After GROUP BY</td></tr>
+          <tr><td>Subquery</td><td><code>WHERE id IN (SELECT id FROM ...)</code></td><td>Can be slow</td></tr>
+          <tr><td>CTE</td><td><code>WITH x AS (SELECT ...) SELECT * FROM x</code></td><td>Readable, reusable</td></tr>
+          <tr><td>Window fn</td><td><code>ROW_NUMBER() OVER (PARTITION BY ...)</code></td><td>Ranking</td></tr>
+          <tr><td>Insert</td><td><code>INSERT INTO t (a,b) VALUES (1,2);</code></td><td>Or VALUES (...), (...)</td></tr>
+          <tr><td>Update</td><td><code>UPDATE t SET a=1 WHERE id=5;</code></td><td>Always use WHERE!</td></tr>
+          <tr><td>Delete</td><td><code>DELETE FROM t WHERE id=5;</code></td><td>Always use WHERE!</td></tr>
+          <tr><td>Create index</td><td><code>CREATE INDEX idx_name ON t(col);</code></td><td>Speeds reads, slows writes</td></tr>
+          <tr><td>Transaction</td><td><code>BEGIN; ... COMMIT; / ROLLBACK;</code></td><td>ACID guarantee</td></tr>
+          <tr><td>Upsert</td><td><code>INSERT INTO t VALUES (...) ON CONFLICT (id) DO UPDATE SET col=EXCLUDED.col;</code></td><td>Postgres upsert</td></tr>
+          <tr><td>LAG / LEAD</td><td><code>LAG(col, 1) OVER (PARTITION BY user ORDER BY ts)</code></td><td>Previous/next row value</td></tr>
+          <tr><td>Recursive CTE</td><td><code>WITH RECURSIVE cte AS (base UNION ALL step) SELECT * FROM cte;</code></td><td>Hierarchies, trees</td></tr>
+          <tr><td>Explain plan</td><td><code>EXPLAIN ANALYZE SELECT ...;</code></td><td>See actual row counts + cost</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="cs-content" id="cs-git">
+      <button class="cs-print-btn" onclick="window.print()">Print &rarr;</button>
+      <div class="cs-title">Git Commands</div>
+      <div class="cs-desc">Daily-driver Git commands every developer must know.</div>
+      <table class="cs-table">
+        <thead><tr><th>Task</th><th>Command</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Clone repo</td><td><code>git clone &lt;url&gt;</code></td><td>Downloads + connects remote</td></tr>
+          <tr><td>Status</td><td><code>git status</code></td><td>What changed?</td></tr>
+          <tr><td>Stage all</td><td><code>git add .</code></td><td>Or <code>-p</code> for patches</td></tr>
+          <tr><td>Commit</td><td><code>git commit -m "message"</code></td><td>Descriptive messages</td></tr>
+          <tr><td>Push</td><td><code>git push origin main</code></td><td>Upload to remote</td></tr>
+          <tr><td>Pull</td><td><code>git pull --rebase</code></td><td>Rebase keeps history clean</td></tr>
+          <tr><td>New branch</td><td><code>git checkout -b feature/x</code></td><td>Create + switch</td></tr>
+          <tr><td>Switch branch</td><td><code>git switch main</code></td><td>Modern syntax</td></tr>
+          <tr><td>List branches</td><td><code>git branch -a</code></td><td>-a includes remotes</td></tr>
+          <tr><td>Merge</td><td><code>git merge feature/x</code></td><td>Creates merge commit</td></tr>
+          <tr><td>Rebase</td><td><code>git rebase main</code></td><td>Linear history</td></tr>
+          <tr><td>Stash</td><td><code>git stash / git stash pop</code></td><td>Save uncommitted work</td></tr>
+          <tr><td>Undo last commit</td><td><code>git reset --soft HEAD~1</code></td><td>Keeps changes</td></tr>
+          <tr><td>Discard changes</td><td><code>git checkout -- file.txt</code></td><td>Permanent!</td></tr>
+          <tr><td>View log</td><td><code>git log --oneline --graph</code></td><td>Visual history</td></tr>
+          <tr><td>Diff</td><td><code>git diff HEAD~1</code></td><td>Vs previous commit</td></tr>
+          <tr><td>Tag</td><td><code>git tag v1.0.0</code></td><td>Mark releases</td></tr>
+          <tr><td>Cherry-pick</td><td><code>git cherry-pick &lt;sha&gt;</code></td><td>Apply specific commit</td></tr>
+          <tr><td>Revert</td><td><code>git revert &lt;sha&gt;</code></td><td>Safe undo (new commit)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="cs-content" id="cs-regex">
+      <button class="cs-print-btn" onclick="window.print()">Print &rarr;</button>
+      <div class="cs-title">Regex Cheat Sheet</div>
+      <div class="cs-desc">Regular expression patterns for text matching.</div>
+      <table class="cs-table">
+        <thead><tr><th>Pattern</th><th>Meaning</th><th>Example match</th></tr></thead>
+        <tbody>
+          <tr><td><code>.</code></td><td>Any character (except newline)</td><td><code>a.c</code> matches "abc", "a1c"</td></tr>
+          <tr><td><code>\d</code></td><td>Any digit (0-9)</td><td><code>\d+</code> matches "123"</td></tr>
+          <tr><td><code>\D</code></td><td>Any non-digit</td><td><code>\D+</code> matches "abc"</td></tr>
+          <tr><td><code>\w</code></td><td>Word char (a-z, 0-9, _)</td><td><code>\w+</code> matches "hello_1"</td></tr>
+          <tr><td><code>\s</code></td><td>Whitespace (space, tab, newline)</td><td><code>\s+</code> matches "   "</td></tr>
+          <tr><td><code>^</code></td><td>Start of string/line</td><td><code>^Hello</code> matches start</td></tr>
+          <tr><td><code>$</code></td><td>End of string/line</td><td><code>world$</code> matches end</td></tr>
+          <tr><td><code>*</code></td><td>0 or more</td><td><code>ab*</code> matches "a", "ab", "abb"</td></tr>
+          <tr><td><code>+</code></td><td>1 or more</td><td><code>ab+</code> matches "ab", "abb"</td></tr>
+          <tr><td><code>?</code></td><td>0 or 1 (optional)</td><td><code>colou?r</code> matches both</td></tr>
+          <tr><td><code>{n}</code></td><td>Exactly n times</td><td><code>\d{3}</code> matches "123"</td></tr>
+          <tr><td><code>{n,m}</code></td><td>Between n and m</td><td><code>\d{2,4}</code> matches 2-4 digits</td></tr>
+          <tr><td><code>[abc]</code></td><td>Any of a, b, or c</td><td><code>[aeiou]</code> matches vowel</td></tr>
+          <tr><td><code>[^abc]</code></td><td>NOT a, b, or c</td><td><code>[^0-9]</code> matches non-digit</td></tr>
+          <tr><td><code>(abc)</code></td><td>Capture group</td><td>Reference with $1</td></tr>
+          <tr><td><code>a|b</code></td><td>a OR b</td><td><code>cat|dog</code></td></tr>
+          <tr><td><code></code></td><td>Word boundary</td><td><code>cat</code> = whole word</td></tr>
+        </tbody>
+      </table>
+      <table class="cs-table">
+        <thead><tr><th>Common pattern</th><th>Regex</th></tr></thead>
+        <tbody>
+          <tr><td>Email</td><td><code>^[\w.-]+@[\w.-]+\.\w+$</code></td></tr>
+          <tr><td>URL</td><td><code>https?://[\w.-]+(/\S*)?</code></td></tr>
+          <tr><td>IPv4</td><td><code>\d{1,3}(\.\d{1,3}){3}</code></td></tr>
+          <tr><td>Phone (US)</td><td><code>\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}</code></td></tr>
+          <tr><td>Date (YYYY-MM-DD)</td><td><code>\d{4}-\d{2}-\d{2}</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="cs-content" id="cs-linux">
+      <button class="cs-print-btn" onclick="window.print()">Print &rarr;</button>
+      <div class="cs-title">Linux &amp; Bash Commands</div>
+      <div class="cs-desc">Daily-use Linux commands for developers and engineers.</div>
+      <table class="cs-table">
+        <thead><tr><th>Task</th><th>Command</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>List files</td><td><code>ls -lah</code></td><td>Long, all, human-readable</td></tr>
+          <tr><td>Change dir</td><td><code>cd /path</code></td><td><code>cd -</code> = previous</td></tr>
+          <tr><td>Print working dir</td><td><code>pwd</code></td><td>—</td></tr>
+          <tr><td>Make dir</td><td><code>mkdir -p a/b/c</code></td><td>-p creates parents</td></tr>
+          <tr><td>Copy</td><td><code>cp -r src dst</code></td><td>-r for directories</td></tr>
+          <tr><td>Move/rename</td><td><code>mv old new</code></td><td>—</td></tr>
+          <tr><td>Remove</td><td><code>rm -rf dir</code></td><td>⚠️ Permanent!</td></tr>
+          <tr><td>View file</td><td><code>cat / less / head / tail</code></td><td>tail -f follows logs</td></tr>
+          <tr><td>Search in files</td><td><code>grep -rni "text" .</code></td><td>recursive, line#, ignore case</td></tr>
+          <tr><td>Find files</td><td><code>find . -name "*.py"</code></td><td>—</td></tr>
+          <tr><td>Pipe</td><td><code>cmd1 | cmd2</code></td><td>Chain commands</td></tr>
+          <tr><td>Redirect output</td><td><code>cmd &gt; file / &gt;&gt; file</code></td><td>Overwrite / append</td></tr>
+          <tr><td>Permissions</td><td><code>chmod +x script.sh</code></td><td>Make executable</td></tr>
+          <tr><td>Change owner</td><td><code>chown user:group file</code></td><td>—</td></tr>
+          <tr><td>Process list</td><td><code>ps aux / top / htop</code></td><td>htop = interactive</td></tr>
+          <tr><td>Kill process</td><td><code>kill -9 &lt;PID&gt;</code></td><td>-9 = force</td></tr>
+          <tr><td>Disk usage</td><td><code>df -h / du -sh *</code></td><td>Filesystem / dir sizes</td></tr>
+          <tr><td>Network</td><td><code>curl / wget / netstat -tulpn</code></td><td>—</td></tr>
+          <tr><td>SSH</td><td><code>ssh user@host -p 22</code></td><td>—</td></tr>
+          <tr><td>Copy over SSH</td><td><code>scp file user@host:/path</code></td><td>—</td></tr>
+          <tr><td>Env variables</td><td><code>export VAR=value</code></td><td>Session only</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="cs-content" id="cs-docker">
+      <button class="cs-print-btn" onclick="window.print()">Print &rarr;</button>
+      <div class="cs-title">Docker Commands</div>
+      <div class="cs-desc">Container essentials for builds, runs, and debugging.</div>
+      <table class="cs-table">
+        <thead><tr><th>Task</th><th>Command</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Build image</td><td><code>docker build -t myapp:1.0 .</code></td><td>Reads Dockerfile in .</td></tr>
+          <tr><td>Run container</td><td><code>docker run -d -p 8080:80 myapp</code></td><td>-d = detached</td></tr>
+          <tr><td>List running</td><td><code>docker ps</code></td><td>Add -a for all</td></tr>
+          <tr><td>List images</td><td><code>docker images</code></td><td>—</td></tr>
+          <tr><td>Stop container</td><td><code>docker stop &lt;id&gt;</code></td><td>—</td></tr>
+          <tr><td>Remove container</td><td><code>docker rm &lt;id&gt;</code></td><td>-f = force</td></tr>
+          <tr><td>Remove image</td><td><code>docker rmi &lt;image&gt;</code></td><td>—</td></tr>
+          <tr><td>Logs</td><td><code>docker logs -f &lt;id&gt;</code></td><td>-f follows</td></tr>
+          <tr><td>Shell into container</td><td><code>docker exec -it &lt;id&gt; bash</code></td><td>For debugging</td></tr>
+          <tr><td>Pull image</td><td><code>docker pull nginx:latest</code></td><td>From registry</td></tr>
+          <tr><td>Push image</td><td><code>docker push myrepo/myapp:1.0</code></td><td>Login first</td></tr>
+          <tr><td>Cleanup all</td><td><code>docker system prune -a</code></td><td>Frees disk space</td></tr>
+          <tr><td>Compose up</td><td><code>docker compose up -d</code></td><td>Multi-container</td></tr>
+          <tr><td>Compose down</td><td><code>docker compose down -v</code></td><td>-v removes volumes</td></tr>
+          <tr><td>Volume mount</td><td><code>-v $(pwd):/app</code></td><td>Host path : container path</td></tr>
+          <tr><td>Env variable</td><td><code>-e KEY=value</code></td><td>Or --env-file .env</td></tr>
+          <tr><td>Network</td><td><code>--network mynet</code></td><td>Containers can talk</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="cs-content" id="cs-k8s">
+      <button class="cs-print-btn" onclick="window.print()">Print &rarr;</button>
+      <div class="cs-title">Kubernetes (kubectl)</div>
+      <div class="cs-desc">Core kubectl commands for managing clusters and workloads.</div>
+      <table class="cs-table">
+        <thead><tr><th>Task</th><th>Command</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Get pods</td><td><code>kubectl get pods -A</code></td><td>-A = all namespaces</td></tr>
+          <tr><td>Get all resources</td><td><code>kubectl get all</code></td><td>In current namespace</td></tr>
+          <tr><td>Describe pod</td><td><code>kubectl describe pod &lt;name&gt;</code></td><td>Detailed info + events</td></tr>
+          <tr><td>Pod logs</td><td><code>kubectl logs -f &lt;pod&gt;</code></td><td>-f follows</td></tr>
+          <tr><td>Shell into pod</td><td><code>kubectl exec -it &lt;pod&gt; -- bash</code></td><td>Debug</td></tr>
+          <tr><td>Apply manifest</td><td><code>kubectl apply -f deploy.yaml</code></td><td>Create/update</td></tr>
+          <tr><td>Delete resource</td><td><code>kubectl delete -f deploy.yaml</code></td><td>—</td></tr>
+          <tr><td>Scale deployment</td><td><code>kubectl scale deploy/x --replicas=5</code></td><td>—</td></tr>
+          <tr><td>Rollout status</td><td><code>kubectl rollout status deploy/x</code></td><td>Watch deployment</td></tr>
+          <tr><td>Rollback</td><td><code>kubectl rollout undo deploy/x</code></td><td>—</td></tr>
+          <tr><td>Port forward</td><td><code>kubectl port-forward svc/x 8080:80</code></td><td>Local debug</td></tr>
+          <tr><td>Set context</td><td><code>kubectl config use-context &lt;name&gt;</code></td><td>Switch clusters</td></tr>
+          <tr><td>Get nodes</td><td><code>kubectl get nodes -o wide</code></td><td>Cluster health</td></tr>
+          <tr><td>Top pods</td><td><code>kubectl top pods</code></td><td>CPU/mem usage</td></tr>
+          <tr><td>Edit live</td><td><code>kubectl edit deploy/x</code></td><td>⚠️ Avoid in prod</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="cs-content" id="cs-http">
+      <button class="cs-print-btn" onclick="window.print()">Print &rarr;</button>
+      <div class="cs-title">HTTP Quick Reference</div>
+      <div class="cs-desc">Methods, status codes, and headers you'll see daily.</div>
+      <table class="cs-table">
+        <thead><tr><th>Method</th><th>Use</th><th>Idempotent?</th></tr></thead>
+        <tbody>
+          <tr><td><code>GET</code></td><td>Read resource</td><td>Yes</td></tr>
+          <tr><td><code>POST</code></td><td>Create resource</td><td>No</td></tr>
+          <tr><td><code>PUT</code></td><td>Replace resource</td><td>Yes</td></tr>
+          <tr><td><code>PATCH</code></td><td>Partial update</td><td>Usually yes</td></tr>
+          <tr><td><code>DELETE</code></td><td>Remove resource</td><td>Yes</td></tr>
+          <tr><td><code>HEAD</code></td><td>Headers only, no body</td><td>Yes</td></tr>
+          <tr><td><code>OPTIONS</code></td><td>Allowed methods (CORS)</td><td>Yes</td></tr>
+        </tbody>
+      </table>
+      <table class="cs-table">
+        <thead><tr><th>Code</th><th>Meaning</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><code>200</code></td><td>OK</td><td>Success</td></tr>
+          <tr><td><code>201</code></td><td>Created</td><td>POST success</td></tr>
+          <tr><td><code>204</code></td><td>No Content</td><td>Success, empty body</td></tr>
+          <tr><td><code>301</code></td><td>Moved Permanently</td><td>Redirect (SEO-safe)</td></tr>
+          <tr><td><code>302</code></td><td>Found</td><td>Temporary redirect</td></tr>
+          <tr><td><code>304</code></td><td>Not Modified</td><td>Cached response valid</td></tr>
+          <tr><td><code>400</code></td><td>Bad Request</td><td>Client sent invalid data</td></tr>
+          <tr><td><code>401</code></td><td>Unauthorized</td><td>Not authenticated</td></tr>
+          <tr><td><code>403</code></td><td>Forbidden</td><td>Authenticated but denied</td></tr>
+          <tr><td><code>404</code></td><td>Not Found</td><td>Resource missing</td></tr>
+          <tr><td><code>409</code></td><td>Conflict</td><td>Resource state mismatch</td></tr>
+          <tr><td><code>422</code></td><td>Unprocessable Entity</td><td>Validation failed</td></tr>
+          <tr><td><code>429</code></td><td>Too Many Requests</td><td>Rate limited</td></tr>
+          <tr><td><code>500</code></td><td>Internal Server Error</td><td>Server bug</td></tr>
+          <tr><td><code>502</code></td><td>Bad Gateway</td><td>Upstream failed</td></tr>
+          <tr><td><code>503</code></td><td>Service Unavailable</td><td>Server overloaded/down</td></tr>
+          <tr><td><code>504</code></td><td>Gateway Timeout</td><td>Upstream too slow</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- PROBLEMS -->
+<div class="section" id="problems">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2 class="section-title">Interview Problems</h2>
+    <span class="section-sub">click "show solution" to reveal</span>
+  </div>
+  <div class="problems-grid">
+
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Two Sum</div><div class="prob-diff diff-easy">Easy</div></div>
+      <div class="prob-cat">Hash Map &middot; Arrays</div>
+      <div class="prob-desc">Given an array of integers and a target, return indices of two numbers that add up to the target.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">two_sum</span>(nums, target):
+    seen = {}  <span class="cm"># value -&gt; index</span>
+    <span class="kw">for</span> i, n <span class="kw">in</span> <span class="fn">enumerate</span>(nums):
+        complement = target - n
+        <span class="kw">if</span> complement <span class="kw">in</span> seen:
+            <span class="kw">return</span> [seen[complement], i]
+        seen[n] = i
+    <span class="kw">return</span> []</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n)</div><div><strong>Space:</strong> O(n)</div></div>
+      </div>
+    </div>
+
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Valid Parentheses</div><div class="prob-diff diff-easy">Easy</div></div>
+      <div class="prob-cat">Stack &middot; Strings</div>
+      <div class="prob-desc">Determine if a string of brackets <code>()[]{}</code> is valid (properly opened and closed).</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">is_valid</span>(s):
+    stack = []
+    pairs = {<span class="str">')'</span>: <span class="str">'('</span>, <span class="str">']'</span>: <span class="str">'['</span>, <span class="str">'}'</span>: <span class="str">'{'</span>}
+    <span class="kw">for</span> ch <span class="kw">in</span> s:
+        <span class="kw">if</span> ch <span class="kw">in</span> <span class="str">'([{'</span>:
+            stack.<span class="fn">append</span>(ch)
+        <span class="kw">else</span>:
+            <span class="kw">if not</span> stack <span class="kw">or</span> stack.<span class="fn">pop</span>() != pairs[ch]:
+                <span class="kw">return</span> <span class="num">False</span>
+    <span class="kw">return not</span> stack</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n)</div><div><strong>Space:</strong> O(n)</div></div>
+      </div>
+    </div>
+
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Reverse Linked List</div><div class="prob-diff diff-easy">Easy</div></div>
+      <div class="prob-cat">Linked List &middot; Pointers</div>
+      <div class="prob-desc">Reverse a singly linked list iteratively in-place.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">reverse</span>(head):
+    prev = <span class="num">None</span>
+    curr = head
+    <span class="kw">while</span> curr:
+        nxt = curr.next
+        curr.next = prev
+        prev = curr
+        curr = nxt
+    <span class="kw">return</span> prev</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n)</div><div><strong>Space:</strong> O(1)</div></div>
+      </div>
+    </div>
+
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Best Time to Buy/Sell Stock</div><div class="prob-diff diff-easy">Easy</div></div>
+      <div class="prob-cat">Greedy &middot; Arrays</div>
+      <div class="prob-desc">Given prices array, find max profit from one buy + one sell.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">max_profit</span>(prices):
+    min_price = <span class="fn">float</span>(<span class="str">'inf'</span>)
+    profit = <span class="num">0</span>
+    <span class="kw">for</span> p <span class="kw">in</span> prices:
+        min_price = <span class="fn">min</span>(min_price, p)
+        profit = <span class="fn">max</span>(profit, p - min_price)
+    <span class="kw">return</span> profit</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n)</div><div><strong>Space:</strong> O(1)</div></div>
+      </div>
+    </div>
+
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Longest Substring No Repeat</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">Sliding Window &middot; Hash Set</div>
+      <div class="prob-desc">Find the length of the longest substring with no repeating characters.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">length_of_longest</span>(s):
+    seen = {}
+    left = max_len = <span class="num">0</span>
+    <span class="kw">for</span> right, ch <span class="kw">in</span> <span class="fn">enumerate</span>(s):
+        <span class="kw">if</span> ch <span class="kw">in</span> seen <span class="kw">and</span> seen[ch] >= left:
+            left = seen[ch] + <span class="num">1</span>
+        seen[ch] = right
+        max_len = <span class="fn">max</span>(max_len, right - left + <span class="num">1</span>)
+    <span class="kw">return</span> max_len</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n)</div><div><strong>Space:</strong> O(min(n, charset))</div></div>
+      </div>
+    </div>
+
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">LRU Cache</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">Hash Map &middot; Doubly Linked List</div>
+      <div class="prob-desc">Implement Least Recently Used cache with O(1) get and put operations.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">from</span> collections <span class="kw">import</span> OrderedDict
+
+<span class="kw">class</span> <span class="fn">LRUCache</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(self, cap):
+        self.cap = cap
+        self.cache = <span class="fn">OrderedDict</span>()
+
+    <span class="kw">def</span> <span class="fn">get</span>(self, key):
+        <span class="kw">if</span> key <span class="kw">not in</span> self.cache:
+            <span class="kw">return</span> -<span class="num">1</span>
+        self.cache.<span class="fn">move_to_end</span>(key)
+        <span class="kw">return</span> self.cache[key]
+
+    <span class="kw">def</span> <span class="fn">put</span>(self, key, val):
+        <span class="kw">if</span> key <span class="kw">in</span> self.cache:
+            self.cache.<span class="fn">move_to_end</span>(key)
+        self.cache[key] = val
+        <span class="kw">if</span> <span class="fn">len</span>(self.cache) > self.cap:
+            self.cache.<span class="fn">popitem</span>(last=<span class="num">False</span>)</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(1) get/put</div><div><strong>Space:</strong> O(capacity)</div></div>
+      </div>
+    </div>
+
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Number of Islands</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">DFS / BFS &middot; Grid</div>
+      <div class="prob-desc">Count islands in a 2D grid of '1's (land) and '0's (water).</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">num_islands</span>(grid):
+    <span class="kw">if not</span> grid: <span class="kw">return</span> <span class="num">0</span>
+    rows, cols = <span class="fn">len</span>(grid), <span class="fn">len</span>(grid[<span class="num">0</span>])
+    count = <span class="num">0</span>
+
+    <span class="kw">def</span> <span class="fn">dfs</span>(r, c):
+        <span class="kw">if</span> r &lt; <span class="num">0</span> <span class="kw">or</span> c &lt; <span class="num">0</span> <span class="kw">or</span> r &gt;= rows \
+           <span class="kw">or</span> c &gt;= cols <span class="kw">or</span> grid[r][c] != <span class="str">'1'</span>:
+            <span class="kw">return</span>
+        grid[r][c] = <span class="str">'0'</span>
+        <span class="fn">dfs</span>(r+<span class="num">1</span>, c); <span class="fn">dfs</span>(r-<span class="num">1</span>, c)
+        <span class="fn">dfs</span>(r, c+<span class="num">1</span>); <span class="fn">dfs</span>(r, c-<span class="num">1</span>)
+
+    <span class="kw">for</span> r <span class="kw">in</span> <span class="fn">range</span>(rows):
+        <span class="kw">for</span> c <span class="kw">in</span> <span class="fn">range</span>(cols):
+            <span class="kw">if</span> grid[r][c] == <span class="str">'1'</span>:
+                count += <span class="num">1</span>
+                <span class="fn">dfs</span>(r, c)
+    <span class="kw">return</span> count</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(m&middot;n)</div><div><strong>Space:</strong> O(m&middot;n) recursion</div></div>
+      </div>
+    </div>
+
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Merge K Sorted Lists</div><div class="prob-diff diff-hard">Hard</div></div>
+      <div class="prob-cat">Heap &middot; Linked List</div>
+      <div class="prob-desc">Merge k sorted linked lists into one sorted list.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">import</span> heapq
+
+<span class="kw">def</span> <span class="fn">merge_k_lists</span>(lists):
+    heap = []
+    <span class="kw">for</span> i, lst <span class="kw">in</span> <span class="fn">enumerate</span>(lists):
+        <span class="kw">if</span> lst:
+            heapq.<span class="fn">heappush</span>(heap, (lst.val, i, lst))
+
+    dummy = curr = <span class="fn">ListNode</span>()
+    <span class="kw">while</span> heap:
+        val, i, node = heapq.<span class="fn">heappop</span>(heap)
+        curr.next = node
+        curr = curr.next
+        <span class="kw">if</span> node.next:
+            heapq.<span class="fn">heappush</span>(heap, (node.next.val, i, node.next))
+    <span class="kw">return</span> dummy.next</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n log k)</div><div><strong>Space:</strong> O(k)</div></div>
+      </div>
+    </div>
+
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Word Break</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">Dynamic Programming</div>
+      <div class="prob-desc">Given a string and dictionary, can the string be segmented into dictionary words?</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">word_break</span>(s, words):
+    word_set = <span class="fn">set</span>(words)
+    n = <span class="fn">len</span>(s)
+    dp = [<span class="num">False</span>] * (n + <span class="num">1</span>)
+    dp[<span class="num">0</span>] = <span class="num">True</span>
+
+    <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="num">1</span>, n + <span class="num">1</span>):
+        <span class="kw">for</span> j <span class="kw">in</span> <span class="fn">range</span>(i):
+            <span class="kw">if</span> dp[j] <span class="kw">and</span> s[j:i] <span class="kw">in</span> word_set:
+                dp[i] = <span class="num">True</span>
+                <span class="kw">break</span>
+    <span class="kw">return</span> dp[n]</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n&sup2;)</div><div><strong>Space:</strong> O(n)</div></div>
+      </div>
+    </div>
+
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Trapping Rain Water</div><div class="prob-diff diff-hard">Hard</div></div>
+      <div class="prob-cat">Two Pointers &middot; Arrays</div>
+      <div class="prob-desc">Given heights, compute how much water can be trapped after raining.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">trap</span>(h):
+    left, right = <span class="num">0</span>, <span class="fn">len</span>(h) - <span class="num">1</span>
+    lmax = rmax = water = <span class="num">0</span>
+    <span class="kw">while</span> left &lt; right:
+        <span class="kw">if</span> h[left] &lt; h[right]:
+            <span class="kw">if</span> h[left] &gt;= lmax: lmax = h[left]
+            <span class="kw">else</span>: water += lmax - h[left]
+            left += <span class="num">1</span>
+        <span class="kw">else</span>:
+            <span class="kw">if</span> h[right] &gt;= rmax: rmax = h[right]
+            <span class="kw">else</span>: water += rmax - h[right]
+            right -= <span class="num">1</span>
+    <span class="kw">return</span> water</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n)</div><div><strong>Space:</strong> O(1)</div></div>
+      </div>
+    </div>
+
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Find Duplicate Number</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">Floyd's Cycle &middot; Math</div>
+      <div class="prob-desc">Array of n+1 ints in [1,n] has one duplicate. Find it without modifying array, O(1) space.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">find_duplicate</span>(nums):
+    slow = fast = nums[<span class="num">0</span>]
+    <span class="kw">while</span> <span class="num">True</span>:
+        slow = nums[slow]
+        fast = nums[nums[fast]]
+        <span class="kw">if</span> slow == fast: <span class="kw">break</span>
+
+    slow = nums[<span class="num">0</span>]
+    <span class="kw">while</span> slow != fast:
+        slow = nums[slow]
+        fast = nums[fast]
+    <span class="kw">return</span> slow</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n)</div><div><strong>Space:</strong> O(1)</div></div>
+      </div>
+    </div>
+
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Producer-Consumer</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">Concurrency &middot; Threads</div>
+      <div class="prob-desc">Classic synchronization — producers add to buffer, consumers remove. No race conditions.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">import</span> threading, queue, time
+
+buffer = queue.<span class="fn">Queue</span>(maxsize=<span class="num">5</span>)
+
+<span class="kw">def</span> <span class="fn">producer</span>():
+    <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="num">10</span>):
+        buffer.<span class="fn">put</span>(i)
+        <span class="fn">print</span>(<span class="str">f"Produced {i}"</span>)
+        time.<span class="fn">sleep</span>(<span class="num">0.1</span>)
+
+<span class="kw">def</span> <span class="fn">consumer</span>():
+    <span class="kw">while</span> <span class="num">True</span>:
+        item = buffer.<span class="fn">get</span>()
+        <span class="fn">print</span>(<span class="str">f"Consumed {item}"</span>)
+        buffer.<span class="fn">task_done</span>()
+
+threading.<span class="fn">Thread</span>(target=producer).<span class="fn">start</span>()
+threading.<span class="fn">Thread</span>(target=consumer, daemon=<span class="num">True</span>).<span class="fn">start</span>()</pre></div>
+        <div class="complexity-row"><div><strong>Note:</strong> queue.Queue is thread-safe</div></div>
+      </div>
+    </div>
+
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Binary Search</div><div class="prob-diff diff-easy">Easy</div></div>
+      <div class="prob-cat">Binary Search &middot; Arrays</div>
+      <div class="prob-desc">Given a sorted array and a target, return the index of the target or -1 if not found. O(log n) required.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">binary_search</span>(nums, target):
+    left, right = <span class="num">0</span>, <span class="fn">len</span>(nums) - <span class="num">1</span>
+    <span class="kw">while</span> left &lt;= right:
+        mid = left + (right - left) // <span class="num">2</span>
+        <span class="kw">if</span> nums[mid] == target:
+            <span class="kw">return</span> mid
+        <span class="kw">elif</span> nums[mid] &lt; target:
+            left = mid + <span class="num">1</span>
+        <span class="kw">else</span>:
+            right = mid - <span class="num">1</span>
+    <span class="kw">return</span> -<span class="num">1</span></pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(log n)</div><div><strong>Space:</strong> O(1)</div></div>
+      </div>
+    </div>
+
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Merge Intervals</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">Sorting &middot; Arrays</div>
+      <div class="prob-desc">Given a list of intervals, merge all overlapping ones and return the non-overlapping result.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">merge</span>(intervals):
+    intervals.<span class="fn">sort</span>(key=<span class="kw">lambda</span> x: x[<span class="num">0</span>])
+    merged = [intervals[<span class="num">0</span>]]
+    <span class="kw">for</span> start, end <span class="kw">in</span> intervals[<span class="num">1</span>:]:
+        <span class="kw">if</span> start &lt;= merged[-<span class="num">1</span>][<span class="num">1</span>]:
+            merged[-<span class="num">1</span>][<span class="num">1</span>] = <span class="fn">max</span>(merged[-<span class="num">1</span>][<span class="num">1</span>], end)
+        <span class="kw">else</span>:
+            merged.<span class="fn">append</span>([start, end])
+    <span class="kw">return</span> merged</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n log n)</div><div><strong>Space:</strong> O(n)</div></div>
+      </div>
+    </div>
+
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Coin Change</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">Dynamic Programming</div>
+      <div class="prob-desc">Given coin denominations and an amount, return the fewest coins needed to make that amount, or -1 if impossible.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">coin_change</span>(coins, amount):
+    dp = [<span class="fn">float</span>(<span class="str">'inf'</span>)] * (amount + <span class="num">1</span>)
+    dp[<span class="num">0</span>] = <span class="num">0</span>
+    <span class="kw">for</span> coin <span class="kw">in</span> coins:
+        <span class="kw">for</span> amt <span class="kw">in</span> <span class="fn">range</span>(coin, amount + <span class="num">1</span>):
+            dp[amt] = <span class="fn">min</span>(dp[amt], dp[amt - coin] + <span class="num">1</span>)
+    <span class="kw">return</span> dp[amount] <span class="kw">if</span> dp[amount] != <span class="fn">float</span>(<span class="str">'inf'</span>) <span class="kw">else</span> -<span class="num">1</span></pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(amount &times; coins)</div><div><strong>Space:</strong> O(amount)</div></div>
+      </div>
+    </div>
+
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Kth Largest Element</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">QuickSelect &middot; Heap</div>
+      <div class="prob-desc">Find the kth largest element in an unsorted array. Beat O(n log n) sort with QuickSelect O(n) average.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">import</span> random
+
+<span class="kw">def</span> <span class="fn">find_kth_largest</span>(nums, k):
+    pivot = <span class="fn">random.choice</span>(nums)
+    greater = [x <span class="kw">for</span> x <span class="kw">in</span> nums <span class="kw">if</span> x &gt; pivot]
+    equal   = [x <span class="kw">for</span> x <span class="kw">in</span> nums <span class="kw">if</span> x == pivot]
+    less    = [x <span class="kw">for</span> x <span class="kw">in</span> nums <span class="kw">if</span> x &lt; pivot]
+    <span class="kw">if</span> k &lt;= <span class="fn">len</span>(greater):
+        <span class="kw">return</span> <span class="fn">find_kth_largest</span>(greater, k)
+    <span class="kw">if</span> k &lt;= <span class="fn">len</span>(greater) + <span class="fn">len</span>(equal):
+        <span class="kw">return</span> pivot
+    <span class="kw">return</span> <span class="fn">find_kth_largest</span>(less, k - <span class="fn">len</span>(greater) - <span class="fn">len</span>(equal))</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n) avg, O(n&sup2;) worst</div><div><strong>Space:</strong> O(n)</div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- SYSTEM DESIGN -->
+<div class="sd-section" id="systemdesign">
+  <div class="sd-inner">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2 class="section-title">System Design Walkthroughs</h2>
+      <span class="section-sub">5 classic interview cases</span>
+    </div>
+    <div class="sd-grid">
+
+      <div class="sd-card">
+        <div class="sd-tag">Design</div>
+        <div class="sd-name">URL Shortener (bit.ly)</div>
+        <div class="sd-section-h">Requirements</div>
+        <ul class="sd-list"><li>Shorten long URLs to ~7 char codes</li><li>Redirect short URL to original</li><li>~100M new URLs/month, 10:1 read:write</li><li>Low latency redirects (&lt;100ms)</li></ul>
+        <div class="sd-toggle" onclick="toggleSD(this)">&#9658; show full design</div>
+        <div class="sd-detail">
+          <div class="sd-section-h">Capacity Estimate</div>
+          <ul class="sd-list"><li>100M writes/mo &asymp; 40 writes/sec</li><li>1B reads/mo &asymp; 400 reads/sec</li><li>Storage: 100M &times; 500B = 50GB/mo</li></ul>
+          <div class="sd-section-h">Approach</div>
+          <ul class="sd-list"><li><strong>Encoding:</strong> base62 (a-z, A-Z, 0-9). 7 chars = 62&sup7; &asymp; 3.5 trillion URLs.</li><li><strong>ID generation:</strong> distributed counter (Snowflake) &rarr; base62 encode</li><li><strong>Storage:</strong> key-value store (DynamoDB/Cassandra)</li><li><strong>Cache:</strong> Redis for hot URLs (LRU eviction)</li><li><strong>API:</strong> POST /shorten, GET /:code &rarr; 301 redirect</li></ul>
+          <div class="sd-section-h">Tradeoffs</div>
+          <ul class="sd-list"><li>Pre-generate codes vs. on-demand</li><li>301 (cached) vs 302 (analytics-friendly)</li><li>Custom aliases need uniqueness check</li></ul>
+        </div>
+      </div>
+
+      <div class="sd-card">
+        <div class="sd-tag">Design</div>
+        <div class="sd-name">Twitter / News Feed</div>
+        <div class="sd-section-h">Requirements</div>
+        <ul class="sd-list"><li>Post tweets, follow users</li><li>Home timeline of followed users' tweets</li><li>500M users, 200M DAU, ~6K tweets/sec</li><li>Read-heavy: ~150K timeline reads/sec</li></ul>
+        <div class="sd-toggle" onclick="toggleSD(this)">&#9658; show full design</div>
+        <div class="sd-detail">
+          <div class="sd-section-h">Fan-out on write</div>
+          <ul class="sd-list"><li>Push tweet to followers' timelines (Redis lists)</li><li>Read = O(1). Heavy write cost for celebs.</li></ul>
+          <div class="sd-section-h">Fan-out on read</div>
+          <ul class="sd-list"><li>Pull tweets when timeline requested</li><li>Cheap writes, expensive reads</li></ul>
+          <div class="sd-section-h">Hybrid (Twitter's approach)</div>
+          <ul class="sd-list"><li>Fan-out on write for normal users</li><li>Fan-out on read for celebrities (&gt;1M followers)</li><li>Merge both at read time</li></ul>
+          <div class="sd-section-h">Stack</div>
+          <ul class="sd-list"><li>Tweet store: Cassandra</li><li>Timeline cache: Redis</li><li>Search: Elasticsearch</li><li>Media: S3 + CDN</li></ul>
+        </div>
+      </div>
+
+      <div class="sd-card">
+        <div class="sd-tag">Design</div>
+        <div class="sd-name">Uber / Ride Sharing</div>
+        <div class="sd-section-h">Requirements</div>
+        <ul class="sd-list"><li>Match riders with nearby drivers</li><li>Real-time location updates (every 4s)</li><li>10M active drivers, 100M riders</li><li>Trip lifecycle: request &rarr; match &rarr; ride &rarr; pay</li></ul>
+        <div class="sd-toggle" onclick="toggleSD(this)">&#9658; show full design</div>
+        <div class="sd-detail">
+          <div class="sd-section-h">Core: Geo-spatial search</div>
+          <ul class="sd-list"><li>Geohashing / quad-trees &mdash; divide map into cells</li><li>Drivers update cell every few seconds (Redis + TTL)</li><li>Query: drivers in rider's cell + neighbors</li></ul>
+          <div class="sd-section-h">Components</div>
+          <ul class="sd-list"><li><strong>Location Service:</strong> driver pings (Kafka &rarr; Redis)</li><li><strong>Matching:</strong> K-nearest drivers, ranked by ETA</li><li><strong>Trip Service:</strong> SQL (needs ACID)</li><li><strong>Payment:</strong> async via queue, idempotent</li><li><strong>Notifications:</strong> WebSockets / push</li></ul>
+        </div>
+      </div>
+
+      <div class="sd-card">
+        <div class="sd-tag">Design</div>
+        <div class="sd-name">WhatsApp / Chat</div>
+        <div class="sd-section-h">Requirements</div>
+        <ul class="sd-list"><li>1:1 and group messaging</li><li>Online presence, read receipts, typing indicators</li><li>2B users, 100B messages/day</li><li>End-to-end encryption</li></ul>
+        <div class="sd-toggle" onclick="toggleSD(this)">&#9658; show full design</div>
+        <div class="sd-detail">
+          <div class="sd-section-h">Connection Layer</div>
+          <ul class="sd-list"><li>Persistent WebSocket connections</li><li>If recipient offline &rarr; queue (Kafka)</li></ul>
+          <div class="sd-section-h">Message Flow</div>
+          <ul class="sd-list"><li>Sender &rarr; WS server &rarr; queue &rarr; recipient WS &rarr; recipient</li><li>Persist to Cassandra for offline delivery</li><li>ACK = "delivered". Open chat ACK = "read".</li></ul>
+          <div class="sd-section-h">E2EE</div>
+          <ul class="sd-list"><li>Signal Protocol: client-side encryption</li><li>Server stores ciphertext only</li></ul>
+        </div>
+      </div>
+
+      <div class="sd-card">
+        <div class="sd-tag">Design</div>
+        <div class="sd-name">Netflix / Video Streaming</div>
+        <div class="sd-section-h">Requirements</div>
+        <ul class="sd-list"><li>Stream video to 250M+ users globally</li><li>Adaptive bitrate based on bandwidth</li><li>Recommendations + search</li><li>Resume from last watched position</li></ul>
+        <div class="sd-toggle" onclick="toggleSD(this)">&#9658; show full design</div>
+        <div class="sd-detail">
+          <div class="sd-section-h">Video Pipeline</div>
+          <ul class="sd-list"><li><strong>Upload:</strong> raw video &rarr; S3</li><li><strong>Encode:</strong> multiple bitrates/codecs (H.264, H.265, AV1)</li><li><strong>Chunk:</strong> 2-10 second segments (HLS/DASH)</li><li><strong>Distribute:</strong> CDN edge nodes (Open Connect)</li></ul>
+          <div class="sd-section-h">Playback</div>
+          <ul class="sd-list"><li>Client downloads manifest &rarr; fetches chunks from nearest CDN</li><li>Adaptive bitrate: switches quality per chunk</li><li>Watch position: Cassandra</li></ul>
+          <div class="sd-section-h">Other</div>
+          <ul class="sd-list"><li><strong>Recommendations:</strong> offline ML &rarr; precomputed ranked lists</li><li><strong>Search:</strong> Elasticsearch</li><li><strong>DRM:</strong> Widevine, FairPlay, PlayReady</li></ul>
+        </div>
+      </div>
+
+      <div class="sd-card">
+        <div class="sd-tag">Design</div>
+        <div class="sd-name">Rate Limiter</div>
+        <div class="sd-section-h">Requirements</div>
+        <ul class="sd-list"><li>Limit API calls per user/IP (e.g. 100 req/min)</li><li>Return 429 when limit exceeded</li><li>Works across multiple API servers</li><li>Low latency overhead (&lt;5ms per check)</li></ul>
+        <div class="sd-toggle" onclick="toggleSD(this)">&#9658; show full design</div>
+        <div class="sd-detail">
+          <div class="sd-section-h">Algorithms</div>
+          <ul class="sd-list"><li><strong>Token Bucket:</strong> tokens added at fixed rate, consumed per request. Allows bursts.</li><li><strong>Fixed Window:</strong> count resets every minute. Simple but allows 2&times; burst at window boundary.</li><li><strong>Sliding Window Log:</strong> timestamp-based, accurate but memory-heavy.</li><li><strong>Sliding Window Counter:</strong> hybrid — accurate + memory-efficient. Twitter's approach.</li></ul>
+          <div class="sd-section-h">Implementation</div>
+          <ul class="sd-list"><li>Redis + Lua scripts for atomic increment/check (single round-trip)</li><li>Key: <code>rate_limit:{user_id}:{window}</code></li><li>Set TTL equal to window size</li><li>Distributed: all API servers talk to same Redis cluster</li></ul>
+          <div class="sd-section-h">Headers</div>
+          <ul class="sd-list"><li>X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset</li></ul>
+        </div>
+      </div>
+
+      <div class="sd-card">
+        <div class="sd-tag">Design</div>
+        <div class="sd-name">Search Autocomplete</div>
+        <div class="sd-section-h">Requirements</div>
+        <ul class="sd-list"><li>Return top 5 suggestions as user types</li><li>Results ranked by frequency/relevance</li><li>~10M DAU, ~10 queries/session = 100M queries/day</li><li>Latency &lt;100ms (feels real-time)</li></ul>
+        <div class="sd-toggle" onclick="toggleSD(this)">&#9658; show full design</div>
+        <div class="sd-detail">
+          <div class="sd-section-h">Data Structure</div>
+          <ul class="sd-list"><li><strong>Trie:</strong> prefix tree where each node stores top-k completions. O(L) lookup where L = prefix length.</li><li>Store frequency at each node, keep top-5 as you insert/update.</li></ul>
+          <div class="sd-section-h">System</div>
+          <ul class="sd-list"><li><strong>Data collection:</strong> log search queries + clicks &rarr; Kafka &rarr; batch aggregation</li><li><strong>Trie builder:</strong> weekly/daily offline job rebuilds trie from aggregated data</li><li><strong>Trie storage:</strong> serialize to object store (S3), load into memory on API servers</li><li><strong>Cache:</strong> Redis for hot prefixes (top 1000 search terms cover 90% of traffic)</li></ul>
+          <div class="sd-section-h">Tradeoffs</div>
+          <ul class="sd-list"><li>Trie vs Elasticsearch (ES easier, less latency control)</li><li>How often to rebuild (freshness vs. cost)</li></ul>
+        </div>
+      </div>
+
+      <div class="sd-card">
+        <div class="sd-tag">Design</div>
+        <div class="sd-name">Google Drive / File Storage</div>
+        <div class="sd-section-h">Requirements</div>
+        <ul class="sd-list"><li>Upload, download, sync files across devices</li><li>Share files/folders with others</li><li>Version history</li><li>1B users, files up to 5GB, 10PB+ total storage</li></ul>
+        <div class="sd-toggle" onclick="toggleSD(this)">&#9658; show full design</div>
+        <div class="sd-detail">
+          <div class="sd-section-h">Upload Flow</div>
+          <ul class="sd-list"><li>Client splits file into chunks (e.g. 4MB each)</li><li>Client computes SHA256 of each chunk (dedup check)</li><li>API server returns presigned S3 URL per chunk</li><li>Client uploads chunks directly to S3 (bypass API servers)</li><li>Client notifies API when done &rarr; metadata saved to DB</li></ul>
+          <div class="sd-section-h">Storage</div>
+          <ul class="sd-list"><li><strong>Files:</strong> S3 (chunks keyed by hash &rarr; automatic dedup)</li><li><strong>Metadata:</strong> PostgreSQL (files, folders, permissions, versions)</li><li><strong>Delta sync:</strong> only upload changed chunks on edit</li></ul>
+          <div class="sd-section-h">Sync</div>
+          <ul class="sd-list"><li>Long-polling or WebSocket for change notifications</li><li>Vector clocks / last-write-wins for conflict resolution</li></ul>
+        </div>
+      </div>
+
+      <div class="sd-card">
+        <div class="sd-tag">Design</div>
+        <div class="sd-name">Notification Service</div>
+        <div class="sd-section-h">Requirements</div>
+        <ul class="sd-list"><li>Send push, SMS, and email notifications</li><li>~10M notifications/day, spikes at 100K/sec</li><li>At-least-once delivery, no duplicates shown to user</li><li>User preferences (opt-outs, quiet hours)</li></ul>
+        <div class="sd-toggle" onclick="toggleSD(this)">&#9658; show full design</div>
+        <div class="sd-detail">
+          <div class="sd-section-h">Flow</div>
+          <ul class="sd-list"><li>Producers (payment, social, alerts) publish events &rarr; Kafka topic</li><li>Notification service consumes, checks user preferences, routes to channel</li><li>Push: APNs (iOS) / FCM (Android). SMS: Twilio. Email: SES/SendGrid</li></ul>
+          <div class="sd-section-h">Reliability</div>
+          <ul class="sd-list"><li>Idempotency key per notification to prevent duplication</li><li>Dead letter queue for failed deliveries &rarr; retry with backoff</li><li>Delivery log in Cassandra (device_id, notif_id, status, timestamp)</li></ul>
+          <div class="sd-section-h">Preferences</div>
+          <ul class="sd-list"><li>Redis cache of user opt-outs and quiet hours — checked before sending</li><li>Unsubscribe / snooze updates invalidate cache entry</li></ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- CONCEPTS -->
+<div class="section" id="concepts">
+  <div class="section-header">
+    <span class="section-num">05</span>
+    <h2 class="section-title">Concept Deep-Dives</h2>
+    <span class="section-sub">Networking · Security · Testing · Cloud</span>
+  </div>
+  <div class="cpt-tabs">
+    <button class="cpt-tab active" onclick="switchCPT('networking', this)">🌐 Networking</button>
+    <button class="cpt-tab" onclick="switchCPT('security', this)">🔐 Security</button>
+    <button class="cpt-tab" onclick="switchCPT('testing', this)">🧪 Testing</button>
+    <button class="cpt-tab" onclick="switchCPT('cloud', this)">☁️ Cloud</button>
+  </div>
+
+  <!-- NETWORKING -->
+  <div class="cpt-pane active" id="cpt-networking">
+    <div class="cpt-sh">TCP vs UDP</div>
+    <div class="cpt-compare">
+      <div class="cpt-col">
+        <h4>TCP — Transmission Control Protocol</h4>
+        <ul>
+          <li>Connection-oriented (SYN → SYN-ACK → ACK handshake)</li>
+          <li>Guaranteed delivery, in-order, error-checked</li>
+          <li>Flow control + congestion control built in</li>
+          <li>Higher overhead — use when reliability matters</li>
+          <li>Use: HTTP, SSH, databases, email (SMTP)</li>
+        </ul>
+      </div>
+      <div class="cpt-col">
+        <h4>UDP — User Datagram Protocol</h4>
+        <ul>
+          <li>Connectionless — fire and forget, no handshake</li>
+          <li>No delivery guarantee, no ordering</li>
+          <li>Very low overhead and latency</li>
+          <li>App handles packet loss if needed</li>
+          <li>Use: DNS, video streaming, gaming, VoIP, HTTP/3 (QUIC)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="cpt-sh">DNS Resolution</div>
+    <div class="cpt-flow">
+      <div class="cpt-step">Browser cache</div><div class="cpt-arrow">→</div>
+      <div class="cpt-step">OS /etc/hosts</div><div class="cpt-arrow">→</div>
+      <div class="cpt-step">Recursive resolver (ISP)</div><div class="cpt-arrow">→</div>
+      <div class="cpt-step">Root nameserver</div><div class="cpt-arrow">→</div>
+      <div class="cpt-step">TLD (.com)</div><div class="cpt-arrow">→</div>
+      <div class="cpt-step">Authoritative NS</div><div class="cpt-arrow">→</div>
+      <div class="cpt-step">IP address returned</div>
+    </div>
+    <ul class="cpt-list">
+      <li>TTL controls cache duration — lower TTL means faster propagation but more resolver load</li>
+      <li>Record types: A (→ IPv4), AAAA (→ IPv6), CNAME (alias → canonical name), MX (mail server), TXT (SPF/DKIM)</li>
+      <li>DoH (DNS over HTTPS) and DoT (DNS over TLS) encrypt DNS queries to prevent eavesdropping</li>
+    </ul>
+
+    <div class="cpt-grid">
+      <div class="cpt-card">
+        <div class="cpt-h">HTTP Evolution</div>
+        <ul class="cpt-list">
+          <li><strong>HTTP/1.1</strong> — persistent connections but HOL blocking; effectively 1 in-flight request per connection despite pipelining</li>
+          <li><strong>HTTP/2</strong> — binary framing; multiplexing (many streams per TCP conn); header compression (HPACK); server push</li>
+          <li><strong>HTTP/3</strong> — runs on QUIC (UDP-based); eliminates TCP HOL blocking; 0-RTT session resumption; built-in TLS 1.3; better on lossy networks</li>
+        </ul>
+      </div>
+      <div class="cpt-card">
+        <div class="cpt-h">TLS 1.3 Handshake</div>
+        <ul class="cpt-list">
+          <li><strong>ClientHello</strong> — supported ciphers, DH key share, random nonce</li>
+          <li><strong>ServerHello</strong> — chosen cipher, server key share, certificate chain</li>
+          <li><strong>Client verifies</strong> cert against trusted CA roots in browser/OS store</li>
+          <li><strong>Session keys</strong> derived via Diffie-Hellman — secret never transmitted</li>
+          <li>TLS 1.3: 1 RTT total (vs 2 for TLS 1.2); 0-RTT for session resumption</li>
+          <li>PFS: ephemeral keys mean past traffic can't be decrypted if private key leaks later</li>
+        </ul>
+      </div>
+      <div class="cpt-card">
+        <div class="cpt-h">WebSockets vs SSE vs Polling</div>
+        <ul class="cpt-list">
+          <li><strong>WebSocket</strong> — full-duplex, persistent; upgrades from HTTP via <code>Upgrade: websocket</code>; use for chat, games, live collab</li>
+          <li><strong>SSE (Server-Sent Events)</strong> — server-to-client only; uses plain HTTP; simpler; reconnects automatically; use for dashboards, notifications</li>
+          <li><strong>Long polling</strong> — client holds request open; server replies when data ready; fallback for restricted environments</li>
+          <li>Scale WebSockets horizontally with sticky sessions or shared Redis pub/sub</li>
+        </ul>
+      </div>
+      <div class="cpt-card">
+        <div class="cpt-h">Load Balancers: L4 vs L7</div>
+        <ul class="cpt-list">
+          <li><strong>L4 (Transport)</strong> — routes by IP + TCP/UDP port; no content inspection; very fast; e.g. AWS NLB, HAProxy TCP</li>
+          <li><strong>L7 (Application)</strong> — routes by URL path, headers, cookies; SSL termination; A/B routing; e.g. AWS ALB, nginx, Envoy</li>
+          <li>Algorithms: Round Robin, Least Connections, IP Hash (sticky), Weighted RR</li>
+          <li>Health checks: periodic probes remove unhealthy backends automatically</li>
+          <li>CDN (Cloudflare, CloudFront) = globally distributed L7 cache + anycast edge routing</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECURITY -->
+  <div class="cpt-pane" id="cpt-security">
+    <div class="cpt-sh">Authentication vs Authorization</div>
+    <div class="cpt-compare">
+      <div class="cpt-col">
+        <h4>Authentication (AuthN) — Who are you?</h4>
+        <ul>
+          <li>Prove identity: password, biometric, hardware key, OTP</li>
+          <li>Result: session cookie, JWT, signed token</li>
+          <li>Protocols: OAuth 2.0, OIDC, SAML, LDAP</li>
+          <li>Factors: something you know / have / are → MFA</li>
+        </ul>
+      </div>
+      <div class="cpt-col">
+        <h4>Authorization (AuthZ) — What can you do?</h4>
+        <ul>
+          <li>Checks permissions after identity confirmed</li>
+          <li>RBAC — roles (admin, editor, viewer)</li>
+          <li>ABAC — attributes (dept=eng, clearance=3)</li>
+          <li>Principle of Least Privilege — grant minimum needed</li>
+          <li>Tools: OPA (Open Policy Agent), Casbin, AWS IAM</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="cpt-sh">JWT — JSON Web Tokens</div>
+    <div class="cpt-card" style="margin-bottom:1.5rem">
+      <div class="cpt-h">Structure: header.payload.signature (all base64url encoded)</div>
+      <div class="code-panel"><pre><span class="cm">// Header — algorithm + token type</span>
+{ <span class="str">"alg"</span>: <span class="str">"RS256"</span>, <span class="str">"typ"</span>: <span class="str">"JWT"</span> }
+
+<span class="cm">// Payload — claims (public + private)</span>
+{ <span class="str">"sub"</span>: <span class="str">"user_123"</span>, <span class="str">"role"</span>: <span class="str">"admin"</span>, <span class="str">"exp"</span>: <span class="num">1735689600</span> }
+
+<span class="cm">// Signature — server verifies on every request</span>
+RSASHA256(base64url(header) + <span class="str">"."</span> + base64url(payload), privateKey)</pre></div>
+      <ul class="cpt-list">
+        <li>Stateless — server validates signature without DB lookup (ideal for microservices)</li>
+        <li>Prefer RS256 (asymmetric) over HS256 (shared secret) for distributed systems</li>
+        <li>Short expiry (15 min access token) + long-lived refresh token + rotation = revocability</li>
+        <li>Store in HttpOnly cookie, NOT localStorage — prevents XSS token theft</li>
+        <li>Payload is base64-encoded, not encrypted — never put secrets in JWT claims</li>
+      </ul>
+    </div>
+
+    <div class="cpt-sh">OAuth 2.0 Grant Types</div>
+    <div class="cpt-grid">
+      <div class="cpt-card">
+        <div class="cpt-h">Authorization Code + PKCE (web / mobile)</div>
+        <ul class="cpt-list">
+          <li>User authenticates at AuthServer → redirected back with a one-time <code>code</code></li>
+          <li>Client exchanges <code>code</code> + <code>code_verifier</code> (PKCE) for access + refresh tokens</li>
+          <li>PKCE prevents code interception attacks — safe for public clients (SPA, mobile)</li>
+          <li>Never expose client_secret in frontend JS — use PKCE instead</li>
+        </ul>
+      </div>
+      <div class="cpt-card">
+        <div class="cpt-h">Client Credentials (Machine-to-Machine)</div>
+        <ul class="cpt-list">
+          <li>Service sends client_id + client_secret directly to AuthServer for token</li>
+          <li>No user involved — for backend-to-backend API calls</li>
+          <li>Rotate secrets via secrets manager; never hardcode in source code</li>
+          <li>Scope access narrowly — one client per service per environment</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="cpt-sh">Password Hashing</div>
+    <div class="cpt-card" style="margin-bottom:1.5rem">
+      <div class="cpt-h">Use bcrypt / Argon2id / scrypt — never raw MD5, SHA1, or SHA256</div>
+      <div class="code-panel"><pre><span class="kw">import</span> bcrypt
+
+<span class="cm"># Hash on registration (cost=12 ≈ 300ms — slow is the point)</span>
+hashed = bcrypt.<span class="fn">hashpw</span>(password.<span class="fn">encode</span>(), bcrypt.<span class="fn">gensalt</span>(rounds=<span class="num">12</span>))
+
+<span class="cm"># Verify on login — uses constant-time comparison internally</span>
+is_valid = bcrypt.<span class="fn">checkpw</span>(candidate.<span class="fn">encode</span>(), hashed)</pre></div>
+      <ul class="cpt-list">
+        <li>bcrypt automatically salts each hash — no separate salt management needed</li>
+        <li>Argon2id is the 2023 OWASP recommendation — memory-hard, resistant to GPU cracking</li>
+        <li>MD5 / SHA-256 are fast checksums for data integrity, not designed for passwords</li>
+        <li>Increase cost factor over time as hardware improves; re-hash on next login</li>
+      </ul>
+    </div>
+
+    <div class="cpt-sh">OWASP Top 10 Essentials</div>
+    <div class="cpt-grid">
+      <div class="cpt-card">
+        <div class="cpt-h">SQL Injection</div>
+        <div class="code-panel"><pre><span class="cm"># Vulnerable — attacker passes id="1 OR 1=1"</span>
+query = <span class="str">f"SELECT * FROM users WHERE id={user_id}"</span>
+
+<span class="cm"># Safe — parameterized query</span>
+cursor.<span class="fn">execute</span>(<span class="str">"SELECT * FROM users WHERE id = %s"</span>, (user_id,))</pre></div>
+        <p class="cpt-text">Use ORMs or parameterized queries everywhere. Grant DB accounts only the permissions they need. Validate and whitelist all user input at the boundary.</p>
+      </div>
+      <div class="cpt-card">
+        <div class="cpt-h">XSS — Cross-Site Scripting</div>
+        <div class="code-panel"><pre><span class="cm">// Vulnerable — injects attacker JS into DOM</span>
+element.innerHTML = userInput;
+
+<span class="cm">// Safe — treats as plain text</span>
+element.textContent = userInput;
+<span class="cm">// Rich text: sanitize with DOMPurify first</span></pre></div>
+        <p class="cpt-text">Escape all user-controlled output in templates. Set <code>Content-Security-Policy</code> header. Use HttpOnly cookies so JS cannot read auth tokens even if XSS occurs.</p>
+      </div>
+      <div class="cpt-card">
+        <div class="cpt-h">CSRF — Cross-Site Request Forgery</div>
+        <ul class="cpt-list">
+          <li>Attacker's page tricks logged-in user's browser into sending a forged request to your API</li>
+          <li><strong>Defense 1:</strong> CSRF token — random, per-session, validated server-side on every mutating request</li>
+          <li><strong>Defense 2:</strong> <code>SameSite=Strict</code> or <code>SameSite=Lax</code> cookie attribute blocks cross-origin sends</li>
+          <li><strong>Defense 3:</strong> Verify <code>Origin</code> / <code>Referer</code> headers on state-changing endpoints</li>
+        </ul>
+      </div>
+      <div class="cpt-card">
+        <div class="cpt-h">Cookie Security Flags + CORS</div>
+        <ul class="cpt-list">
+          <li><code>HttpOnly</code> — JS cannot read cookie; blocks XSS token theft</li>
+          <li><code>Secure</code> — only sent over HTTPS; never over HTTP</li>
+          <li><code>SameSite=Strict</code> — never sent cross-site (may break OAuth redirects)</li>
+          <li><code>SameSite=Lax</code> — sent on top-level navigation only (safe default)</li>
+          <li>CORS: <code>Access-Control-Allow-Origin</code> restricts which origins can call your API; never use <code>*</code> with credentials</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- TESTING -->
+  <div class="cpt-pane" id="cpt-testing">
+    <div class="cpt-sh">The Test Pyramid</div>
+    <div class="cpt-compare">
+      <div class="cpt-col">
+        <h4>Layer Overview (bottom = most, top = fewest)</h4>
+        <ul>
+          <li>🟢 Unit — fast, isolated, mock all deps. Run on every save.</li>
+          <li>🔵 Integration — real components together (DB, queue, API). Run in CI.</li>
+          <li>🔴 E2E — real browser, full stack, slow and flaky. Run before release.</li>
+        </ul>
+      </div>
+      <div class="cpt-col">
+        <h4>Rule of Thumb</h4>
+        <ul>
+          <li>70% unit / 20% integration / 10% E2E</li>
+          <li>More integration = more confidence, slower CI</li>
+          <li>Test behavior, not implementation details</li>
+          <li>Don't mock what you don't own — use fakes instead</li>
+          <li>"Test the contract, not the internals"</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="cpt-sh">TDD — Red → Green → Refactor</div>
+    <div class="cpt-flow">
+      <div class="cpt-step">🔴 Write failing test</div><div class="cpt-arrow">→</div>
+      <div class="cpt-step">🟢 Minimal code to pass</div><div class="cpt-arrow">→</div>
+      <div class="cpt-step">🔵 Refactor safely</div><div class="cpt-arrow">→</div>
+      <div class="cpt-step">repeat</div>
+    </div>
+    <ul class="cpt-list">
+      <li>Forces API design before implementation — surfaces awkward interfaces early</li>
+      <li>Tests become living documentation of intended behavior</li>
+      <li>Don't TDD everything — spikes, UI exploration, migrations rarely benefit</li>
+      <li>Name tests: <code>test_[unit]_when_[scenario]_should_[expected]</code> for clarity</li>
+    </ul>
+
+    <div class="cpt-sh">Test Doubles</div>
+    <div class="cpt-grid">
+      <div class="cpt-card">
+        <div class="cpt-h">Mock — verifies behavior</div>
+        <div class="code-panel"><pre><span class="kw">from</span> unittest.mock <span class="kw">import</span> Mock
+mailer = <span class="fn">Mock</span>()
+<span class="fn">register_user</span>(user, mailer)
+mailer.send.<span class="fn">assert_called_once_with</span>(<span class="str">"user@x.com"</span>)</pre></div>
+        <p class="cpt-text">Pre-programmed with call expectations. Fails the test if not invoked correctly. Overuse leads to brittle tests tightly coupled to implementation.</p>
+      </div>
+      <div class="cpt-card">
+        <div class="cpt-h">Stub — returns canned data</div>
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">fake_get_user</span>(id):
+    <span class="kw">return</span> {<span class="str">'id'</span>: id, <span class="str">'name'</span>: <span class="str">'Alice'</span>}
+
+monkeypatch.<span class="fn">setattr</span>(db, <span class="str">'get_user'</span>, fake_get_user)</pre></div>
+        <p class="cpt-text">Returns fixed responses; does not verify call count. Simpler and less brittle than mocks. Used for state-based testing where you care about the result, not the path.</p>
+      </div>
+      <div class="cpt-card">
+        <div class="cpt-h">Fake — working lightweight implementation</div>
+        <ul class="cpt-list">
+          <li>Working implementation — simpler than production (e.g. in-memory DB, fake payment processor)</li>
+          <li>More realistic than stubs; actually maintains state across calls</li>
+          <li>Best for replacing infrastructure dependencies in test suites</li>
+          <li>Example: SQLite in tests, fake S3 via localstack or moto</li>
+        </ul>
+      </div>
+      <div class="cpt-card">
+        <div class="cpt-h">Coverage — What It Misses</div>
+        <ul class="cpt-list">
+          <li>100% line coverage does NOT mean no bugs — logic errors still slip through</li>
+          <li>Branch coverage matters more — every if/else/case path needs a test</li>
+          <li>Mutation testing (mutmut, Pitest) verifies your tests actually catch real bugs</li>
+          <li>Coverage theater: an assertion that always passes can hit 100% coverage</li>
+          <li>Aim for 80%+ meaningful coverage with real assertions, not vanity metrics</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="cpt-sh">Testing by Layer</div>
+    <table class="cs-table">
+      <thead><tr><th>Layer</th><th>What to Test</th><th>Tools</th><th>Key Principle</th></tr></thead>
+      <tbody>
+        <tr><td>Unit</td><td>Pure functions, business logic, algorithms</td><td>pytest, jest, JUnit</td><td>No I/O; all deps injected or mocked</td></tr>
+        <tr><td>Integration</td><td>DB queries, API controllers, service interactions</td><td>pytest + testcontainers, supertest</td><td>Real DB — do not mock the DB layer</td></tr>
+        <tr><td>E2E</td><td>Critical user journeys (login, checkout, signup)</td><td>Playwright, Cypress</td><td>Stable selectors; cover critical paths only</td></tr>
+        <tr><td>Contract</td><td>API consumer/provider agreement</td><td>Pact, Schemathesis</td><td>Catches breaking API changes before deploy</td></tr>
+        <tr><td>Performance</td><td>Latency under load, throughput, regressions</td><td>k6, Locust, JMeter</td><td>Establish baseline; compare on every release</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CLOUD -->
+  <div class="cpt-pane" id="cpt-cloud">
+    <div class="cpt-sh">Core Service Categories (AWS / GCP / Azure)</div>
+    <div class="cpt-grid">
+      <div class="cpt-card">
+        <div class="cpt-h">Compute</div>
+        <ul class="cpt-list">
+          <li><strong>VMs:</strong> EC2 (AWS), Compute Engine (GCP), Azure VMs — full OS control, persistent, hourly billing</li>
+          <li><strong>Containers:</strong> ECS/Fargate, GKE, AKS — managed Kubernetes or serverless task runners</li>
+          <li><strong>Serverless:</strong> Lambda, Cloud Functions, Azure Functions — per-invocation billing, auto-scale to zero</li>
+          <li><strong>Choose by:</strong> control needs, workload burst pattern, team ops capacity</li>
+        </ul>
+      </div>
+      <div class="cpt-card">
+        <div class="cpt-h">Storage</div>
+        <ul class="cpt-list">
+          <li><strong>Object:</strong> S3, GCS, Azure Blob — unstructured data, 11 nines durability, infinite scale, per-GB billing</li>
+          <li><strong>Block:</strong> EBS, Persistent Disk — attached to a single VM like a local disk; high IOPS for databases</li>
+          <li><strong>File:</strong> EFS, Filestore — shared NFS accessible by multiple instances concurrently</li>
+          <li>S3 tiers: Standard → Infrequent Access → Glacier (access frequency vs. cost)</li>
+        </ul>
+      </div>
+      <div class="cpt-card">
+        <div class="cpt-h">Databases</div>
+        <ul class="cpt-list">
+          <li><strong>Managed SQL:</strong> RDS (Postgres/MySQL), Cloud SQL — ACID, auto backups, read replicas, failover</li>
+          <li><strong>Serverless SQL:</strong> Aurora Serverless, Neon — scales to zero; great for dev/low-traffic</li>
+          <li><strong>NoSQL:</strong> DynamoDB, Firestore, Cosmos DB — single-digit ms at any scale; key-value / document</li>
+          <li><strong>Cache:</strong> ElastiCache (Redis/Memcached) — sub-ms reads, session store, rate limiting</li>
+          <li><strong>Data warehouse:</strong> Redshift, BigQuery, Synapse — columnar, petabyte-scale analytics</li>
+        </ul>
+      </div>
+      <div class="cpt-card">
+        <div class="cpt-h">Networking</div>
+        <ul class="cpt-list">
+          <li><strong>VPC</strong> — isolated virtual network; you control IP ranges, subnets, routing tables</li>
+          <li><strong>Public subnet:</strong> internet gateway attached; for load balancers and NAT instances</li>
+          <li><strong>Private subnet:</strong> no direct internet; for DBs, internal services; use NAT gateway for outbound</li>
+          <li><strong>Security groups:</strong> stateful instance-level firewall; define inbound/outbound rules by port + source</li>
+          <li><strong>Route 53 / Cloud DNS:</strong> managed DNS with health-check-based failover routing</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="cpt-sh">IAM — Identity and Access Management</div>
+    <div class="cpt-card" style="margin-bottom:1.5rem">
+      <div class="cpt-h">Core Concepts: Principal → Policy → Role</div>
+      <div class="code-panel"><pre><span class="cm"># AWS IAM policy — explicit allow on specific resource</span>
+{
+  <span class="str">"Effect"</span>: <span class="str">"Allow"</span>,
+  <span class="str">"Action"</span>: [<span class="str">"s3:GetObject"</span>, <span class="str">"s3:PutObject"</span>],
+  <span class="str">"Resource"</span>: <span class="str">"arn:aws:s3:::my-bucket/*"</span>,
+  <span class="str">"Condition"</span>: { <span class="str">"StringEquals"</span>: { <span class="str">"s3:prefix"</span>: <span class="str">"uploads/"</span> } }
+}</pre></div>
+      <ul class="cpt-list">
+        <li><strong>Principal</strong> — who: IAM user, role, service account, federated identity</li>
+        <li><strong>Policy</strong> — what actions are allowed/denied on which resources under what conditions</li>
+        <li><strong>Role</strong> — named policy bundle; assumed by EC2 instances, Lambda functions, CI/CD pipelines</li>
+        <li>Use instance profiles / workload identity — never hardcode credentials in code or env files</li>
+        <li>Prefer temporary credentials via STS AssumeRole over long-lived access keys</li>
+        <li>Enable MFA on all IAM users, especially root; delete root access keys immediately after setup</li>
+        <li>Audit regularly with IAM Access Analyzer — automatically surfaces overly permissive policies</li>
+      </ul>
+    </div>
+
+    <div class="cpt-sh">Serverless vs Containers</div>
+    <div class="cpt-compare">
+      <div class="cpt-col">
+        <h4>Serverless (Lambda / Cloud Functions)</h4>
+        <ul>
+          <li>Zero server management; auto-scales to millions of requests</li>
+          <li>Pay per invocation + duration (ms granularity)</li>
+          <li>Cold start: 100ms–2s on first invocation (use Provisioned Concurrency to eliminate)</li>
+          <li>Max execution: 15 min (Lambda); no persistent connections</li>
+          <li>Best for: event handlers, webhooks, scheduled jobs, glue code, bursty workloads</li>
+        </ul>
+      </div>
+      <div class="cpt-col">
+        <h4>Containers (ECS / GKE / AKS)</h4>
+        <ul>
+          <li>Full control over runtime, dependencies, OS packages</li>
+          <li>Predictable latency; no cold starts; supports persistent connections</li>
+          <li>Pay per running instance even when idle</li>
+          <li>Best for: long-running APIs, WebSocket servers, ML inference, high-throughput services</li>
+          <li>Ops overhead: health checks, autoscaling config, rolling deploys, image scanning</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="cpt-sh">Auto-Scaling Strategies</div>
+    <table class="cs-table">
+      <thead><tr><th>Strategy</th><th>Mechanism</th><th>Best For</th></tr></thead>
+      <tbody>
+        <tr><td>Horizontal scale-out</td><td>Add more instances behind a load balancer; trigger on CPU, req rate, or queue depth</td><td>Stateless web servers, microservices</td></tr>
+        <tr><td>Vertical scale-up</td><td>Move to a larger instance type (more CPU/RAM)</td><td>Databases — horizontally harder to shard</td></tr>
+        <tr><td>Scheduled scaling</td><td>Pre-warm capacity before known traffic spikes</td><td>Black Friday, daily business-hours peaks</td></tr>
+        <tr><td>Predictive scaling</td><td>ML model forecasts load and scales proactively</td><td>AWS Auto Scaling predictive mode</td></tr>
+        <tr><td>KEDA / event-driven</td><td>Scale worker count based on Kafka lag or queue depth</td><td>Async job processor pools</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" onclick="if(event.target.id==='modal')closeModal()">
+  <div class="modal" id="modal-content">
+    <div class="modal-header">
+      <div class="modal-header-text">
+        <div class="modal-icon" id="m-icon"></div>
+        <div class="modal-title" id="m-title"></div>
+        <div class="modal-cat" id="m-cat"></div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">&#10005;</button>
+    </div>
+    <div class="modal-body" id="m-body"></div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-text">Built for <span>Prajwal</span> &middot; DevPrep &middot; 69 topics &middot; 8 cheat sheets &middot; 16 problems &middot; 9 system designs &middot; 4 deep-dives</div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
