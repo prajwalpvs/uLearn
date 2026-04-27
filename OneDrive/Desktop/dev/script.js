@@ -1844,6 +1844,48 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+// Search
+const searchInput = document.getElementById('search-input');
+const topicCards = document.querySelectorAll('.topic-card');
+const topicsGrid = document.querySelector('.topics-grid');
+const noResults = document.createElement('div');
+noResults.className = 'no-results';
+noResults.textContent = 'No topics match — try a different term.';
+if (topicsGrid) topicsGrid.appendChild(noResults);
+
+if (searchInput) {
+  searchInput.addEventListener('input', () => {
+    const q = searchInput.value.trim().toLowerCase();
+    let visible = 0;
+    topicCards.forEach(card => {
+      const name = card.querySelector('.topic-name')?.textContent.toLowerCase() || '';
+      const desc = card.querySelector('.topic-desc')?.textContent.toLowerCase() || '';
+      const tags = card.querySelector('.topic-tags')?.textContent.toLowerCase() || '';
+      const match = !q || name.includes(q) || desc.includes(q) || tags.includes(q);
+      card.classList.toggle('hidden', !match);
+      if (match) visible++;
+    });
+    noResults.classList.toggle('visible', visible === 0 && q.length > 0);
+  });
+}
+
 document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") closeModal();
+  const active = document.activeElement;
+  const inInput = active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA');
+
+  if (e.key === "Escape") {
+    closeModal();
+    if (active === searchInput) {
+      searchInput.value = '';
+      searchInput.dispatchEvent(new Event('input'));
+      searchInput.blur();
+    }
+    return;
+  }
+
+  if ((e.key === '/' || (e.ctrlKey && e.key === 'k')) && !inInput) {
+    e.preventDefault();
+    searchInput?.focus();
+    document.getElementById('topics')?.scrollIntoView({ behavior: 'smooth' });
+  }
 });
