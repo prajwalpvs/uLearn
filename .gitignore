@@ -1,0 +1,9 @@
+# Ignore everything
+*
+
+# Whitelist only the dev project
+!.gitignore
+!OneDrive/
+!OneDrive/Desktop/
+!OneDrive/Desktop/dev/
+!OneDrive/Desktop/dev/**

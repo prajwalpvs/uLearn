@@ -1,3 +1,9 @@
+function toggleIQ(el) {
+  const ans = el.nextElementSibling;
+  ans.classList.toggle('show');
+  el.innerHTML = ans.classList.contains('show') ? '&#9660; hide answer' : '&#9658; show answer';
+}
+
 function switchCS(id, btn) {
   document.querySelectorAll('.cs-tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.cs-content').forEach(c => c.classList.remove('active'));
@@ -1866,6 +1872,16 @@ if (searchInput) {
       if (match) visible++;
     });
     noResults.classList.toggle('visible', visible === 0 && q.length > 0);
+    document.querySelectorAll('.gloss-entry').forEach(entry => {
+      const term = entry.querySelector('.gloss-term')?.textContent.toLowerCase() || '';
+      const def = entry.querySelector('.gloss-def')?.textContent.toLowerCase() || '';
+      entry.classList.toggle('hidden', q.length > 0 && !term.includes(q) && !def.includes(q));
+    });
+    document.querySelectorAll('.gloss-group').forEach(group => {
+      group.classList.toggle('hidden', q.length > 0 && !group.querySelector('.gloss-entry:not(.hidden)'));
+    });
+    const gnr = document.querySelector('.gloss-no-results');
+    if (gnr) gnr.classList.toggle('visible', q.length > 0 && !document.querySelector('.gloss-entry:not(.hidden)'));
   });
 }
 

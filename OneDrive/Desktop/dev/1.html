@@ -17,6 +17,8 @@
     <a href="#problems">Problems</a>
     <a href="#systemdesign">System Design</a>
     <a href="#concepts">Deep-Dives</a>
+    <a href="#interview">Interview Qs</a>
+    <a href="#glossary">Glossary</a>
   </div>
   <div class="nav-search">
     <input type="text" id="search-input" placeholder="Search topics…" autocomplete="off" spellcheck="false">
@@ -29,7 +31,7 @@
   <h1>
     Master the basics.<br>
     <span class="line2">Crush the interview.</span>
-    <span class="line3">69 topics · 8 cheat sheets · 16 problems · 9 system designs · 4 deep-dives</span>
+    <span class="line3">69 topics · 10 cheat sheets · 81 problems · 9 system designs · 4 deep-dives · 100 terms</span>
   </h1>
   <p class="hero-sub">A growing knowledge base of software development fundamentals — built for daily practice and interview prep. Skim topics, drill cheat sheets, solve real problems, study system design walkthroughs.</p>
   <div class="hero-ctas">
@@ -53,8 +55,8 @@
 <div class="stats-bar">
   <div class="stats-inner">
     <div class="stat"><div class="stat-num">69</div><div class="stat-label">Core Topics</div></div>
-    <div class="stat"><div class="stat-num">8</div><div class="stat-label">Cheat Sheets</div></div>
-    <div class="stat"><div class="stat-num">16</div><div class="stat-label">Problems</div></div>
+    <div class="stat"><div class="stat-num">10</div><div class="stat-label">Cheat Sheets</div></div>
+    <div class="stat"><div class="stat-num">81</div><div class="stat-label">Problems</div></div>
     <div class="stat"><div class="stat-num">9</div><div class="stat-label">System Designs</div></div>
   </div>
 </div>
@@ -192,6 +194,8 @@
       <button class="cs-tab" onclick="switchCS('docker', this)">Docker</button>
       <button class="cs-tab" onclick="switchCS('k8s', this)">Kubernetes</button>
       <button class="cs-tab" onclick="switchCS('http', this)">HTTP</button>
+      <button class="cs-tab" onclick="switchCS('python', this)">Python</button>
+      <button class="cs-tab" onclick="switchCS('ds', this)">Data Structures</button>
     </div>
 
     <div class="cs-content active" id="cs-bigo">
@@ -255,6 +259,41 @@
           <tr><td>LAG / LEAD</td><td><code>LAG(col, 1) OVER (PARTITION BY user ORDER BY ts)</code></td><td>Previous/next row value</td></tr>
           <tr><td>Recursive CTE</td><td><code>WITH RECURSIVE cte AS (base UNION ALL step) SELECT * FROM cte;</code></td><td>Hierarchies, trees</td></tr>
           <tr><td>Explain plan</td><td><code>EXPLAIN ANALYZE SELECT ...;</code></td><td>See actual row counts + cost</td></tr>
+        </tbody>
+      </table>
+      <table class="cs-table">
+        <thead><tr><th>JOIN type</th><th>Returns</th><th>Use case</th></tr></thead>
+        <tbody>
+          <tr><td>INNER JOIN</td><td>Only matching rows in both tables</td><td>Orders with matching customers</td></tr>
+          <tr><td>LEFT JOIN</td><td>All from left + matches (NULL if none)</td><td>All users even with no orders</td></tr>
+          <tr><td>RIGHT JOIN</td><td>All from right + matches (NULL if none)</td><td>All products even unsold</td></tr>
+          <tr><td>FULL OUTER JOIN</td><td>All rows from both; NULLs where no match</td><td>Reconcile two datasets</td></tr>
+          <tr><td>CROSS JOIN</td><td>Cartesian product (m &times; n rows)</td><td>Pair every item with every category</td></tr>
+          <tr><td>SELF JOIN</td><td>Table joined to itself via aliasing</td><td>Employee &rarr; manager hierarchy</td></tr>
+        </tbody>
+      </table>
+      <table class="cs-table">
+        <thead><tr><th>Window function</th><th>Syntax</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td>ROW_NUMBER()</td><td><code>ROW_NUMBER() OVER (PARTITION BY dept ORDER BY sal DESC)</code></td><td>Sequential rank, no ties</td></tr>
+          <tr><td>RANK()</td><td><code>RANK() OVER (...)</code></td><td>Gaps on ties: 1, 1, 3</td></tr>
+          <tr><td>DENSE_RANK()</td><td><code>DENSE_RANK() OVER (...)</code></td><td>No gaps on ties: 1, 1, 2</td></tr>
+          <tr><td>NTILE(n)</td><td><code>NTILE(4) OVER (ORDER BY score)</code></td><td>Divide rows into n equal buckets</td></tr>
+          <tr><td>LAG / LEAD</td><td><code>LAG(col, 1, 0) OVER (ORDER BY ts)</code></td><td>Previous / next row value; 3rd arg = default</td></tr>
+          <tr><td>Running total</td><td><code>SUM(amt) OVER (ORDER BY ts ROWS UNBOUNDED PRECEDING)</code></td><td>Cumulative sum per row</td></tr>
+          <tr><td>FIRST_VALUE</td><td><code>FIRST_VALUE(price) OVER (PARTITION BY prod ORDER BY date)</code></td><td>First value in the partition window</td></tr>
+        </tbody>
+      </table>
+      <table class="cs-table">
+        <thead><tr><th>Interview pattern</th><th>Query sketch</th></tr></thead>
+        <tbody>
+          <tr><td>Top-N per group</td><td><code>SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY dept ORDER BY sal DESC) rn FROM emp) t WHERE rn &lt;= 3</code></td></tr>
+          <tr><td>Running total</td><td><code>SUM(amount) OVER (ORDER BY date ROWS UNBOUNDED PRECEDING)</code></td></tr>
+          <tr><td>Month-over-month delta</td><td><code>amount - LAG(amount) OVER (ORDER BY month)</code></td></tr>
+          <tr><td>Deduplicate (keep latest row)</td><td><code>DELETE FROM t WHERE id NOT IN (SELECT MAX(id) FROM t GROUP BY email)</code></td></tr>
+          <tr><td>Pivot rows to columns</td><td><code>MAX(CASE WHEN month='Jan' THEN sales END) AS jan</code> — one CASE per column</td></tr>
+          <tr><td>Find gaps in sequence</td><td><code>SELECT id+1 gap_start FROM t WHERE id+1 NOT IN (SELECT id FROM t)</code></td></tr>
+          <tr><td>Manager hierarchy (self-join)</td><td><code>SELECT e.name, m.name mgr FROM emp e LEFT JOIN emp m ON e.mgr_id = m.id</code></td></tr>
         </tbody>
       </table>
     </div>
@@ -449,6 +488,93 @@
           <tr><td><code>502</code></td><td>Bad Gateway</td><td>Upstream failed</td></tr>
           <tr><td><code>503</code></td><td>Service Unavailable</td><td>Server overloaded/down</td></tr>
           <tr><td><code>504</code></td><td>Gateway Timeout</td><td>Upstream too slow</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="cs-content" id="cs-python">
+      <button class="cs-print-btn" onclick="window.print()">Print &rarr;</button>
+      <div class="cs-title">Python Quick Reference</div>
+      <div class="cs-desc">Pythonic patterns, built-ins, and DS&amp;A helpers for interviews.</div>
+      <table class="cs-table">
+        <thead><tr><th>Operation</th><th>Syntax</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>List append</td><td><code>lst.append(x)</code></td><td>O(1) amortized</td></tr>
+          <tr><td>List pop end</td><td><code>lst.pop()</code></td><td>O(1)</td></tr>
+          <tr><td>List pop index</td><td><code>lst.pop(i)</code></td><td>O(n) — shifts elements</td></tr>
+          <tr><td>List insert</td><td><code>lst.insert(i, x)</code></td><td>O(n)</td></tr>
+          <tr><td>Slice</td><td><code>lst[1:4:2]</code></td><td>start : stop : step</td></tr>
+          <tr><td>Reverse</td><td><code>lst[::-1]</code></td><td>Returns new list, O(n)</td></tr>
+          <tr><td>Sort in-place</td><td><code>lst.sort(key=lambda x: x[1])</code></td><td>Timsort O(n log n)</td></tr>
+          <tr><td>Sort new list</td><td><code>sorted(lst, reverse=True)</code></td><td>Preserves original</td></tr>
+          <tr><td>Dict get w/ default</td><td><code>d.get(key, 0)</code></td><td>No KeyError</td></tr>
+          <tr><td>Dict setdefault</td><td><code>d.setdefault(key, [])</code></td><td>Init if missing</td></tr>
+          <tr><td>Dict merge (3.9+)</td><td><code>c = a | b</code></td><td>b wins on conflict</td></tr>
+          <tr><td>Set ops</td><td><code>a | b &nbsp; a &amp; b &nbsp; a - b &nbsp; a ^ b</code></td><td>union / intersect / diff / sym-diff</td></tr>
+          <tr><td>Counter</td><td><code>from collections import Counter; c = Counter(lst)</code></td><td>c.most_common(3)</td></tr>
+          <tr><td>defaultdict</td><td><code>from collections import defaultdict; d = defaultdict(list)</code></td><td>Auto-initializes missing keys</td></tr>
+          <tr><td>deque</td><td><code>from collections import deque; dq = deque(); dq.appendleft(x)</code></td><td>O(1) both ends</td></tr>
+          <tr><td>Heap push / pop</td><td><code>import heapq; heapq.heappush(h, x); heapq.heappop(h)</code></td><td>Min-heap by default</td></tr>
+          <tr><td>Max-heap trick</td><td><code>heapq.heappush(h, -x); -heapq.heappop(h)</code></td><td>Negate values</td></tr>
+          <tr><td>Bisect</td><td><code>import bisect; bisect.bisect_left(lst, x)</code></td><td>Binary search on sorted list O(log n)</td></tr>
+          <tr><td>List comprehension</td><td><code>[x*2 for x in lst if x &gt; 0]</code></td><td>Faster than map/filter</td></tr>
+          <tr><td>Dict comprehension</td><td><code>{k: v for k, v in pairs}</code></td><td>&nbsp;</td></tr>
+          <tr><td>Generator expr</td><td><code>sum(x*x for x in lst)</code></td><td>Lazy — no list in memory</td></tr>
+          <tr><td>zip</td><td><code>for a, b in zip(l1, l2)</code></td><td>Stops at shortest; zip_longest for longest</td></tr>
+          <tr><td>enumerate</td><td><code>for i, v in enumerate(lst, start=1)</code></td><td>Index + value</td></tr>
+          <tr><td>Star unpack</td><td><code>a, *rest, b = lst</code></td><td>Star captures middle elements</td></tr>
+          <tr><td>Walrus operator</td><td><code>while chunk := f.read(8192)</code></td><td>Assign + test in one expression (3.8+)</td></tr>
+        </tbody>
+      </table>
+      <table class="cs-table">
+        <thead><tr><th>String method</th><th>Example</th><th>Returns</th></tr></thead>
+        <tbody>
+          <tr><td><code>split(sep)</code></td><td><code>"a,b,c".split(",")</code></td><td>['a', 'b', 'c']</td></tr>
+          <tr><td><code>join(iter)</code></td><td><code>"-".join(['a','b'])</code></td><td>'a-b'</td></tr>
+          <tr><td><code>strip()</code></td><td><code>"  hi  ".strip()</code></td><td>'hi'</td></tr>
+          <tr><td><code>replace(a, b)</code></td><td><code>"foo".replace("o","0")</code></td><td>'f00'</td></tr>
+          <tr><td><code>startswith / endswith</code></td><td><code>s.startswith("http")</code></td><td>bool</td></tr>
+          <tr><td><code>find(sub)</code></td><td><code>s.find("x")</code></td><td>index or -1</td></tr>
+          <tr><td><code>isdigit / isalpha</code></td><td><code>c.isdigit()</code></td><td>bool — useful for char parsing</td></tr>
+          <tr><td><code>ord / chr</code></td><td><code>ord('a') == 97</code></td><td>int / str — alphabet indexing</td></tr>
+          <tr><td><code>f-string</code></td><td><code>f"val={x:.2f}"</code></td><td>Formatted string</td></tr>
+          <tr><td><code>maketrans + translate</code></td><td><code>"abc".translate(str.maketrans("abc","xyz"))</code></td><td>'xyz' — fast bulk char swap</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="cs-content" id="cs-ds">
+      <button class="cs-print-btn" onclick="window.print()">Print &rarr;</button>
+      <div class="cs-title">Data Structures Reference</div>
+      <div class="cs-desc">Time / space complexity and pick-the-right-one guide.</div>
+      <table class="cs-table">
+        <thead><tr><th>Structure</th><th>Access</th><th>Search</th><th>Insert</th><th>Delete</th><th>Space</th></tr></thead>
+        <tbody>
+          <tr><td>Array</td><td><code>O(1)</code></td><td><code>O(n)</code></td><td><code>O(n)</code></td><td><code>O(n)</code></td><td><code>O(n)</code></td></tr>
+          <tr><td>Sorted Array</td><td><code>O(1)</code></td><td><code>O(log n)</code></td><td><code>O(n)</code></td><td><code>O(n)</code></td><td><code>O(n)</code></td></tr>
+          <tr><td>Linked List</td><td><code>O(n)</code></td><td><code>O(n)</code></td><td>O(1) head</td><td>O(1) if ptr known</td><td><code>O(n)</code></td></tr>
+          <tr><td>Hash Map</td><td>O(1) avg</td><td>O(1) avg</td><td>O(1) avg</td><td>O(1) avg</td><td><code>O(n)</code></td></tr>
+          <tr><td>BST (balanced)</td><td><code>O(log n)</code></td><td><code>O(log n)</code></td><td><code>O(log n)</code></td><td><code>O(log n)</code></td><td><code>O(n)</code></td></tr>
+          <tr><td>Min / Max Heap</td><td>O(1) peek</td><td><code>O(n)</code></td><td><code>O(log n)</code></td><td><code>O(log n)</code></td><td><code>O(n)</code></td></tr>
+          <tr><td>Stack</td><td><code>O(n)</code></td><td><code>O(n)</code></td><td>O(1) top</td><td>O(1) top</td><td><code>O(n)</code></td></tr>
+          <tr><td>Queue</td><td><code>O(n)</code></td><td><code>O(n)</code></td><td>O(1) tail</td><td>O(1) head</td><td><code>O(n)</code></td></tr>
+          <tr><td>Trie</td><td><code>O(k)</code></td><td><code>O(k)</code></td><td><code>O(k)</code></td><td><code>O(k)</code></td><td><code>O(n&middot;k)</code></td></tr>
+          <tr><td>Graph (adj. list)</td><td><code>O(1)</code></td><td><code>O(V+E)</code></td><td><code>O(1)</code></td><td><code>O(E)</code></td><td><code>O(V+E)</code></td></tr>
+        </tbody>
+      </table>
+      <table class="cs-table">
+        <thead><tr><th>Use case</th><th>Pick</th><th>Why</th></tr></thead>
+        <tbody>
+          <tr><td>Fast lookup by key</td><td>Hash Map</td><td>O(1) average get / set</td></tr>
+          <tr><td>Ordered data, range queries</td><td>Sorted Array / BST</td><td>Binary search / in-order traversal</td></tr>
+          <tr><td>LIFO (undo stack, DFS)</td><td>Stack</td><td>O(1) push / pop</td></tr>
+          <tr><td>FIFO (BFS, task queue)</td><td>Queue / deque</td><td>O(1) enqueue / dequeue</td></tr>
+          <tr><td>Always need min or max</td><td>Heap</td><td>O(log n) insert, O(1) peek</td></tr>
+          <tr><td>Top-k elements</td><td>Min-heap of size k</td><td>Push every element; pop when size &gt; k</td></tr>
+          <tr><td>Prefix search / autocomplete</td><td>Trie</td><td>O(k) lookup regardless of vocab size</td></tr>
+          <tr><td>Unique membership + set math</td><td>Hash Set</td><td>O(1) add / contains; union &amp; intersect O(n)</td></tr>
+          <tr><td>Graph BFS / DFS traversal</td><td>Adjacency list</td><td>Space-efficient for sparse graphs</td></tr>
+          <tr><td>Cache-friendly, contiguous</td><td>Array</td><td>CPU cache locality; no pointer overhead</td></tr>
+          <tr><td>Frequent insert/delete middle</td><td>Linked List</td><td>O(1) once pointer known; no shifting</td></tr>
+          <tr><td>Sliding window / monotonic queue</td><td>deque</td><td>O(1) appendleft / popleft both ends</td></tr>
         </tbody>
       </table>
     </div>
@@ -812,6 +938,1201 @@ threading.<span class="fn">Thread</span>(target=consumer, daemon=<span class="nu
         <span class="kw">return</span> pivot
     <span class="kw">return</span> <span class="fn">find_kth_largest</span>(less, k - <span class="fn">len</span>(greater) - <span class="fn">len</span>(equal))</pre></div>
         <div class="complexity-row"><div><strong>Time:</strong> O(n) avg, O(n&sup2;) worst</div><div><strong>Space:</strong> O(n)</div></div>
+      </div>
+
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Contains Duplicate</div><div class="prob-diff diff-easy">Easy</div></div>
+      <div class="prob-cat">Arrays &middot; Hash Set</div>
+      <div class="prob-desc">Return true if any value appears at least twice in the array.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">containsDuplicate</span>(nums):
+    <span class="kw">return</span> <span class="fn">len</span>(nums) != <span class="fn">len</span>(<span class="fn">set</span>(nums))</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n)</div><div><strong>Space:</strong> O(n)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Product of Array Except Self</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">Arrays &middot; Prefix Product</div>
+      <div class="prob-desc">Return array where each element is the product of all other elements. No division, O(n).</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">productExceptSelf</span>(nums):
+    n = <span class="fn">len</span>(nums)
+    res = [<span class="num">1</span>] * n
+    pre = <span class="num">1</span>
+    <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(n):
+        res[i] = pre
+        pre *= nums[i]
+    post = <span class="num">1</span>
+    <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(n-<span class="num">1</span>, -<span class="num">1</span>, -<span class="num">1</span>):
+        res[i] *= post
+        post *= nums[i]
+    <span class="kw">return</span> res</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n)</div><div><strong>Space:</strong> O(1) output excluded</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Maximum Subarray</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">Arrays &middot; Kadane's Algorithm</div>
+      <div class="prob-desc">Find the contiguous subarray with the largest sum (Kadane's algorithm).</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">maxSubArray</span>(nums):
+    max_sum = curr = nums[<span class="num">0</span>]
+    <span class="kw">for</span> n <span class="kw">in</span> nums[<span class="num">1</span>:]:
+        curr = <span class="fn">max</span>(n, curr + n)
+        max_sum = <span class="fn">max</span>(max_sum, curr)
+    <span class="kw">return</span> max_sum</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n)</div><div><strong>Space:</strong> O(1)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Maximum Product Subarray</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">Arrays &middot; Dynamic Programming</div>
+      <div class="prob-desc">Find the contiguous subarray that has the largest product.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">maxProduct</span>(nums):
+    res = mx = mn = nums[<span class="num">0</span>]
+    <span class="kw">for</span> n <span class="kw">in</span> nums[<span class="num">1</span>:]:
+        picks = (n, mx*n, mn*n)
+        mx, mn = <span class="fn">max</span>(picks), <span class="fn">min</span>(picks)
+        res = <span class="fn">max</span>(res, mx)
+    <span class="kw">return</span> res</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n)</div><div><strong>Space:</strong> O(1)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Find Minimum in Rotated Sorted Array</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">Binary Search &middot; Arrays</div>
+      <div class="prob-desc">Find the minimum element in a sorted array that has been rotated.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">findMin</span>(nums):
+    left, right = <span class="num">0</span>, <span class="fn">len</span>(nums)-<span class="num">1</span>
+    <span class="kw">while</span> left &lt; right:
+        mid = (left+right)//<span class="num">2</span>
+        <span class="kw">if</span> nums[mid] &gt; nums[right]:
+            left = mid+<span class="num">1</span>
+        <span class="kw">else</span>:
+            right = mid
+    <span class="kw">return</span> nums[left]</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(log n)</div><div><strong>Space:</strong> O(1)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Search in Rotated Sorted Array</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">Binary Search &middot; Arrays</div>
+      <div class="prob-desc">Search for a target in a rotated sorted array; return index or -1.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">search</span>(nums, target):
+    left, right = <span class="num">0</span>, <span class="fn">len</span>(nums)-<span class="num">1</span>
+    <span class="kw">while</span> left &lt;= right:
+        mid = (left+right)//<span class="num">2</span>
+        <span class="kw">if</span> nums[mid] == target: <span class="kw">return</span> mid
+        <span class="kw">if</span> nums[left] &lt;= nums[mid]:
+            <span class="kw">if</span> nums[left] &lt;= target &lt; nums[mid]: right = mid-<span class="num">1</span>
+            <span class="kw">else</span>: left = mid+<span class="num">1</span>
+        <span class="kw">else</span>:
+            <span class="kw">if</span> nums[mid] &lt; target &lt;= nums[right]: left = mid+<span class="num">1</span>
+            <span class="kw">else</span>: right = mid-<span class="num">1</span>
+    <span class="kw">return</span> -<span class="num">1</span></pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(log n)</div><div><strong>Space:</strong> O(1)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">3Sum</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">Two Pointers &middot; Arrays</div>
+      <div class="prob-desc">Find all unique triplets in the array that sum to zero.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">threeSum</span>(nums):
+    nums.<span class="fn">sort</span>(); res = []
+    <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="fn">len</span>(nums)-<span class="num">2</span>):
+        <span class="kw">if</span> i &gt; <span class="num">0</span> <span class="kw">and</span> nums[i] == nums[i-<span class="num">1</span>]: <span class="kw">continue</span>
+        l, r = i+<span class="num">1</span>, <span class="fn">len</span>(nums)-<span class="num">1</span>
+        <span class="kw">while</span> l &lt; r:
+            s = nums[i]+nums[l]+nums[r]
+            <span class="kw">if</span> s == <span class="num">0</span>:
+                res.<span class="fn">append</span>([nums[i], nums[l], nums[r]])
+                <span class="kw">while</span> l&lt;r <span class="kw">and</span> nums[l]==nums[l+<span class="num">1</span>]: l+=<span class="num">1</span>
+                <span class="kw">while</span> l&lt;r <span class="kw">and</span> nums[r]==nums[r-<span class="num">1</span>]: r-=<span class="num">1</span>
+                l+=<span class="num">1</span>; r-=<span class="num">1</span>
+            <span class="kw">elif</span> s &lt; <span class="num">0</span>: l+=<span class="num">1</span>
+            <span class="kw">else</span>: r-=<span class="num">1</span>
+    <span class="kw">return</span> res</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n&sup2;)</div><div><strong>Space:</strong> O(n) output</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Container With Most Water</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">Two Pointers &middot; Arrays</div>
+      <div class="prob-desc">Find two lines that together with the x-axis forms a container holding the most water.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">maxArea</span>(height):
+    l, r = <span class="num">0</span>, <span class="fn">len</span>(height)-<span class="num">1</span>
+    best = <span class="num">0</span>
+    <span class="kw">while</span> l &lt; r:
+        best = <span class="fn">max</span>(best, <span class="fn">min</span>(height[l], height[r]) * (r-l))
+        <span class="kw">if</span> height[l] &lt; height[r]: l+=<span class="num">1</span>
+        <span class="kw">else</span>: r-=<span class="num">1</span>
+    <span class="kw">return</span> best</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n)</div><div><strong>Space:</strong> O(1)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Sum of Two Integers</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">Bit Manipulation &middot; Math</div>
+      <div class="prob-desc">Add two integers without using + or - operators.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">getSum</span>(a, b):
+    MASK = <span class="num">0</span>xFFFFFFFF
+    MAX  = <span class="num">0</span>x7FFFFFFF
+    <span class="kw">while</span> b != <span class="num">0</span>:
+        a, b = (a^b)&amp;MASK, ((a&amp;b)&lt;&lt;<span class="num">1</span>)&amp;MASK
+    <span class="kw">return</span> a <span class="kw">if</span> a &lt;= MAX <span class="kw">else</span> ~(a^MASK)</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(1)</div><div><strong>Space:</strong> O(1)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Number of 1 Bits</div><div class="prob-diff diff-easy">Easy</div></div>
+      <div class="prob-cat">Bit Manipulation</div>
+      <div class="prob-desc">Return the number of set bits (1s) in a 32-bit unsigned integer.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">hammingWeight</span>(n):
+    count = <span class="num">0</span>
+    <span class="kw">while</span> n:
+        n &amp;= n-<span class="num">1</span>  <span class="cm"># clear lowest set bit</span>
+        count += <span class="num">1</span>
+    <span class="kw">return</span> count</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(1)</div><div><strong>Space:</strong> O(1)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Counting Bits</div><div class="prob-diff diff-easy">Easy</div></div>
+      <div class="prob-cat">Bit Manipulation &middot; Dynamic Programming</div>
+      <div class="prob-desc">Return an array of length n+1 where each entry is the number of 1-bits of that index.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">countBits</span>(n):
+    dp = [<span class="num">0</span>] * (n+<span class="num">1</span>)
+    <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="num">1</span>, n+<span class="num">1</span>):
+        dp[i] = dp[i&gt;&gt;<span class="num">1</span>] + (i&amp;<span class="num">1</span>)
+    <span class="kw">return</span> dp</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n)</div><div><strong>Space:</strong> O(n)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Missing Number</div><div class="prob-diff diff-easy">Easy</div></div>
+      <div class="prob-cat">Bit Manipulation &middot; Math</div>
+      <div class="prob-desc">Given array of n distinct numbers in [0,n], find the one number missing.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">missingNumber</span>(nums):
+    res = <span class="fn">len</span>(nums)
+    <span class="kw">for</span> i, n <span class="kw">in</span> <span class="fn">enumerate</span>(nums):
+        res ^= i ^ n
+    <span class="kw">return</span> res</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n)</div><div><strong>Space:</strong> O(1)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Reverse Bits</div><div class="prob-diff diff-easy">Easy</div></div>
+      <div class="prob-cat">Bit Manipulation</div>
+      <div class="prob-desc">Reverse the bits of a 32-bit unsigned integer.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">reverseBits</span>(n):
+    res = <span class="num">0</span>
+    <span class="kw">for</span> _ <span class="kw">in</span> <span class="fn">range</span>(<span class="num">32</span>):
+        res = (res&lt;&lt;<span class="num">1</span>) | (n&amp;<span class="num">1</span>)
+        n &gt;&gt;= <span class="num">1</span>
+    <span class="kw">return</span> res</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(1)</div><div><strong>Space:</strong> O(1)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Climbing Stairs</div><div class="prob-diff diff-easy">Easy</div></div>
+      <div class="prob-cat">Dynamic Programming</div>
+      <div class="prob-desc">You can climb 1 or 2 steps. How many distinct ways to reach the top (n steps)?</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">climbStairs</span>(n):
+    <span class="kw">if</span> n &lt;= <span class="num">2</span>: <span class="kw">return</span> n
+    a, b = <span class="num">1</span>, <span class="num">2</span>
+    <span class="kw">for</span> _ <span class="kw">in</span> <span class="fn">range</span>(<span class="num">3</span>, n+<span class="num">1</span>):
+        a, b = b, a+b
+    <span class="kw">return</span> b</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n)</div><div><strong>Space:</strong> O(1)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Longest Increasing Subsequence</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">Dynamic Programming &middot; Binary Search</div>
+      <div class="prob-desc">Return the length of the longest strictly increasing subsequence.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">from</span> bisect <span class="kw">import</span> bisect_left
+
+<span class="kw">def</span> <span class="fn">lengthOfLIS</span>(nums):
+    tails = []
+    <span class="kw">for</span> n <span class="kw">in</span> nums:
+        pos = <span class="fn">bisect_left</span>(tails, n)
+        <span class="kw">if</span> pos == <span class="fn">len</span>(tails): tails.<span class="fn">append</span>(n)
+        <span class="kw">else</span>: tails[pos] = n
+    <span class="kw">return</span> <span class="fn">len</span>(tails)</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n log n)</div><div><strong>Space:</strong> O(n)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Longest Common Subsequence</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">Dynamic Programming &middot; 2-D DP</div>
+      <div class="prob-desc">Return the length of the longest common subsequence of two strings.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">longestCommonSubsequence</span>(t1, t2):
+    m, n = <span class="fn">len</span>(t1), <span class="fn">len</span>(t2)
+    dp = [[<span class="num">0</span>]*(n+<span class="num">1</span>) <span class="kw">for</span> _ <span class="kw">in</span> <span class="fn">range</span>(m+<span class="num">1</span>)]
+    <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="num">1</span>, m+<span class="num">1</span>):
+        <span class="kw">for</span> j <span class="kw">in</span> <span class="fn">range</span>(<span class="num">1</span>, n+<span class="num">1</span>):
+            <span class="kw">if</span> t1[i-<span class="num">1</span>] == t2[j-<span class="num">1</span>]: dp[i][j] = dp[i-<span class="num">1</span>][j-<span class="num">1</span>]+<span class="num">1</span>
+            <span class="kw">else</span>: dp[i][j] = <span class="fn">max</span>(dp[i-<span class="num">1</span>][j], dp[i][j-<span class="num">1</span>])
+    <span class="kw">return</span> dp[m][n]</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(m&middot;n)</div><div><strong>Space:</strong> O(m&middot;n)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Combination Sum IV</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">Dynamic Programming</div>
+      <div class="prob-desc">Given distinct integers and a target, count the number of ordered combinations that sum to target.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">combinationSum4</span>(nums, target):
+    dp = [<span class="num">0</span>] * (target+<span class="num">1</span>)
+    dp[<span class="num">0</span>] = <span class="num">1</span>
+    <span class="kw">for</span> t <span class="kw">in</span> <span class="fn">range</span>(<span class="num">1</span>, target+<span class="num">1</span>):
+        <span class="kw">for</span> n <span class="kw">in</span> nums:
+            <span class="kw">if</span> t &gt;= n: dp[t] += dp[t-n]
+    <span class="kw">return</span> dp[target]</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(target &times; len(nums))</div><div><strong>Space:</strong> O(target)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">House Robber</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">Dynamic Programming</div>
+      <div class="prob-desc">Max money robbed from adjacent houses without robbing two in a row.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">rob</span>(nums):
+    prev2 = prev1 = <span class="num">0</span>
+    <span class="kw">for</span> n <span class="kw">in</span> nums:
+        prev2, prev1 = prev1, <span class="fn">max</span>(prev1, prev2+n)
+    <span class="kw">return</span> prev1</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n)</div><div><strong>Space:</strong> O(1)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">House Robber II</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">Dynamic Programming</div>
+      <div class="prob-desc">Same as House Robber but houses are in a circle (first and last are adjacent).</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">rob</span>(nums):
+    <span class="kw">def</span> <span class="fn">rob_range</span>(arr):
+        p2 = p1 = <span class="num">0</span>
+        <span class="kw">for</span> n <span class="kw">in</span> arr:
+            p2, p1 = p1, <span class="fn">max</span>(p1, p2+n)
+        <span class="kw">return</span> p1
+    <span class="kw">return</span> <span class="fn">max</span>(nums[<span class="num">0</span>], <span class="fn">rob_range</span>(nums[:-<span class="num">1</span>]), <span class="fn">rob_range</span>(nums[<span class="num">1</span>:]))</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n)</div><div><strong>Space:</strong> O(1)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Decode Ways</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">Dynamic Programming</div>
+      <div class="prob-desc">Count the number of ways to decode a string of digits into letters (A=1, ..., Z=26).</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">numDecodings</span>(s):
+    <span class="kw">if</span> s[<span class="num">0</span>] == <span class="str">&#x27;0&#x27;</span>: <span class="kw">return</span> <span class="num">0</span>
+    n = <span class="fn">len</span>(s)
+    dp = [<span class="num">0</span>]*(n+<span class="num">1</span>); dp[<span class="num">0</span>] = dp[<span class="num">1</span>] = <span class="num">1</span>
+    <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="num">2</span>, n+<span class="num">1</span>):
+        <span class="kw">if</span> s[i-<span class="num">1</span>] != <span class="str">&#x27;0&#x27;</span>: dp[i] += dp[i-<span class="num">1</span>]
+        two = <span class="fn">int</span>(s[i-<span class="num">2</span>:i])
+        <span class="kw">if</span> <span class="num">10</span> &lt;= two &lt;= <span class="num">26</span>: dp[i] += dp[i-<span class="num">2</span>]
+    <span class="kw">return</span> dp[n]</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n)</div><div><strong>Space:</strong> O(n)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Unique Paths</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">Dynamic Programming &middot; 2-D DP</div>
+      <div class="prob-desc">Count distinct paths from top-left to bottom-right of an m x n grid (only right/down moves).</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">uniquePaths</span>(m, n):
+    dp = [[<span class="num">1</span>]*n <span class="kw">for</span> _ <span class="kw">in</span> <span class="fn">range</span>(m)]
+    <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="num">1</span>, m):
+        <span class="kw">for</span> j <span class="kw">in</span> <span class="fn">range</span>(<span class="num">1</span>, n):
+            dp[i][j] = dp[i-<span class="num">1</span>][j] + dp[i][j-<span class="num">1</span>]
+    <span class="kw">return</span> dp[m-<span class="num">1</span>][n-<span class="num">1</span>]</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(m&middot;n)</div><div><strong>Space:</strong> O(m&middot;n)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Jump Game</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">Greedy &middot; Arrays</div>
+      <div class="prob-desc">Given jump lengths at each position, determine if you can reach the last index.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">canJump</span>(nums):
+    reach = <span class="num">0</span>
+    <span class="kw">for</span> i, n <span class="kw">in</span> <span class="fn">enumerate</span>(nums):
+        <span class="kw">if</span> i &gt; reach: <span class="kw">return</span> <span class="kw">False</span>
+        reach = <span class="fn">max</span>(reach, i+n)
+    <span class="kw">return</span> <span class="kw">True</span></pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n)</div><div><strong>Space:</strong> O(1)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Clone Graph</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">Graph &middot; DFS &middot; Hash Map</div>
+      <div class="prob-desc">Deep-copy a connected undirected graph where each node has a value and a neighbors list.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">cloneGraph</span>(node):
+    <span class="kw">if</span> <span class="kw">not</span> node: <span class="kw">return</span> <span class="kw">None</span>
+    visited = {}
+    <span class="kw">def</span> <span class="fn">dfs</span>(n):
+        <span class="kw">if</span> n <span class="kw">in</span> visited: <span class="kw">return</span> visited[n]
+        clone = <span class="fn">Node</span>(n.val)
+        visited[n] = clone
+        <span class="kw">for</span> nb <span class="kw">in</span> n.neighbors:
+            clone.neighbors.<span class="fn">append</span>(<span class="fn">dfs</span>(nb))
+        <span class="kw">return</span> clone
+    <span class="kw">return</span> <span class="fn">dfs</span>(node)</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(V+E)</div><div><strong>Space:</strong> O(V)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Course Schedule</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">Graph &middot; Topological Sort &middot; Cycle Detection</div>
+      <div class="prob-desc">Given n courses and prerequisites, determine if you can finish all courses (detect cycle).</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">canFinish</span>(n, prereqs):
+    adj = [[] <span class="kw">for</span> _ <span class="kw">in</span> <span class="fn">range</span>(n)]
+    <span class="kw">for</span> a, b <span class="kw">in</span> prereqs: adj[b].<span class="fn">append</span>(a)
+    state = [<span class="num">0</span>]*n  <span class="cm"># 0=unvisited 1=visiting 2=done</span>
+    <span class="kw">def</span> <span class="fn">dfs</span>(node):
+        <span class="kw">if</span> state[node] == <span class="num">1</span>: <span class="kw">return</span> <span class="kw">False</span>
+        <span class="kw">if</span> state[node] == <span class="num">2</span>: <span class="kw">return</span> <span class="kw">True</span>
+        state[node] = <span class="num">1</span>
+        <span class="kw">for</span> nb <span class="kw">in</span> adj[node]:
+            <span class="kw">if</span> <span class="kw">not</span> <span class="fn">dfs</span>(nb): <span class="kw">return</span> <span class="kw">False</span>
+        state[node] = <span class="num">2</span>
+        <span class="kw">return</span> <span class="kw">True</span>
+    <span class="kw">return</span> <span class="fn">all</span>(<span class="fn">dfs</span>(i) <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(n))</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(V+E)</div><div><strong>Space:</strong> O(V+E)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Pacific Atlantic Water Flow</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">Graph &middot; BFS / DFS</div>
+      <div class="prob-desc">Find cells from which water can flow to both the Pacific (top/left) and Atlantic (bottom/right) edges.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">pacificAtlantic</span>(h):
+    R, C = <span class="fn">len</span>(h), <span class="fn">len</span>(h[<span class="num">0</span>])
+    pac, atl = <span class="fn">set</span>(), <span class="fn">set</span>()
+    <span class="kw">def</span> <span class="fn">dfs</span>(r, c, vis, prev):
+        <span class="kw">if</span> (r,c) <span class="kw">in</span> vis <span class="kw">or</span> r&lt;<span class="num">0</span> <span class="kw">or</span> c&lt;<span class="num">0</span> <span class="kw">or</span> r&gt;=R <span class="kw">or</span> c&gt;=C <span class="kw">or</span> h[r][c]&lt;prev: <span class="kw">return</span>
+        vis.<span class="fn">add</span>((r,c))
+        <span class="kw">for</span> dr,dc <span class="kw">in</span> [(<span class="num">1</span>,<span class="num">0</span>),(-<span class="num">1</span>,<span class="num">0</span>),(<span class="num">0</span>,<span class="num">1</span>),(<span class="num">0</span>,-<span class="num">1</span>)]:
+            <span class="fn">dfs</span>(r+dr, c+dc, vis, h[r][c])
+    <span class="kw">for</span> r <span class="kw">in</span> <span class="fn">range</span>(R):
+        <span class="fn">dfs</span>(r,<span class="num">0</span>,pac,h[r][<span class="num">0</span>]); <span class="fn">dfs</span>(r,C-<span class="num">1</span>,atl,h[r][C-<span class="num">1</span>])
+    <span class="kw">for</span> c <span class="kw">in</span> <span class="fn">range</span>(C):
+        <span class="fn">dfs</span>(<span class="num">0</span>,c,pac,h[<span class="num">0</span>][c]); <span class="fn">dfs</span>(R-<span class="num">1</span>,c,atl,h[R-<span class="num">1</span>][c])
+    <span class="kw">return</span> [[r,c] <span class="kw">for</span> r <span class="kw">in</span> <span class="fn">range</span>(R) <span class="kw">for</span> c <span class="kw">in</span> <span class="fn">range</span>(C) <span class="kw">if</span> (r,c) <span class="kw">in</span> pac <span class="kw">and</span> (r,c) <span class="kw">in</span> atl]</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(R&middot;C)</div><div><strong>Space:</strong> O(R&middot;C)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Longest Consecutive Sequence</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">Arrays &middot; Hash Set</div>
+      <div class="prob-desc">Find the length of the longest consecutive integer sequence in O(n) time.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">longestConsecutive</span>(nums):
+    s = <span class="fn">set</span>(nums); best = <span class="num">0</span>
+    <span class="kw">for</span> n <span class="kw">in</span> s:
+        <span class="kw">if</span> n-<span class="num">1</span> <span class="kw">not</span> <span class="kw">in</span> s:
+            cur = n; length = <span class="num">1</span>
+            <span class="kw">while</span> cur+<span class="num">1</span> <span class="kw">in</span> s:
+                cur += <span class="num">1</span>; length += <span class="num">1</span>
+            best = <span class="fn">max</span>(best, length)
+    <span class="kw">return</span> best</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n)</div><div><strong>Space:</strong> O(n)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Alien Dictionary</div><div class="prob-diff diff-hard">Hard</div></div>
+      <div class="prob-cat">Graph &middot; Topological Sort</div>
+      <div class="prob-desc">Given a sorted alien word list, determine the character order of the alien alphabet.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">alienOrder</span>(words):
+    adj = {c: <span class="fn">set</span>() <span class="kw">for</span> w <span class="kw">in</span> words <span class="kw">for</span> c <span class="kw">in</span> w}
+    <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="fn">len</span>(words)-<span class="num">1</span>):
+        w1, w2 = words[i], words[i+<span class="num">1</span>]
+        mn = <span class="fn">min</span>(<span class="fn">len</span>(w1), <span class="fn">len</span>(w2))
+        <span class="kw">if</span> <span class="fn">len</span>(w1) &gt; <span class="fn">len</span>(w2) <span class="kw">and</span> w1[:mn] == w2[:mn]: <span class="kw">return</span> <span class="str">&#x27;&#x27;</span>
+        <span class="kw">for</span> j <span class="kw">in</span> <span class="fn">range</span>(mn):
+            <span class="kw">if</span> w1[j] != w2[j]: adj[w1[j]].<span class="fn">add</span>(w2[j]); <span class="kw">break</span>
+    visited = {}; result = []
+    <span class="kw">def</span> <span class="fn">dfs</span>(c):
+        <span class="kw">if</span> c <span class="kw">in</span> visited: <span class="kw">return</span> visited[c]
+        visited[c] = <span class="kw">True</span>
+        <span class="kw">for</span> nb <span class="kw">in</span> adj[c]:
+            <span class="kw">if</span> <span class="fn">dfs</span>(nb): <span class="kw">return</span> <span class="kw">True</span>
+        visited[c] = <span class="kw">False</span>; result.<span class="fn">append</span>(c)
+        <span class="kw">return</span> <span class="kw">False</span>
+    <span class="kw">for</span> c <span class="kw">in</span> adj:
+        <span class="kw">if</span> <span class="fn">dfs</span>(c): <span class="kw">return</span> <span class="str">&#x27;&#x27;</span>
+    <span class="kw">return</span> <span class="str">&#x27;&#x27;</span>.<span class="fn">join</span>(<span class="fn">reversed</span>(result))</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(V+E)</div><div><strong>Space:</strong> O(V+E)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Graph Valid Tree</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">Graph &middot; Union-Find</div>
+      <div class="prob-desc">Given n nodes and edges, determine if the edges form a valid tree (connected, no cycle).</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">validTree</span>(n, edges):
+    <span class="kw">if</span> <span class="fn">len</span>(edges) != n-<span class="num">1</span>: <span class="kw">return</span> <span class="kw">False</span>
+    adj = [[] <span class="kw">for</span> _ <span class="kw">in</span> <span class="fn">range</span>(n)]
+    <span class="kw">for</span> a,b <span class="kw">in</span> edges: adj[a].<span class="fn">append</span>(b); adj[b].<span class="fn">append</span>(a)
+    visited = <span class="fn">set</span>()
+    <span class="kw">def</span> <span class="fn">dfs</span>(node, parent):
+        visited.<span class="fn">add</span>(node)
+        <span class="kw">for</span> nb <span class="kw">in</span> adj[node]:
+            <span class="kw">if</span> nb == parent: <span class="kw">continue</span>
+            <span class="kw">if</span> nb <span class="kw">in</span> visited: <span class="kw">return</span> <span class="kw">False</span>
+            <span class="kw">if</span> <span class="kw">not</span> <span class="fn">dfs</span>(nb, node): <span class="kw">return</span> <span class="kw">False</span>
+        <span class="kw">return</span> <span class="kw">True</span>
+    <span class="kw">return</span> <span class="fn">dfs</span>(<span class="num">0</span>, -<span class="num">1</span>) <span class="kw">and</span> <span class="fn">len</span>(visited) == n</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(V+E)</div><div><strong>Space:</strong> O(V+E)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Number of Connected Components</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">Graph &middot; Union-Find</div>
+      <div class="prob-desc">Count the number of connected components in an undirected graph of n nodes.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">countComponents</span>(n, edges):
+    parent = <span class="fn">list</span>(<span class="fn">range</span>(n))
+    <span class="kw">def</span> <span class="fn">find</span>(x):
+        <span class="kw">while</span> parent[x] != x:
+            parent[x] = parent[parent[x]]; x = parent[x]
+        <span class="kw">return</span> x
+    <span class="kw">def</span> <span class="fn">union</span>(x, y):
+        px, py = <span class="fn">find</span>(x), <span class="fn">find</span>(y)
+        <span class="kw">if</span> px == py: <span class="kw">return</span> <span class="num">0</span>
+        parent[px] = py; <span class="kw">return</span> <span class="num">1</span>
+    <span class="kw">return</span> n - <span class="fn">sum</span>(<span class="fn">union</span>(a,b) <span class="kw">for</span> a,b <span class="kw">in</span> edges)</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n &alpha;(n))</div><div><strong>Space:</strong> O(n)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Insert Interval</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">Intervals &middot; Arrays</div>
+      <div class="prob-desc">Insert a new interval into a sorted non-overlapping list, merging if necessary.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">insert</span>(intervals, new):
+    res = []
+    <span class="kw">for</span> i, (s, e) <span class="kw">in</span> <span class="fn">enumerate</span>(intervals):
+        <span class="kw">if</span> new[<span class="num">1</span>] &lt; s:
+            res.<span class="fn">append</span>(new)
+            <span class="kw">return</span> res + intervals[i:]
+        <span class="kw">elif</span> new[<span class="num">0</span>] &gt; e:
+            res.<span class="fn">append</span>([s, e])
+        <span class="kw">else</span>:
+            new = [<span class="fn">min</span>(new[<span class="num">0</span>],s), <span class="fn">max</span>(new[<span class="num">1</span>],e)]
+    res.<span class="fn">append</span>(new)
+    <span class="kw">return</span> res</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n)</div><div><strong>Space:</strong> O(n)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Non-overlapping Intervals</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">Intervals &middot; Greedy</div>
+      <div class="prob-desc">Find the minimum number of intervals to remove to make the rest non-overlapping.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">eraseOverlapIntervals</span>(intervals):
+    intervals.<span class="fn">sort</span>(key=<span class="kw">lambda</span> x: x[<span class="num">1</span>])
+    count = <span class="num">0</span>; end = <span class="fn">float</span>(<span class="str">&#x27;-inf&#x27;</span>)
+    <span class="kw">for</span> s, e <span class="kw">in</span> intervals:
+        <span class="kw">if</span> s &gt;= end: end = e
+        <span class="kw">else</span>: count += <span class="num">1</span>
+    <span class="kw">return</span> count</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n log n)</div><div><strong>Space:</strong> O(1)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Meeting Rooms</div><div class="prob-diff diff-easy">Easy</div></div>
+      <div class="prob-cat">Intervals &middot; Sorting</div>
+      <div class="prob-desc">Given meeting time intervals, determine if a person can attend all meetings.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">canAttendMeetings</span>(intervals):
+    intervals.<span class="fn">sort</span>()
+    <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="num">1</span>, <span class="fn">len</span>(intervals)):
+        <span class="kw">if</span> intervals[i][<span class="num">0</span>] &lt; intervals[i-<span class="num">1</span>][<span class="num">1</span>]:
+            <span class="kw">return</span> <span class="kw">False</span>
+    <span class="kw">return</span> <span class="kw">True</span></pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n log n)</div><div><strong>Space:</strong> O(1)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Meeting Rooms II</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">Intervals &middot; Heap</div>
+      <div class="prob-desc">Find the minimum number of conference rooms required to hold all meetings.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">import</span> heapq
+
+<span class="kw">def</span> <span class="fn">minMeetingRooms</span>(intervals):
+    intervals.<span class="fn">sort</span>()
+    heap = []  <span class="cm"># end times</span>
+    <span class="kw">for</span> start, end <span class="kw">in</span> intervals:
+        <span class="kw">if</span> heap <span class="kw">and</span> heap[<span class="num">0</span>] &lt;= start:
+            heapq.<span class="fn">heapreplace</span>(heap, end)
+        <span class="kw">else</span>:
+            heapq.<span class="fn">heappush</span>(heap, end)
+    <span class="kw">return</span> <span class="fn">len</span>(heap)</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n log n)</div><div><strong>Space:</strong> O(n)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Linked List Cycle</div><div class="prob-diff diff-easy">Easy</div></div>
+      <div class="prob-cat">Linked List &middot; Two Pointers</div>
+      <div class="prob-desc">Detect whether a linked list has a cycle using Floyd's slow/fast pointer.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">hasCycle</span>(head):
+    slow = fast = head
+    <span class="kw">while</span> fast <span class="kw">and</span> fast.next:
+        slow = slow.next
+        fast = fast.next.next
+        <span class="kw">if</span> slow == fast: <span class="kw">return</span> <span class="kw">True</span>
+    <span class="kw">return</span> <span class="kw">False</span></pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n)</div><div><strong>Space:</strong> O(1)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Merge Two Sorted Lists</div><div class="prob-diff diff-easy">Easy</div></div>
+      <div class="prob-cat">Linked List &middot; Recursion</div>
+      <div class="prob-desc">Merge two sorted linked lists into one sorted list.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">mergeTwoLists</span>(l1, l2):
+    dummy = curr = <span class="fn">ListNode</span>()
+    <span class="kw">while</span> l1 <span class="kw">and</span> l2:
+        <span class="kw">if</span> l1.val &lt;= l2.val: curr.next = l1; l1 = l1.next
+        <span class="kw">else</span>: curr.next = l2; l2 = l2.next
+        curr = curr.next
+    curr.next = l1 <span class="kw">or</span> l2
+    <span class="kw">return</span> dummy.next</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n+m)</div><div><strong>Space:</strong> O(1)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Remove Nth Node From End</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">Linked List &middot; Two Pointers</div>
+      <div class="prob-desc">Remove the nth node from the end of a linked list in one pass.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">removeNthFromEnd</span>(head, n):
+    dummy = <span class="fn">ListNode</span>(<span class="num">0</span>, head)
+    fast = slow = dummy
+    <span class="kw">for</span> _ <span class="kw">in</span> <span class="fn">range</span>(n+<span class="num">1</span>): fast = fast.next
+    <span class="kw">while</span> fast:
+        fast = fast.next; slow = slow.next
+    slow.next = slow.next.next
+    <span class="kw">return</span> dummy.next</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n)</div><div><strong>Space:</strong> O(1)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Reorder List</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">Linked List &middot; Two Pointers</div>
+      <div class="prob-desc">Reorder L0→L1→…→Ln to L0→Ln→L1→Ln-1→… in-place.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">reorderList</span>(head):
+    slow = fast = head
+    <span class="kw">while</span> fast <span class="kw">and</span> fast.next:
+        slow = slow.next; fast = fast.next.next
+    prev, curr = <span class="kw">None</span>, slow.next
+    slow.next = <span class="kw">None</span>
+    <span class="kw">while</span> curr:
+        nxt = curr.next; curr.next = prev
+        prev = curr; curr = nxt
+    first, second = head, prev
+    <span class="kw">while</span> second:
+        t1, t2 = first.next, second.next
+        first.next = second; second.next = t1
+        first, second = t1, t2</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n)</div><div><strong>Space:</strong> O(1)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Set Matrix Zeroes</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">Matrix &middot; Arrays</div>
+      <div class="prob-desc">If a cell is 0, set its entire row and column to 0. Do it in-place.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">setZeroes</span>(matrix):
+    rows, cols = <span class="fn">len</span>(matrix), <span class="fn">len</span>(matrix[<span class="num">0</span>])
+    zr, zc = <span class="fn">set</span>(), <span class="fn">set</span>()
+    <span class="kw">for</span> r <span class="kw">in</span> <span class="fn">range</span>(rows):
+        <span class="kw">for</span> c <span class="kw">in</span> <span class="fn">range</span>(cols):
+            <span class="kw">if</span> matrix[r][c] == <span class="num">0</span>: zr.<span class="fn">add</span>(r); zc.<span class="fn">add</span>(c)
+    <span class="kw">for</span> r <span class="kw">in</span> <span class="fn">range</span>(rows):
+        <span class="kw">for</span> c <span class="kw">in</span> <span class="fn">range</span>(cols):
+            <span class="kw">if</span> r <span class="kw">in</span> zr <span class="kw">or</span> c <span class="kw">in</span> zc: matrix[r][c] = <span class="num">0</span></pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(m&middot;n)</div><div><strong>Space:</strong> O(m+n)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Spiral Matrix</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">Matrix &middot; Simulation</div>
+      <div class="prob-desc">Return all elements of a matrix in spiral order.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">spiralOrder</span>(matrix):
+    res = []
+    top, bot, l, r = <span class="num">0</span>, <span class="fn">len</span>(matrix)-<span class="num">1</span>, <span class="num">0</span>, <span class="fn">len</span>(matrix[<span class="num">0</span>])-<span class="num">1</span>
+    <span class="kw">while</span> top &lt;= bot <span class="kw">and</span> l &lt;= r:
+        <span class="kw">for</span> c <span class="kw">in</span> <span class="fn">range</span>(l, r+<span class="num">1</span>): res.<span class="fn">append</span>(matrix[top][c])
+        top += <span class="num">1</span>
+        <span class="kw">for</span> row <span class="kw">in</span> <span class="fn">range</span>(top, bot+<span class="num">1</span>): res.<span class="fn">append</span>(matrix[row][r])
+        r -= <span class="num">1</span>
+        <span class="kw">if</span> top &lt;= bot:
+            <span class="kw">for</span> c <span class="kw">in</span> <span class="fn">range</span>(r, l-<span class="num">1</span>, -<span class="num">1</span>): res.<span class="fn">append</span>(matrix[bot][c])
+            bot -= <span class="num">1</span>
+        <span class="kw">if</span> l &lt;= r:
+            <span class="kw">for</span> row <span class="kw">in</span> <span class="fn">range</span>(bot, top-<span class="num">1</span>, -<span class="num">1</span>): res.<span class="fn">append</span>(matrix[row][l])
+            l += <span class="num">1</span>
+    <span class="kw">return</span> res</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(m&middot;n)</div><div><strong>Space:</strong> O(1)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Rotate Image</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">Matrix &middot; Math</div>
+      <div class="prob-desc">Rotate an n x n matrix 90 degrees clockwise in-place.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">rotate</span>(matrix):
+    n = <span class="fn">len</span>(matrix)
+    <span class="cm"># Transpose</span>
+    <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(n):
+        <span class="kw">for</span> j <span class="kw">in</span> <span class="fn">range</span>(i+<span class="num">1</span>, n):
+            matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
+    <span class="cm"># Reverse rows</span>
+    <span class="kw">for</span> row <span class="kw">in</span> matrix:
+        row.<span class="fn">reverse</span>()</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n&sup2;)</div><div><strong>Space:</strong> O(1)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Word Search</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">Matrix &middot; Backtracking &middot; DFS</div>
+      <div class="prob-desc">Given a board of characters, return true if the word exists as a connected path.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">exist</span>(board, word):
+    R, C = <span class="fn">len</span>(board), <span class="fn">len</span>(board[<span class="num">0</span>])
+    <span class="kw">def</span> <span class="fn">dfs</span>(r, c, i):
+        <span class="kw">if</span> i == <span class="fn">len</span>(word): <span class="kw">return</span> <span class="kw">True</span>
+        <span class="kw">if</span> r&lt;<span class="num">0</span> <span class="kw">or</span> c&lt;<span class="num">0</span> <span class="kw">or</span> r&gt;=R <span class="kw">or</span> c&gt;=C <span class="kw">or</span> board[r][c]!=word[i]: <span class="kw">return</span> <span class="kw">False</span>
+        tmp = board[r][c]; board[r][c] = <span class="str">&#x27;#&#x27;</span>
+        found = (<span class="fn">dfs</span>(r+<span class="num">1</span>,c,i+<span class="num">1</span>) <span class="kw">or</span> <span class="fn">dfs</span>(r-<span class="num">1</span>,c,i+<span class="num">1</span>) <span class="kw">or</span>
+                 <span class="fn">dfs</span>(r,c+<span class="num">1</span>,i+<span class="num">1</span>) <span class="kw">or</span> <span class="fn">dfs</span>(r,c-<span class="num">1</span>,i+<span class="num">1</span>))
+        board[r][c] = tmp
+        <span class="kw">return</span> found
+    <span class="kw">return</span> <span class="fn">any</span>(<span class="fn">dfs</span>(r,c,<span class="num">0</span>) <span class="kw">for</span> r <span class="kw">in</span> <span class="fn">range</span>(R) <span class="kw">for</span> c <span class="kw">in</span> <span class="fn">range</span>(C))</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(R&middot;C&middot;4^len(word))</div><div><strong>Space:</strong> O(len(word))</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Longest Repeating Character Replacement</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">Sliding Window &middot; Hash Map</div>
+      <div class="prob-desc">Find the longest substring with at most k replacements where all characters are the same.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">characterReplacement</span>(s, k):
+    count = {}; left = mx = res = <span class="num">0</span>
+    <span class="kw">for</span> right, c <span class="kw">in</span> <span class="fn">enumerate</span>(s):
+        count[c] = count.<span class="fn">get</span>(c,<span class="num">0</span>)+<span class="num">1</span>
+        mx = <span class="fn">max</span>(mx, count[c])
+        <span class="kw">if</span> (right-left+<span class="num">1</span>)-mx &gt; k:
+            count[s[left]] -= <span class="num">1</span>; left += <span class="num">1</span>
+        res = <span class="fn">max</span>(res, right-left+<span class="num">1</span>)
+    <span class="kw">return</span> res</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n)</div><div><strong>Space:</strong> O(1)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Minimum Window Substring</div><div class="prob-diff diff-hard">Hard</div></div>
+      <div class="prob-cat">Sliding Window &middot; Hash Map</div>
+      <div class="prob-desc">Find the minimum window in s that contains all characters of t.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">from</span> collections <span class="kw">import</span> Counter
+
+<span class="kw">def</span> <span class="fn">minWindow</span>(s, t):
+    need = <span class="fn">Counter</span>(t); missing = <span class="fn">len</span>(t)
+    best = <span class="str">&#x27;&#x27;</span>; i = <span class="num">0</span>
+    <span class="kw">for</span> j, c <span class="kw">in</span> <span class="fn">enumerate</span>(s, <span class="num">1</span>):
+        <span class="kw">if</span> need[c] &gt; <span class="num">0</span>: missing -= <span class="num">1</span>
+        need[c] -= <span class="num">1</span>
+        <span class="kw">if</span> missing == <span class="num">0</span>:
+            <span class="kw">while</span> need[s[i]] &lt; <span class="num">0</span>: need[s[i]] += <span class="num">1</span>; i += <span class="num">1</span>
+            <span class="kw">if</span> <span class="kw">not</span> best <span class="kw">or</span> j-i &lt; <span class="fn">len</span>(best): best = s[i:j]
+            need[s[i]] += <span class="num">1</span>; missing += <span class="num">1</span>; i += <span class="num">1</span>
+    <span class="kw">return</span> best</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n+m)</div><div><strong>Space:</strong> O(m)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Valid Anagram</div><div class="prob-diff diff-easy">Easy</div></div>
+      <div class="prob-cat">String &middot; Hash Map</div>
+      <div class="prob-desc">Return true if t is an anagram of s (same characters, same counts).</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">from</span> collections <span class="kw">import</span> Counter
+
+<span class="kw">def</span> <span class="fn">isAnagram</span>(s, t):
+    <span class="kw">return</span> <span class="fn">Counter</span>(s) == <span class="fn">Counter</span>(t)</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n)</div><div><strong>Space:</strong> O(n)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Group Anagrams</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">String &middot; Hash Map</div>
+      <div class="prob-desc">Group an array of strings so that all anagrams are in the same group.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">from</span> collections <span class="kw">import</span> defaultdict
+
+<span class="kw">def</span> <span class="fn">groupAnagrams</span>(strs):
+    groups = <span class="fn">defaultdict</span>(list)
+    <span class="kw">for</span> s <span class="kw">in</span> strs:
+        groups[<span class="fn">tuple</span>(<span class="fn">sorted</span>(s))].<span class="fn">append</span>(s)
+    <span class="kw">return</span> <span class="fn">list</span>(groups.<span class="fn">values</span>())</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n&middot;k log k)</div><div><strong>Space:</strong> O(n&middot;k)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Valid Palindrome</div><div class="prob-diff diff-easy">Easy</div></div>
+      <div class="prob-cat">String &middot; Two Pointers</div>
+      <div class="prob-desc">A phrase is a palindrome if, after lowercasing and removing non-alphanumerics, it reads the same forward and backward.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">isPalindrome</span>(s):
+    filtered = [c.<span class="fn">lower</span>() <span class="kw">for</span> c <span class="kw">in</span> s <span class="kw">if</span> c.<span class="fn">isalnum</span>()]
+    <span class="kw">return</span> filtered == filtered[::-<span class="num">1</span>]</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n)</div><div><strong>Space:</strong> O(n)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Palindromic Substrings</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">String &middot; Expand Around Center</div>
+      <div class="prob-desc">Count the number of palindromic substrings in a string.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">countSubstrings</span>(s):
+    count = <span class="num">0</span>
+    <span class="kw">for</span> center <span class="kw">in</span> <span class="fn">range</span>(<span class="num">2</span>*<span class="fn">len</span>(s)-<span class="num">1</span>):
+        l = center//<span class="num">2</span>; r = l + center%<span class="num">2</span>
+        <span class="kw">while</span> l &gt;= <span class="num">0</span> <span class="kw">and</span> r &lt; <span class="fn">len</span>(s) <span class="kw">and</span> s[l] == s[r]:
+            count += <span class="num">1</span>; l -= <span class="num">1</span>; r += <span class="num">1</span>
+    <span class="kw">return</span> count</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n&sup2;)</div><div><strong>Space:</strong> O(1)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Longest Palindromic Substring</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">String &middot; Expand Around Center</div>
+      <div class="prob-desc">Return the longest palindromic substring.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">longestPalindrome</span>(s):
+    res = <span class="str">&#x27;&#x27;</span>
+    <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="fn">len</span>(s)):
+        <span class="kw">for</span> l, r <span class="kw">in</span> [(i,i), (i,i+<span class="num">1</span>)]:
+            <span class="kw">while</span> l&gt;=<span class="num">0</span> <span class="kw">and</span> r&lt;<span class="fn">len</span>(s) <span class="kw">and</span> s[l]==s[r]:
+                <span class="kw">if</span> r-l+<span class="num">1</span> &gt; <span class="fn">len</span>(res): res = s[l:r+<span class="num">1</span>]
+                l-=<span class="num">1</span>; r+=<span class="num">1</span>
+    <span class="kw">return</span> res</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n&sup2;)</div><div><strong>Space:</strong> O(1)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Encode and Decode Strings</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">String &middot; Design</div>
+      <div class="prob-desc">Design an algorithm to encode a list of strings to a single string and decode it back.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">encode</span>(strs):
+    <span class="kw">return</span> <span class="str">&#x27;&#x27;</span>.<span class="fn">join</span>(f<span class="str">&#x27;{len(w)}#{w}&#x27;</span> <span class="kw">for</span> w <span class="kw">in</span> strs)
+
+<span class="kw">def</span> <span class="fn">decode</span>(data):
+    res = []; i = <span class="num">0</span>
+    <span class="kw">while</span> i &lt; <span class="fn">len</span>(data):
+        j = data.<span class="fn">index</span>(<span class="str">&#x27;#&#x27;</span>, i)
+        n = <span class="fn">int</span>(data[i:j])
+        res.<span class="fn">append</span>(data[j+<span class="num">1</span>:j+<span class="num">1</span>+n])
+        i = j+<span class="num">1</span>+n
+    <span class="kw">return</span> res</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n)</div><div><strong>Space:</strong> O(n)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Maximum Depth of Binary Tree</div><div class="prob-diff diff-easy">Easy</div></div>
+      <div class="prob-cat">Tree &middot; DFS</div>
+      <div class="prob-desc">Return the maximum depth (number of nodes along the longest root-to-leaf path).</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">maxDepth</span>(root):
+    <span class="kw">if</span> <span class="kw">not</span> root: <span class="kw">return</span> <span class="num">0</span>
+    <span class="kw">return</span> <span class="num">1</span> + <span class="fn">max</span>(<span class="fn">maxDepth</span>(root.left), <span class="fn">maxDepth</span>(root.right))</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n)</div><div><strong>Space:</strong> O(h)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Same Tree</div><div class="prob-diff diff-easy">Easy</div></div>
+      <div class="prob-cat">Tree &middot; DFS</div>
+      <div class="prob-desc">Given two binary trees, check if they are structurally identical with the same node values.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">isSameTree</span>(p, q):
+    <span class="kw">if</span> <span class="kw">not</span> p <span class="kw">and</span> <span class="kw">not</span> q: <span class="kw">return</span> <span class="kw">True</span>
+    <span class="kw">if</span> <span class="kw">not</span> p <span class="kw">or</span> <span class="kw">not</span> q <span class="kw">or</span> p.val != q.val: <span class="kw">return</span> <span class="kw">False</span>
+    <span class="kw">return</span> <span class="fn">isSameTree</span>(p.left,q.left) <span class="kw">and</span> <span class="fn">isSameTree</span>(p.right,q.right)</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n)</div><div><strong>Space:</strong> O(h)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Invert Binary Tree</div><div class="prob-diff diff-easy">Easy</div></div>
+      <div class="prob-cat">Tree &middot; DFS</div>
+      <div class="prob-desc">Invert (mirror) a binary tree.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">invertTree</span>(root):
+    <span class="kw">if</span> <span class="kw">not</span> root: <span class="kw">return</span> <span class="kw">None</span>
+    root.left, root.right = <span class="fn">invertTree</span>(root.right), <span class="fn">invertTree</span>(root.left)
+    <span class="kw">return</span> root</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n)</div><div><strong>Space:</strong> O(h)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Binary Tree Maximum Path Sum</div><div class="prob-diff diff-hard">Hard</div></div>
+      <div class="prob-cat">Tree &middot; DFS</div>
+      <div class="prob-desc">Find the maximum path sum where a path can start and end at any node.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">maxPathSum</span>(root):
+    res = [root.val]
+    <span class="kw">def</span> <span class="fn">dfs</span>(node):
+        <span class="kw">if</span> <span class="kw">not</span> node: <span class="kw">return</span> <span class="num">0</span>
+        l = <span class="fn">max</span>(<span class="fn">dfs</span>(node.left), <span class="num">0</span>)
+        r = <span class="fn">max</span>(<span class="fn">dfs</span>(node.right), <span class="num">0</span>)
+        res[<span class="num">0</span>] = <span class="fn">max</span>(res[<span class="num">0</span>], node.val+l+r)
+        <span class="kw">return</span> node.val + <span class="fn">max</span>(l, r)
+    <span class="fn">dfs</span>(root)
+    <span class="kw">return</span> res[<span class="num">0</span>]</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n)</div><div><strong>Space:</strong> O(h)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Binary Tree Level Order Traversal</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">Tree &middot; BFS</div>
+      <div class="prob-desc">Return the level-order traversal of a binary tree as a list of lists.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">from</span> collections <span class="kw">import</span> deque
+
+<span class="kw">def</span> <span class="fn">levelOrder</span>(root):
+    <span class="kw">if</span> <span class="kw">not</span> root: <span class="kw">return</span> []
+    res = []; q = <span class="fn">deque</span>([root])
+    <span class="kw">while</span> q:
+        level = []
+        <span class="kw">for</span> _ <span class="kw">in</span> <span class="fn">range</span>(<span class="fn">len</span>(q)):
+            node = q.<span class="fn">popleft</span>()
+            level.<span class="fn">append</span>(node.val)
+            <span class="kw">if</span> node.left: q.<span class="fn">append</span>(node.left)
+            <span class="kw">if</span> node.right: q.<span class="fn">append</span>(node.right)
+        res.<span class="fn">append</span>(level)
+    <span class="kw">return</span> res</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n)</div><div><strong>Space:</strong> O(n)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Serialize and Deserialize Binary Tree</div><div class="prob-diff diff-hard">Hard</div></div>
+      <div class="prob-cat">Tree &middot; BFS &middot; Design</div>
+      <div class="prob-desc">Design an algorithm to serialize a binary tree to a string and deserialize it back.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">serialize</span>(root):
+    vals = []
+    <span class="kw">def</span> <span class="fn">dfs</span>(node):
+        <span class="kw">if</span> <span class="kw">not</span> node: vals.<span class="fn">append</span>(<span class="str">&#x27;N&#x27;</span>); <span class="kw">return</span>
+        vals.<span class="fn">append</span>(<span class="fn">str</span>(node.val))
+        <span class="fn">dfs</span>(node.left); <span class="fn">dfs</span>(node.right)
+    <span class="fn">dfs</span>(root); <span class="kw">return</span> <span class="str">&#x27;,&#x27;</span>.<span class="fn">join</span>(vals)
+
+<span class="kw">def</span> <span class="fn">deserialize</span>(data):
+    it = <span class="fn">iter</span>(data.<span class="fn">split</span>(<span class="str">&#x27;,&#x27;</span>))
+    <span class="kw">def</span> <span class="fn">dfs</span>():
+        v = <span class="fn">next</span>(it)
+        <span class="kw">if</span> v == <span class="str">&#x27;N&#x27;</span>: <span class="kw">return</span> <span class="kw">None</span>
+        node = <span class="fn">TreeNode</span>(<span class="fn">int</span>(v))
+        node.left = <span class="fn">dfs</span>(); node.right = <span class="fn">dfs</span>()
+        <span class="kw">return</span> node
+    <span class="kw">return</span> <span class="fn">dfs</span>()</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n)</div><div><strong>Space:</strong> O(n)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Subtree of Another Tree</div><div class="prob-diff diff-easy">Easy</div></div>
+      <div class="prob-cat">Tree &middot; DFS</div>
+      <div class="prob-desc">Return true if tree s is a subtree of tree t.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">isSubtree</span>(root, sub):
+    <span class="kw">if</span> <span class="kw">not</span> root: <span class="kw">return</span> <span class="kw">False</span>
+    <span class="kw">if</span> <span class="fn">sameTree</span>(root, sub): <span class="kw">return</span> <span class="kw">True</span>
+    <span class="kw">return</span> <span class="fn">isSubtree</span>(root.left, sub) <span class="kw">or</span> <span class="fn">isSubtree</span>(root.right, sub)
+
+<span class="kw">def</span> <span class="fn">sameTree</span>(p, q):
+    <span class="kw">if</span> <span class="kw">not</span> p <span class="kw">and</span> <span class="kw">not</span> q: <span class="kw">return</span> <span class="kw">True</span>
+    <span class="kw">if</span> <span class="kw">not</span> p <span class="kw">or</span> <span class="kw">not</span> q <span class="kw">or</span> p.val != q.val: <span class="kw">return</span> <span class="kw">False</span>
+    <span class="kw">return</span> <span class="fn">sameTree</span>(p.left,q.left) <span class="kw">and</span> <span class="fn">sameTree</span>(p.right,q.right)</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n&middot;m)</div><div><strong>Space:</strong> O(h)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Construct Tree from Preorder + Inorder</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">Tree &middot; DFS &middot; Divide &amp; Conquer</div>
+      <div class="prob-desc">Build a binary tree from its preorder and inorder traversal arrays.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">buildTree</span>(preorder, inorder):
+    <span class="kw">if</span> <span class="kw">not</span> preorder: <span class="kw">return</span> <span class="kw">None</span>
+    root = <span class="fn">TreeNode</span>(preorder[<span class="num">0</span>])
+    mid = inorder.<span class="fn">index</span>(preorder[<span class="num">0</span>])
+    root.left  = <span class="fn">buildTree</span>(preorder[<span class="num">1</span>:mid+<span class="num">1</span>], inorder[:mid])
+    root.right = <span class="fn">buildTree</span>(preorder[mid+<span class="num">1</span>:],  inorder[mid+<span class="num">1</span>:])
+    <span class="kw">return</span> root</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n&sup2;)</div><div><strong>Space:</strong> O(n)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Validate Binary Search Tree</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">Tree &middot; DFS</div>
+      <div class="prob-desc">Determine if a binary tree is a valid BST.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">isValidBST</span>(root):
+    <span class="kw">def</span> <span class="fn">validate</span>(node, lo, hi):
+        <span class="kw">if</span> <span class="kw">not</span> node: <span class="kw">return</span> <span class="kw">True</span>
+        <span class="kw">if</span> node.val &lt;= lo <span class="kw">or</span> node.val &gt;= hi: <span class="kw">return</span> <span class="kw">False</span>
+        <span class="kw">return</span> (<span class="fn">validate</span>(node.left, lo, node.val) <span class="kw">and</span>
+                <span class="fn">validate</span>(node.right, node.val, hi))
+    <span class="kw">return</span> <span class="fn">validate</span>(root, <span class="fn">float</span>(<span class="str">&#x27;-inf&#x27;</span>), <span class="fn">float</span>(<span class="str">&#x27;inf&#x27;</span>))</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n)</div><div><strong>Space:</strong> O(h)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Kth Smallest Element in BST</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">Tree &middot; In-order Traversal</div>
+      <div class="prob-desc">Find the kth smallest element in a BST using iterative in-order traversal.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">kthSmallest</span>(root, k):
+    stack = []; curr = root
+    <span class="kw">while</span> stack <span class="kw">or</span> curr:
+        <span class="kw">while</span> curr: stack.<span class="fn">append</span>(curr); curr = curr.left
+        curr = stack.<span class="fn">pop</span>(); k -= <span class="num">1</span>
+        <span class="kw">if</span> k == <span class="num">0</span>: <span class="kw">return</span> curr.val
+        curr = curr.right</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(H+k)</div><div><strong>Space:</strong> O(H)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Lowest Common Ancestor of BST</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">Tree &middot; BST</div>
+      <div class="prob-desc">Find the lowest common ancestor of two nodes in a BST.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">lowestCommonAncestor</span>(root, p, q):
+    <span class="kw">if</span> p.val &lt; root.val <span class="kw">and</span> q.val &lt; root.val:
+        <span class="kw">return</span> <span class="fn">lowestCommonAncestor</span>(root.left, p, q)
+    <span class="kw">if</span> p.val &gt; root.val <span class="kw">and</span> q.val &gt; root.val:
+        <span class="kw">return</span> <span class="fn">lowestCommonAncestor</span>(root.right, p, q)
+    <span class="kw">return</span> root</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(h)</div><div><strong>Space:</strong> O(h)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Top K Frequent Elements</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">Heap &middot; Bucket Sort</div>
+      <div class="prob-desc">Return the k most frequent elements. O(n log k) heap or O(n) bucket sort.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">from</span> collections <span class="kw">import</span> Counter
+
+<span class="kw">def</span> <span class="fn">topKFrequent</span>(nums, k):
+    count = <span class="fn">Counter</span>(nums)
+    buckets = [[] <span class="kw">for</span> _ <span class="kw">in</span> <span class="fn">range</span>(<span class="fn">len</span>(nums)+<span class="num">1</span>)]
+    <span class="kw">for</span> n, freq <span class="kw">in</span> count.<span class="fn">items</span>(): buckets[freq].<span class="fn">append</span>(n)
+    res = []
+    <span class="kw">for</span> bucket <span class="kw">in</span> <span class="fn">reversed</span>(buckets):
+        res.<span class="fn">extend</span>(bucket)
+        <span class="kw">if</span> <span class="fn">len</span>(res) &gt;= k: <span class="kw">return</span> res[:k]
+    <span class="kw">return</span> res</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(n)</div><div><strong>Space:</strong> O(n)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Find Median from Data Stream</div><div class="prob-diff diff-hard">Hard</div></div>
+      <div class="prob-cat">Heap &middot; Design</div>
+      <div class="prob-desc">Design a data structure that supports adding integers and finding the median in O(log n) / O(1).</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">import</span> heapq
+
+<span class="kw">class</span> MedianFinder:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="kw">self</span>):
+        <span class="kw">self</span>.small = []  <span class="cm"># max-heap (negated)</span>
+        <span class="kw">self</span>.large = []  <span class="cm"># min-heap</span>
+
+    <span class="kw">def</span> <span class="fn">addNum</span>(<span class="kw">self</span>, num):
+        heapq.<span class="fn">heappush</span>(<span class="kw">self</span>.small, -num)
+        <span class="kw">if</span> <span class="kw">self</span>.small <span class="kw">and</span> <span class="kw">self</span>.large <span class="kw">and</span> -<span class="kw">self</span>.small[<span class="num">0</span>] &gt; <span class="kw">self</span>.large[<span class="num">0</span>]:
+            heapq.<span class="fn">heappush</span>(<span class="kw">self</span>.large, -heapq.<span class="fn">heappop</span>(<span class="kw">self</span>.small))
+        <span class="kw">if</span> <span class="fn">len</span>(<span class="kw">self</span>.small) &gt; <span class="fn">len</span>(<span class="kw">self</span>.large)+<span class="num">1</span>:
+            heapq.<span class="fn">heappush</span>(<span class="kw">self</span>.large, -heapq.<span class="fn">heappop</span>(<span class="kw">self</span>.small))
+        <span class="kw">if</span> <span class="fn">len</span>(<span class="kw">self</span>.large) &gt; <span class="fn">len</span>(<span class="kw">self</span>.small):
+            heapq.<span class="fn">heappush</span>(<span class="kw">self</span>.small, -heapq.<span class="fn">heappop</span>(<span class="kw">self</span>.large))
+
+    <span class="kw">def</span> <span class="fn">findMedian</span>(<span class="kw">self</span>):
+        <span class="kw">if</span> <span class="fn">len</span>(<span class="kw">self</span>.small) &gt; <span class="fn">len</span>(<span class="kw">self</span>.large): <span class="kw">return</span> -<span class="kw">self</span>.small[<span class="num">0</span>]
+        <span class="kw">return</span> (-<span class="kw">self</span>.small[<span class="num">0</span>] + <span class="kw">self</span>.large[<span class="num">0</span>]) / <span class="num">2</span></pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> addNum O(log n), findMedian O(1)</div><div><strong>Space:</strong> O(n)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Implement Trie</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">Trie &middot; Design</div>
+      <div class="prob-desc">Implement a trie with insert, search, and startsWith operations.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">class</span> Trie:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="kw">self</span>):
+        <span class="kw">self</span>.children = {}
+        <span class="kw">self</span>.is_end = <span class="kw">False</span>
+
+    <span class="kw">def</span> <span class="fn">insert</span>(<span class="kw">self</span>, word):
+        node = <span class="kw">self</span>
+        <span class="kw">for</span> c <span class="kw">in</span> word:
+            <span class="kw">if</span> c <span class="kw">not</span> <span class="kw">in</span> node.children: node.children[c] = <span class="fn">Trie</span>()
+            node = node.children[c]
+        node.is_end = <span class="kw">True</span>
+
+    <span class="kw">def</span> <span class="fn">search</span>(<span class="kw">self</span>, word):
+        node = <span class="kw">self</span>
+        <span class="kw">for</span> c <span class="kw">in</span> word:
+            <span class="kw">if</span> c <span class="kw">not</span> <span class="kw">in</span> node.children: <span class="kw">return</span> <span class="kw">False</span>
+            node = node.children[c]
+        <span class="kw">return</span> node.is_end
+
+    <span class="kw">def</span> <span class="fn">startsWith</span>(<span class="kw">self</span>, prefix):
+        node = <span class="kw">self</span>
+        <span class="kw">for</span> c <span class="kw">in</span> prefix:
+            <span class="kw">if</span> c <span class="kw">not</span> <span class="kw">in</span> node.children: <span class="kw">return</span> <span class="kw">False</span>
+            node = node.children[c]
+        <span class="kw">return</span> <span class="kw">True</span></pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(k) per op</div><div><strong>Space:</strong> O(n&middot;k)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Add and Search Word</div><div class="prob-diff diff-med">Medium</div></div>
+      <div class="prob-cat">Trie &middot; DFS &middot; Wildcard</div>
+      <div class="prob-desc">Design a data structure supporting addWord and search with . as a wildcard character.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">class</span> WordDictionary:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="kw">self</span>):
+        <span class="kw">self</span>.children = {}; <span class="kw">self</span>.is_end = <span class="kw">False</span>
+
+    <span class="kw">def</span> <span class="fn">addWord</span>(<span class="kw">self</span>, word):
+        node = <span class="kw">self</span>
+        <span class="kw">for</span> c <span class="kw">in</span> word:
+            <span class="kw">if</span> c <span class="kw">not</span> <span class="kw">in</span> node.children: node.children[c] = <span class="fn">WordDictionary</span>()
+            node = node.children[c]
+        node.is_end = <span class="kw">True</span>
+
+    <span class="kw">def</span> <span class="fn">search</span>(<span class="kw">self</span>, word):
+        node = <span class="kw">self</span>
+        <span class="kw">for</span> i, c <span class="kw">in</span> <span class="fn">enumerate</span>(word):
+            <span class="kw">if</span> c == <span class="str">&#x27;.&#x27;</span>:
+                <span class="kw">return</span> <span class="fn">any</span>(node.children[k].<span class="fn">search</span>(word[i+<span class="num">1</span>:]) <span class="kw">for</span> k <span class="kw">in</span> node.children)
+            <span class="kw">if</span> c <span class="kw">not</span> <span class="kw">in</span> node.children: <span class="kw">return</span> <span class="kw">False</span>
+            node = node.children[c]
+        <span class="kw">return</span> node.is_end</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(k) / O(26^k) with dot</div><div><strong>Space:</strong> O(n&middot;k)</div></div>
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="prob-head"><div class="prob-name">Word Search II</div><div class="prob-diff diff-hard">Hard</div></div>
+      <div class="prob-cat">Trie &middot; Backtracking</div>
+      <div class="prob-desc">Given a board and a list of words, find all words that exist on the board.</div>
+      <div class="prob-toggle" onclick="toggleSol(this)">&#9658; show solution</div>
+      <div class="prob-solution">
+        <div class="code-panel"><pre><span class="kw">def</span> <span class="fn">findWords</span>(board, words):
+    trie = {}
+    <span class="kw">for</span> word <span class="kw">in</span> words:
+        node = trie
+        <span class="kw">for</span> c <span class="kw">in</span> word: node = node.<span class="fn">setdefault</span>(c, {})
+        node[<span class="str">&#x27;#&#x27;</span>] = word
+    R, C = <span class="fn">len</span>(board), <span class="fn">len</span>(board[<span class="num">0</span>])
+    res = <span class="fn">set</span>()
+    <span class="kw">def</span> <span class="fn">dfs</span>(node, r, c):
+        <span class="kw">if</span> <span class="str">&#x27;#&#x27;</span> <span class="kw">in</span> node: res.<span class="fn">add</span>(node[<span class="str">&#x27;#&#x27;</span>])
+        <span class="kw">if</span> r&lt;<span class="num">0</span> <span class="kw">or</span> c&lt;<span class="num">0</span> <span class="kw">or</span> r&gt;=R <span class="kw">or</span> c&gt;=C <span class="kw">or</span> board[r][c] <span class="kw">not</span> <span class="kw">in</span> node: <span class="kw">return</span>
+        tmp = board[r][c]; board[r][c] = <span class="str">&#x27;!&#x27;</span>
+        <span class="kw">for</span> dr, dc <span class="kw">in</span> [(<span class="num">1</span>,<span class="num">0</span>),(-<span class="num">1</span>,<span class="num">0</span>),(<span class="num">0</span>,<span class="num">1</span>),(<span class="num">0</span>,-<span class="num">1</span>)]:
+            <span class="fn">dfs</span>(node[tmp], r+dr, c+dc)
+        board[r][c] = tmp
+    <span class="kw">for</span> r <span class="kw">in</span> <span class="fn">range</span>(R):
+        <span class="kw">for</span> c <span class="kw">in</span> <span class="fn">range</span>(C): <span class="fn">dfs</span>(trie, r, c)
+    <span class="kw">return</span> <span class="fn">list</span>(res)</pre></div>
+        <div class="complexity-row"><div><strong>Time:</strong> O(R&middot;C&middot;4^max_word)</div><div><strong>Space:</strong> O(total_chars)</div></div>
       </div>
     </div>
 
@@ -1396,6 +2717,323 @@ monkeypatch.<span class="fn">setattr</span>(db, <span class="str">'get_user'</sp
 
 </div>
 
+<div class="section" id="interview">
+  <div class="section-header">
+    <span class="section-num">06</span>
+    <h2 class="section-title">Behavioural Questions</h2>
+    <span class="section-sub">60 public service &amp; behavioural interview questions</span>
+  </div>
+
+  <div class="cat-header">Motivation &amp; Fit</div>
+  <div class="iq-grid">
+    <div class="iq-card"><div class="iq-num">01</div><div class="iq-q">Why do you want to work for this organization?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">This organization&#39;s mission aligns directly with my professional values. I&#39;ve researched your programs and believe my background can contribute meaningfully to your community outcomes. I want work that measures success in people helped, not just profit margins.</p></div></div>
+    <div class="iq-card"><div class="iq-num">02</div><div class="iq-q">What is our mission statement and what does it mean to you?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">Research the specific mission before your interview and connect it to your own work history. To me, a mission like this is a daily accountability standard &mdash; the question of whether today&#39;s work left people better off. I want to be part of an organization that holds itself to that standard.</p></div></div>
+    <div class="iq-card"><div class="iq-num">03</div><div class="iq-q">What do you think you will enjoy most about this position and what will you least enjoy?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">Most: the community impact and cross-functional collaboration this role requires. Least: bureaucratic processes can be slow, and I like to move quickly. But I&#39;ve learned that process in public service exists for accountability and equity reasons, and I&#39;ve developed patience by focusing on long-term outcomes.</p></div></div>
+    <div class="iq-card"><div class="iq-num">04</div><div class="iq-q">What interests you in public service?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">The chance to work on problems that matter at scale, with accountability to the public. You can&#39;t hide behind a bottom line &mdash; every decision is about real people. I find that level of responsibility deeply meaningful.</p></div></div>
+    <div class="iq-card"><div class="iq-num">05</div><div class="iq-q">How does this position align with your long term goals?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">My long-term goal is to contribute to policy and service delivery at a meaningful level in public organizations. This role deepens expertise I need and builds stakeholder relationships that matter in this space. It&#39;s the right next step on that path.</p></div></div>
+  </div>
+
+  <div class="cat-header">About You</div>
+  <div class="iq-grid">
+    <div class="iq-card"><div class="iq-num">01</div><div class="iq-q">Tell me a little bit about yourself from the perspective of your last boss.</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">She&#39;d describe me as reliable and detail-oriented &mdash; the person she trusted with high-stakes deliverables because I follow through. She&#39;d note I push back when something doesn&#39;t make sense, not to be difficult but because I care about outcomes. Her one critique: I sometimes take on too much at once, which I&#39;ve been actively working on.</p></div></div>
+    <div class="iq-card"><div class="iq-num">02</div><div class="iq-q">What are your hobbies?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">I&#39;m an avid reader &mdash; mostly nonfiction around public policy and organizational behavior. I run regularly, which keeps my energy and focus high. I also volunteer with community organizations, which keeps me grounded in the people I want to serve professionally.</p></div></div>
+    <div class="iq-card"><div class="iq-num">03</div><div class="iq-q">What do you like to do for fun?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">Hiking, cooking, and travel. The outdoors helps me reset after demanding weeks. Cooking is my version of creative problem-solving. And I travel when I can &mdash; seeing how other communities and governments operate is surprisingly relevant to public service work.</p></div></div>
+    <div class="iq-card"><div class="iq-num">04</div><div class="iq-q">What motivates you?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">Seeing the downstream impact of my work &mdash; knowing that a decision I made led to better outcomes for someone. Also growth: I want to keep becoming more capable. And the team environment &mdash; working with people who hold high standards pushes me to do the same.</p></div></div>
+    <div class="iq-card"><div class="iq-num">05</div><div class="iq-q">What's something not on your resume that you are proud of?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">I spent two years mentoring high school students from underserved communities through a college prep program. Watching those students get accepted &mdash; knowing the right support structure made the difference &mdash; is something I&#39;m deeply proud of. It&#39;s a big part of why I work in public service.</p></div></div>
+    <div class="iq-card"><div class="iq-num">06</div><div class="iq-q">What is your passion and how would you use it in your job?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">I&#39;m passionate about making complex systems more accessible and equitable. Whether simplifying a process, improving communication, or redesigning a workflow &mdash; I find deep satisfaction in removing barriers. In this role I&#39;d constantly ask: is this as clear and accessible as it could be for the people it serves?</p></div></div>
+    <div class="iq-card"><div class="iq-num">07</div><div class="iq-q">What are your top 3 work values and why?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">Integrity &mdash; trust is the foundation everything else rests on. Accountability &mdash; I take ownership of outcomes, good or bad. Continuous improvement &mdash; no process is too good to be made better. These three compound: integrity builds trust, accountability drives results, improvement sustains them.</p></div></div>
+    <div class="iq-card"><div class="iq-num">08</div><div class="iq-q">Tell me three things you'd want to do/have in your ideal job and why?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">Meaningful work with a clear public purpose &mdash; I can&#39;t sustain high performance without that. Colleagues who hold themselves to high standards &mdash; I grow when I&#39;m challenged. And enough autonomy to solve problems creatively &mdash; give me the goal and constraints, and I&#39;ll figure out the path.</p></div></div>
+    <div class="iq-card"><div class="iq-num">09</div><div class="iq-q">What is the last book you read?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">&#39;The Fifth Risk&#39; by Michael Lewis &mdash; about how federal agencies manage catastrophic risks and what happens when institutional knowledge is lost. A compelling case for why deep, unglamorous government expertise matters. Before that, &#39;Upstream&#39; by Dan Heath, about solving problems at their root rather than reacting to symptoms.</p></div></div>
+    <div class="iq-card"><div class="iq-num">10</div><div class="iq-q">How would your co-workers describe you? How about your friends?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">Co-workers would say I&#39;m dependable and direct &mdash; when I commit to something, it gets done. A few have told me I&#39;m the person they come to for honest feedback, which I take as a real compliment. Friends would add that I&#39;m a good listener and ask questions before giving opinions.</p></div></div>
+    <div class="iq-card"><div class="iq-num">11</div><div class="iq-q">How do you handle stress? What does stressed out look like on you?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">I stay organized &mdash; most of my stress comes from things slipping through cracks, so I list and prioritize proactively. Physically, I run. And I&#39;m honest about my limits: I flag to my manager early rather than white-knuckling it. Stressed-out me goes quiet and focused, not reactive.</p></div></div>
+    <div class="iq-card"><div class="iq-num">12</div><div class="iq-q">How would your children, siblings, or parents describe you?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">My siblings would call me the planner &mdash; three steps ahead, making sure everyone has what they need. They&#39;d also say I hold high standards and sometimes have to remind myself not everyone moves at my pace. My parents would say I&#39;m hardworking and mean what I say.</p></div></div>
+    <div class="iq-card"><div class="iq-num">13</div><div class="iq-q">How would you describe yourself in one word?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">Dependable. It&#39;s built over time through consistent follow-through, and I believe it&#39;s the foundation every other professional quality rests on. I want the people I work with &mdash; and the communities I serve &mdash; to know they can count on me.</p></div></div>
+  </div>
+
+  <div class="cat-header">Values &amp; Character</div>
+  <div class="iq-grid">
+    <div class="iq-card"><div class="iq-num">01</div><div class="iq-q">Talk about a time that your integrity was tested. What was the outcome?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">I discovered a vendor invoice had been approved for work that wasn&#39;t fully completed. My supervisor seemed inclined to let it go. I raised it formally through the appropriate channel. It created tension, but the contract was renegotiated and the work was completed. My supervisor respected the decision afterward. I&#39;ve never regretted doing the right thing, even when uncomfortable.</p></div></div>
+    <div class="iq-card"><div class="iq-num">02</div><div class="iq-q">What does diversity and inclusion mean to you and how do you support it?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">D&amp;I means ensuring people of all backgrounds have equitable access to opportunity and feel genuinely valued &mdash; not just represented on paper. I&#39;ve advocated for inclusive hiring, ensured underrepresented community members had accessible pathways to services, and built teams where different perspectives are actively sought. Inclusion requires ongoing intentional effort, not a checkbox.</p></div></div>
+    <div class="iq-card"><div class="iq-num">03</div><div class="iq-q">How would you incorporate equity and social justice into your role?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">I start by asking: who is this policy designed for, and who might it inadvertently exclude? I look at data disaggregated by race, income, geography, and language access to identify disparities. Equal treatment doesn&#39;t always produce equal outcomes &mdash; sometimes more support is needed where access has historically been less.</p></div></div>
+  </div>
+
+  <div class="cat-header">Behavioral / STAR Stories</div>
+  <div class="iq-grid">
+    <div class="iq-card"><div class="iq-num">01</div><div class="iq-q">Tell me about a time when public service impacted you. What did it mean to you?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">When I was in college I needed government support services for the first time. Navigating the process was confusing and at times dehumanizing. One caseworker who took time to actually explain things changed my outcome completely. That experience stayed with me &mdash; one person doing their job with genuine care made all the difference. I never want to be the reason someone leaves more confused than when they arrived.</p></div></div>
+    <div class="iq-card"><div class="iq-num">02</div><div class="iq-q">Tell me about a time that you were given feedback that was hard to hear.</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">A manager told me I was strong individually but needed to bring people along rather than rushing ahead. That stung &mdash; I thought speed was a strength. I reflected and realized quick decisions sometimes had to be reversed for lack of input. I started building in deliberate stakeholder checkpoints. My next review specifically noted the improvement.</p></div></div>
+    <div class="iq-card"><div class="iq-num">03</div><div class="iq-q">Tell me about a time when you met an obstacle and overcame it.</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">Mid-project, our key technology vendor went out of business. Two months of work on a platform with no support. I convened the team immediately, audited what was portable, and mapped a migration path within a week. We lost three weeks but delivered on time because we&#39;d built buffer into the original plan. The experience reinforced my habit of planning for contingencies.</p></div></div>
+    <div class="iq-card"><div class="iq-num">04</div><div class="iq-q">Provide an example when there was a conflict you had to deal with and how you handled it. In hindsight, how might you have handled it differently?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">A colleague and I disagreed on a communications campaign &mdash; I wanted digital-first, they wanted print for older residents. Rather than escalating, I proposed piloting both and letting engagement data decide. Data showed we were both right: digital worked for working-age residents, print reached seniors. In hindsight, I should have proposed the pilot earlier instead of two weeks of debate.</p></div></div>
+    <div class="iq-card"><div class="iq-num">05</div><div class="iq-q">Tell me about a time when you recommended or implemented an innovative initiative or process. What did you recommend or implement? What did it improve?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">I noticed our benefits intake process averaged 45 minutes with a 30% incomplete submission rate. I proposed digitizing the form with conditional logic and auto-save, then piloted it over three months. Average intake time dropped to 18 minutes and incomplete submissions fell to 8%. The approach was adopted agency-wide.</p></div></div>
+    <div class="iq-card"><div class="iq-num">06</div><div class="iq-q">What is the most difficult decision you have had to make in the last 6 months?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">Recommending we discontinue a program our team had built and was proud of, because outcome data showed it wasn&#39;t achieving its intended impact. It was hard because the team was emotionally invested. But honoring our commitment to evidence-based work mattered more than protecting something we&#39;d created. The decision was accepted and I worked with the team through the transition constructively.</p></div></div>
+    <div class="iq-card"><div class="iq-num">07</div><div class="iq-q">Tell me about a time when you faced a challenging situation and worked as a team to solve it.</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">During a major system outage we had to manually process hundreds of pending applications without database access. I organized the team into shifts, created a paper-based triage system for urgent cases, and ran hourly check-ins to reallocate resources as the backlog shifted. Over three days we cleared the critical queue with no service lapses. Clear communication under pressure made the difference.</p></div></div>
+    <div class="iq-card"><div class="iq-num">08</div><div class="iq-q">Tell me about a time when you had to deal with an irate citizen. How did you deal with the situation?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">A resident came in furious &mdash; his application had been denied with a confusing letter. I let him speak without interrupting, acknowledged his frustration, then walked him through what the letter meant and his options. Once he felt heard, the tone shifted completely. We found a miscategorization error and escalated for expedited review. He thanked me on the way out. Not getting defensive was the key.</p></div></div>
+    <div class="iq-card"><div class="iq-num">09</div><div class="iq-q">Tell me about a time you disagreed with your boss. How did you handle it?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">My manager wanted to implement a policy change on a very compressed timeline. I prepared a specific case: which segments would be affected, what questions staff couldn&#39;t yet answer, and what a two-week extension would cost versus the risk of a rushed rollout. She agreed to extend. We used the time to prepare staff and client communications. The rollout went smoothly. I brought solutions and data, not just concerns.</p></div></div>
+    <div class="iq-card"><div class="iq-num">10</div><div class="iq-q">Tell me about a situation that went from negative to positive and describe the skills and leadership qualities you used.</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">Attendance at our community engagement meetings dropped to almost nothing &mdash; people couldn&#39;t get there. Rather than treating it as a failure I reframed it as data about accessibility barriers. We redesigned the model: online surveys, evening pop-ups, community org partnerships. Participation tripled and the approach became a departmental model.</p></div></div>
+    <div class="iq-card"><div class="iq-num">11</div><div class="iq-q">Tell me about specific actions you have taken to promote and maintain effective work relationships with your team members.</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">I schedule brief check-ins with colleagues to understand their work and what they&#39;re dealing with, not just to discuss deliverables. I help when I can, even outside my lane, and I give credit publicly and feedback privately. These habits build the trust that makes disagreements resolve quickly and joint projects go smoothly.</p></div></div>
+  </div>
+
+  <div class="cat-header">Leadership &amp; Team</div>
+  <div class="iq-grid">
+    <div class="iq-card"><div class="iq-num">01</div><div class="iq-q">What's the greatest impact you had on your team.</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">I introduced a 30-minute weekly retrospective where the team reflected on what was working and what wasn&#39;t. Over six months it surfaced three process inefficiencies we fixed, improved handoffs, and measurably reduced rework. The deeper impact was cultural: the team became comfortable raising problems early, making us faster and less reactive.</p></div></div>
+    <div class="iq-card"><div class="iq-num">02</div><div class="iq-q">What would your current supervisor say are your strengths and weaknesses?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">She&#39;d say my strength is delivery &mdash; consistently, under pressure, with attention to detail. She&#39;d also note I&#39;m good at translating complexity for non-technical audiences. For weakness, she&#39;d say I sometimes struggle to let things go when I think they could be better, even when good enough serves the timeline. I&#39;ve been working on recognizing where the bar actually needs to be.</p></div></div>
+    <div class="iq-card"><div class="iq-num">03</div><div class="iq-q">What management style do you work best with and why?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">Clear expectations, genuine trust, and direct feedback. I&#39;m self-directed &mdash; I need context and latitude, not step-by-step instruction. I check in proactively and surface problems early. The best manager I&#39;ve had was demanding but genuinely invested in my development. That combination brings out my best work.</p></div></div>
+    <div class="iq-card"><div class="iq-num">04</div><div class="iq-q">What would your subordinates or peers say about your work ethic?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">They&#39;d say I work hard and set a high standard &mdash; but I don&#39;t make people feel guilty for not matching my pace. They&#39;d say I roll up my sleeves on hard problems rather than delegating everything difficult. And that I make the team look good to leadership not by taking credit, but by making sure we deliver.</p></div></div>
+    <div class="iq-card"><div class="iq-num">05</div><div class="iq-q">How do you deal with difficult people?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">I try to understand the source first &mdash; is this person under pressure? Do they feel unheard? That reframe usually makes the interaction more productive. If the behavior is affecting the work, I address it directly and privately. If a pattern continues, I document and escalate. The goal is always resolution, not winning.</p></div></div>
+    <div class="iq-card"><div class="iq-num">06</div><div class="iq-q">How have you positively influenced a coworker?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">A colleague was producing rushed work to meet volume targets, and her confidence was suffering as errors came back. I asked if I could share workflow habits that helped me manage quality under pressure. We spent two sessions working through her process. Within a month her error rate dropped significantly. She told me it changed how she approached her work &mdash; that was more satisfying than most things I&#39;ve done in my own lane.</p></div></div>
+    <div class="iq-card"><div class="iq-num">07</div><div class="iq-q">How would you deal with a coworker who was difficult to work with?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">Direct conversation first: &#39;I&#39;ve noticed tension in our collaboration &mdash; I&#39;d like to work better together. Is there something I should know?&#39; Often that opens a door. If the behavior affects the team and a direct approach doesn&#39;t resolve it, I bring it to a supervisor with specific examples. I don&#39;t involve management prematurely &mdash; that escalates more than it resolves.</p></div></div>
+    <div class="iq-card"><div class="iq-num">08</div><div class="iq-q">How do you attract top talent and keep them in your organization?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">Attract by being honest about what the role offers: meaningful work, stability, growth &mdash; not the highest salary. People who join for purpose stay longer. Keep them by delivering on that promise: clear growth paths, real professional development, and a culture where good work is recognized. Top performers leave when they feel invisible or stuck.</p></div></div>
+    <div class="iq-card"><div class="iq-num">09</div><div class="iq-q">How do you like to be managed?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">Clear expectations, genuine trust, and candid direct feedback. I don&#39;t need close supervision &mdash; I check in proactively and surface problems early so my manager is never left guessing. I respond much better to direct feedback about what needs to change than to diplomatically managed vagueness.</p></div></div>
+    <div class="iq-card"><div class="iq-num">10</div><div class="iq-q">How do you approach a tough situation?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">I slow down before reacting &mdash; my first instinct isn&#39;t always my best. I define the problem clearly, identify options and trade-offs, consult people with relevant knowledge, and move forward decisively. If people are involved, I lead with listening. Most tough situations are harder because of poor communication than because of the actual underlying problem.</p></div></div>
+  </div>
+
+  <div class="cat-header">Growth &amp; Goals</div>
+  <div class="iq-grid">
+    <div class="iq-card"><div class="iq-num">01</div><div class="iq-q">What do you need from us to help you grow?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">Challenging assignments slightly beyond my current capability, with support. Honest feedback delivered directly rather than saved for annual reviews. And inclusion in conversations where I can observe how senior decisions are made &mdash; that context accelerates development faster than almost anything else.</p></div></div>
+    <div class="iq-card"><div class="iq-num">02</div><div class="iq-q">What are the best opportunities for growth and development?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">Stretch assignments &mdash; being accountable for something slightly beyond current capability. Cross-functional projects that expose you to perspectives you&#39;d never encounter in a single lane. And mentorship from senior leaders willing to be honest about what advancement actually takes. Lived experience with reflection builds real capability faster than formal training alone.</p></div></div>
+    <div class="iq-card"><div class="iq-num">03</div><div class="iq-q">How many years do you believe will be necessary to accomplish your career goals?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">I think in milestones more than timelines &mdash; progress depends on what opportunities emerge. In the next two to three years I&#39;m focused on deepening expertise in this role and demonstrating leadership that earns broader responsibility. Longer-term I want to be contributing at a policy or program leadership level. I&#39;m committed to doing the work to earn that.</p></div></div>
+    <div class="iq-card"><div class="iq-num">04</div><div class="iq-q">How do you stay on track with continually changing priorities?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">I maintain a prioritized task list and review it every morning. When new priorities come in, I ask where they sit relative to existing commitments &mdash; and if something needs to move, I communicate that proactively. &#39;Is this replacing something or is this additional?&#39; &mdash; that question up front prevents a lot of confusion later.</p></div></div>
+    <div class="iq-card"><div class="iq-num">05</div><div class="iq-q">How long does it take you to reach out for help when you don't know the answer?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">Not long &mdash; I&#39;ve learned that sitting on uncertainty is more costly than asking. If I&#39;m stuck for more than a day without clear progress, I ask. I prefer being direct: &#39;I&#39;m not sure of the best approach and I&#39;d value your input.&#39; The only time I push longer is when the struggle itself is the learning I need.</p></div></div>
+    <div class="iq-card"><div class="iq-num">06</div><div class="iq-q">How do you prioritize your time in order to meet deadlines?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">I make all deadlines visible &mdash; nothing stays in my head. I work backward from due dates to identify the milestones that must happen first, and schedule those explicitly. I treat my personal deadline as two days earlier than the real one, which absorbs unexpected issues. When competing priorities are too many, I communicate early rather than silently hoping I can make everything work.</p></div></div>
+  </div>
+
+  <div class="cat-header">Strengths &amp; Candidacy</div>
+  <div class="iq-grid">
+    <div class="iq-card"><div class="iq-num">01</div><div class="iq-q">What do you feel you can contribute to this organization?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">Analytical rigor and practical judgment &mdash; I can interpret data and translate it into actionable decisions. A track record of improving public-facing processes and the ability to work across departments to get things done. And genuine commitment to this mission. I&#39;m not looking for a job &mdash; I&#39;m looking for work that matters.</p></div></div>
+    <div class="iq-card"><div class="iq-num">02</div><div class="iq-q">What makes you the best candidate for this position?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">Direct experience in the relevant area, a deep commitment to public service, and a working style that matches what this role demands &mdash; structured, collaborative, outcome-focused. Beyond qualifications, I want to be here. The combination of capability and genuine motivation is hard to replicate.</p></div></div>
+    <div class="iq-card"><div class="iq-num">03</div><div class="iq-q">What do you bring to this position that no one else can?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">The particular combination of technical skill, lived experience with the populations this work serves, and my approach to public-facing work. I&#39;ve seen both the policy side and frontline delivery side, which leads to more practical, implementable solutions. I also bring durability &mdash; I don&#39;t lose energy on complex problems, I lean into them.</p></div></div>
+    <div class="iq-card"><div class="iq-num">04</div><div class="iq-q">What strengths would you bring to this position, if you were hired?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">Reliability &mdash; I follow through consistently. Analytical thinking &mdash; I&#39;m comfortable with data and can surface insights from it. Clear communication &mdash; I explain complexity to varied audiences effectively. And resilience &mdash; public service involves slow processes and systemic constraints; I don&#39;t lose energy in the face of those realities.</p></div></div>
+    <div class="iq-card"><div class="iq-num">05</div><div class="iq-q">What makes you the best candidate for this job?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">My qualifications align closely with the role requirements, but more importantly, my values align with what this organization stands for. I&#39;ve deliberately pursued work in this space because I believe in it. What I offer beyond credentials is a track record of delivery and the kind of commitment that sustains performance over time.</p></div></div>
+    <div class="iq-card"><div class="iq-num">06</div><div class="iq-q">How has your education and experience prepared you for this role?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">My education gave me frameworks for analytical thinking, evidence evaluation, and systems understanding. My experience filled in what education can&#39;t: operating in real organizations, navigating constraints, building relationships, and delivering results under pressure. Together they&#39;ve given me both the theoretical grounding and practical judgment this role requires.</p></div></div>
+    <div class="iq-card"><div class="iq-num">07</div><div class="iq-q">What haven't we asked you that you want us to know?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">This isn&#39;t a fallback for me &mdash; I&#39;ve thought carefully about where I want to put my professional energy, and this organization is where I want to be. I&#39;m prepared to contribute meaningfully from day one and to grow into whatever this team needs. If there&#39;s any concern about my fit that hasn&#39;t surfaced, I&#39;d rather hear it and address it now.</p></div></div>
+  </div>
+
+  <div class="cat-header">Accomplishments &amp; Lessons</div>
+  <div class="iq-grid">
+    <div class="iq-card"><div class="iq-num">01</div><div class="iq-q">What is the best thing you learned from a mistake that you made?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">I once sent a communications piece to stakeholders before it was fully reviewed &mdash; I was confident in the content and didn&#39;t want to slow down. There was an error that required a correction and apology. The lesson: the ten minutes a second set of eyes takes is never the actual bottleneck. Since then I&#39;ve built review steps into every communications workflow I manage.</p></div></div>
+    <div class="iq-card"><div class="iq-num">02</div><div class="iq-q">What is something you did in your professional experience that you are most proud of and why?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">Leading a redesign of our client intake process, which reduced average processing time from 45 minutes to 18 minutes while improving accuracy. But I&#39;m not proud of the number &mdash; I&#39;m proud that it made a real difference for people at the counter. Making government less stressful to interact with is a standard I hold all my work to.</p></div></div>
+    <div class="iq-card"><div class="iq-num">03</div><div class="iq-q">What's your greatest professional failure and what did you learn from it?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">I led a stakeholder engagement process early in my career and approached it too transactionally &mdash; checking boxes rather than building relationships. When it came time to implement the plan, we faced resistance because people didn&#39;t feel heard. I had to go back and rebuild trust I should have established from the start. Lesson: process legitimacy matters as much as process outcome.</p></div></div>
+    <div class="iq-card"><div class="iq-num">04</div><div class="iq-q">What is your greatest accomplishment?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">Building a team from the ground up &mdash; inheriting a group with silos, unclear roles, and low morale, and over 18 months creating a high-performing culture with shared norms and genuine trust. By the end they were making good decisions without me in the room. That felt like leadership that actually worked.</p></div></div>
+    <div class="iq-card"><div class="iq-num">05</div><div class="iq-q">Tell me about the work project you are most proud of and why.</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">A multi-agency equity audit I led over eight months &mdash; analyzing service delivery data across five departments to identify disparities in access and outcomes for low-income and minority residents. The recommendations were formally adopted and funded. I&#39;m proud of it because the work was rigorous enough to be credible and specific enough to drive real action. It didn&#39;t sit on a shelf.</p></div></div>
+  </div>
+
+</div>
+
+
+
+<div class="section" id="glossary">
+  <div class="section-header">
+    <span class="section-num">07</span>
+    <h2 class="section-title">Glossary</h2>
+    <span class="section-sub">100 terms &middot; alphabetical quick-reference</span>
+  </div>
+  <div class="gloss-alpha-bar">
+    <a class="gloss-letter-link has-entries" href="#gloss-a">A</a>
+    <a class="gloss-letter-link has-entries" href="#gloss-b">B</a>
+    <a class="gloss-letter-link has-entries" href="#gloss-c">C</a>
+    <a class="gloss-letter-link has-entries" href="#gloss-d">D</a>
+    <a class="gloss-letter-link has-entries" href="#gloss-e">E</a>
+    <a class="gloss-letter-link has-entries" href="#gloss-f">F</a>
+    <a class="gloss-letter-link has-entries" href="#gloss-g">G</a>
+    <a class="gloss-letter-link has-entries" href="#gloss-h">H</a>
+    <a class="gloss-letter-link has-entries" href="#gloss-i">I</a>
+    <a class="gloss-letter-link has-entries" href="#gloss-j">J</a>
+    <a class="gloss-letter-link has-entries" href="#gloss-k">K</a>
+    <a class="gloss-letter-link has-entries" href="#gloss-l">L</a>
+    <a class="gloss-letter-link has-entries" href="#gloss-m">M</a>
+    <a class="gloss-letter-link has-entries" href="#gloss-n">N</a>
+    <a class="gloss-letter-link has-entries" href="#gloss-o">O</a>
+    <a class="gloss-letter-link has-entries" href="#gloss-p">P</a>
+    <a class="gloss-letter-link has-entries" href="#gloss-q">Q</a>
+    <a class="gloss-letter-link has-entries" href="#gloss-r">R</a>
+    <a class="gloss-letter-link has-entries" href="#gloss-s">S</a>
+    <a class="gloss-letter-link has-entries" href="#gloss-t">T</a>
+    <a class="gloss-letter-link has-entries" href="#gloss-u">U</a>
+    <a class="gloss-letter-link has-entries" href="#gloss-v">V</a>
+    <a class="gloss-letter-link has-entries" href="#gloss-w">W</a>
+    <a class="gloss-letter-link has-entries" href="#gloss-x">X</a>
+    <span class="gloss-letter-link">Y</span>
+    <a class="gloss-letter-link has-entries" href="#gloss-z">Z</a>
+  </div>
+  <div class="gloss-grid">
+    <div class="gloss-group" id="gloss-a">
+      <div class="gloss-lhead">A</div>
+      <div class="gloss-entry"><span class="gloss-term">ACID</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Atomicity, Consistency, Isolation, Durability: the four guarantees a relational database transaction must satisfy.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Abstraction</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Hiding implementation complexity behind a clean interface so callers only see what they need.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Agile</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Iterative delivery methodology built around short sprints, continuous feedback, and working software over documentation.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">API</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Application Programming Interface; a defined contract specifying how two systems communicate.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Asynchronous</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Operations that return immediately; the caller handles the result later via callback, promise, or event.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Atomicity</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">A transaction either fully completes or fully rolls back; no partial intermediate state is ever left visible.</span></div>
+    </div>
+    <div class="gloss-group" id="gloss-b">
+      <div class="gloss-lhead">B</div>
+      <div class="gloss-entry"><span class="gloss-term">Backpressure</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">A flow-control signal where a downstream consumer tells an upstream producer to slow down.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Big-O Notation</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Describes the worst-case growth rate of an algorithm's time or space as input size n grows.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Bloom Filter</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">A probabilistic data structure that answers "possibly in set" or "definitely not in set" using minimal memory.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Blue-Green Deployment</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Two identical production environments; deploy to the idle one, then switch traffic instantly for zero downtime.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Branching Strategy</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">A convention for creating and merging code branches, e.g. Git Flow or trunk-based development.</span></div>
+    </div>
+    <div class="gloss-group" id="gloss-c">
+      <div class="gloss-lhead">C</div>
+      <div class="gloss-entry"><span class="gloss-term">CAP Theorem</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">In a distributed system you can guarantee at most two of: Consistency, Availability, Partition Tolerance.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Cache Invalidation</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Removing or updating stale cached data; notoriously one of the two hard problems in computer science.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Canary Release</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Rolling a new version out to a small fraction of users first to catch problems before full deployment.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">CDN</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Content Delivery Network; globally distributed servers that cache static assets close to end users.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Circuit Breaker</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Stops forwarding requests to a failing dependency, failing fast and allowing the dependency time to recover.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Consistency</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Every read sees the most recent committed write or returns an error (versus eventual consistency).</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Container</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Lightweight portable runtime package bundling app code and dependencies; isolated from the OS but sharing the kernel.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">CQRS</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Command Query Responsibility Segregation; using separate models for reads and writes to scale them independently.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">CRUD</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Create, Read, Update, Delete: the four fundamental operations on persistent data.</span></div>
+    </div>
+    <div class="gloss-group" id="gloss-d">
+      <div class="gloss-lhead">D</div>
+      <div class="gloss-entry"><span class="gloss-term">Dead Letter Queue</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">A queue where unprocessable messages land after repeated delivery failures, for later inspection.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Deadlock</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Two or more processes each waiting for a lock held by the other; none can proceed.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Declarative</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">You describe the desired end-state, not the steps to reach it. SQL and Kubernetes manifests are declarative.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Dependency Injection</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Passing a component's dependencies from outside rather than having it construct them internally.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">DevOps</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Culture and practice uniting development and operations to shorten release cycles and improve reliability.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">DNS</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Domain Name System; translates human-readable hostnames to IP addresses via a distributed hierarchy.</span></div>
+    </div>
+    <div class="gloss-group" id="gloss-e">
+      <div class="gloss-lhead">E</div>
+      <div class="gloss-entry"><span class="gloss-term">Encapsulation</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Bundling data with the methods that operate on it and restricting direct access to internals.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Event Sourcing</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Storing state as an append-only log of events; current state is reconstructed by replaying them.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Eventual Consistency</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Replicas will converge to the same value given sufficient time and the absence of new writes.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Exponential Backoff</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Retry strategy where the wait time doubles after each failure to reduce thundering-herd load.</span></div>
+    </div>
+    <div class="gloss-group" id="gloss-f">
+      <div class="gloss-lhead">F</div>
+      <div class="gloss-entry"><span class="gloss-term">Feature Flag</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">A runtime switch enabling or disabling a feature without a code deployment. Also called feature toggle.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">FIFO</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">First In, First Out: the ordering discipline of a queue data structure.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Functional Programming</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">A paradigm treating computation as pure function evaluation; avoids shared mutable state.</span></div>
+    </div>
+    <div class="gloss-group" id="gloss-g">
+      <div class="gloss-lhead">G</div>
+      <div class="gloss-entry"><span class="gloss-term">Garbage Collection</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Automated runtime reclamation of memory held by objects no longer reachable from any reference.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">gRPC</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Google's high-performance RPC framework using Protocol Buffers over HTTP/2 for efficient binary communication.</span></div>
+    </div>
+    <div class="gloss-group" id="gloss-h">
+      <div class="gloss-lhead">H</div>
+      <div class="gloss-entry"><span class="gloss-term">Hash Function</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Maps arbitrary input to a fixed-size output deterministically; identical inputs always produce identical outputs.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Horizontal Scaling</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Adding more machines to distribute load (scale out). Contrasts with vertical scaling (scale up).</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Hot Spot</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">A shard or partition receiving disproportionately high traffic, creating a localized performance bottleneck.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">HTTP/2</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">HTTP revision enabling request multiplexing over one TCP connection, header compression, and server push.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Hysteresis</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Intentional lag before reacting to a state change, preventing rapid oscillation, e.g. autoscaling jitter.</span></div>
+    </div>
+    <div class="gloss-group" id="gloss-i">
+      <div class="gloss-lhead">I</div>
+      <div class="gloss-entry"><span class="gloss-term">Idempotency</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">An operation that produces the same result whether applied once or many times. Critical for safe retries.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Immutability</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Data that cannot be changed after creation; updates produce new values rather than modifying existing ones.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Indexing</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">An auxiliary data structure (B-tree, hash) letting a DB locate rows without scanning the full table.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Infrastructure as Code</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Managing infrastructure via version-controlled config files (Terraform, CloudFormation) instead of manual steps.</span></div>
+    </div>
+    <div class="gloss-group" id="gloss-j">
+      <div class="gloss-lhead">J</div>
+      <div class="gloss-entry"><span class="gloss-term">JWT</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">JSON Web Token; a signed, self-contained token encoding claims, widely used for stateless authentication.</span></div>
+    </div>
+    <div class="gloss-group" id="gloss-k">
+      <div class="gloss-lhead">K</div>
+      <div class="gloss-entry"><span class="gloss-term">Kubernetes</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Container orchestration platform automating deployment, scaling, and management of containerized workloads.</span></div>
+    </div>
+    <div class="gloss-group" id="gloss-l">
+      <div class="gloss-lhead">L</div>
+      <div class="gloss-entry"><span class="gloss-term">Latency</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Time elapsed for a single request to travel end-to-end. Measured in ms; distinct from throughput.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">LIFO</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Last In, First Out: the ordering discipline of a stack data structure.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Load Balancer</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Distributes incoming requests across multiple backend servers to prevent any single one being overwhelmed.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">LoRA</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Low-Rank Adaptation; efficient LLM fine-tuning technique inserting small trainable matrices into frozen model weights.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">LRU Cache</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Least Recently Used; eviction policy that removes the item accessed least recently when the cache is full.</span></div>
+    </div>
+    <div class="gloss-group" id="gloss-m">
+      <div class="gloss-lhead">M</div>
+      <div class="gloss-entry"><span class="gloss-term">Marshalling</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Converting an in-memory object into a transmittable format (JSON, Protobuf). Also called serialization.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Memoization</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Caching function results by input so identical calls return the cached value instead of recomputing.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Message Queue</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Async communication buffer where producers publish messages and consumers retrieve and process them independently.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Microservices</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Architectural style decomposing an application into small, independently deployable services.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Monolith</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">A single deployable unit containing all application components; simpler to develop, harder to scale independently.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Mutex</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Mutual-exclusion lock ensuring only one thread accesses a shared resource at a time.</span></div>
+    </div>
+    <div class="gloss-group" id="gloss-n">
+      <div class="gloss-lhead">N</div>
+      <div class="gloss-entry"><span class="gloss-term">N+1 Problem</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Fetching N records then issuing one extra query per record; causes exponential database load.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Normalization</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Organizing relational tables to reduce redundancy and improve data integrity (1NF, 2NF, 3NF, BCNF).</span></div>
+      <div class="gloss-entry"><span class="gloss-term">NoSQL</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Non-relational databases: document (MongoDB), key-value (Redis), column-family (Cassandra), graph (Neo4j).</span></div>
+    </div>
+    <div class="gloss-group" id="gloss-o">
+      <div class="gloss-lhead">O</div>
+      <div class="gloss-entry"><span class="gloss-term">OAuth 2.0</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Authorization framework letting third-party apps act on a user's behalf without exposing credentials.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Observability</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Ability to understand a system's internal state from its external outputs: logs, metrics, and traces.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">ORM</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Object-Relational Mapper; library mapping database rows to in-code objects (SQLAlchemy, Hibernate, Prisma).</span></div>
+    </div>
+    <div class="gloss-group" id="gloss-p">
+      <div class="gloss-lhead">P</div>
+      <div class="gloss-entry"><span class="gloss-term">Pagination</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Splitting large result sets into pages to avoid returning millions of rows in a single response.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Partitioning</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Dividing data across nodes (horizontal) or by type (vertical) to distribute storage and query load.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Polling</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Repeatedly asking a source at intervals for new data. Contrasts with push-based webhooks.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Polyglot Persistence</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Using different databases for different parts of a system, each chosen for its data model strengths.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Protocol Buffers</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Google's language-neutral binary serialization format; faster and smaller than JSON.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Pub/Sub</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Publish/Subscribe messaging where publishers emit events to topics and subscribers receive them asynchronously.</span></div>
+    </div>
+    <div class="gloss-group" id="gloss-q">
+      <div class="gloss-lhead">Q</div>
+      <div class="gloss-entry"><span class="gloss-term">Queue</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">A FIFO data structure or messaging system used for task buffering, async work, and rate smoothing.</span></div>
+    </div>
+    <div class="gloss-group" id="gloss-r">
+      <div class="gloss-lhead">R</div>
+      <div class="gloss-entry"><span class="gloss-term">Race Condition</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">A bug where behavior depends on the uncontrolled relative timing of two or more concurrent operations.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Rate Limiting</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Capping requests per client per time window to protect a service from abuse or overload.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Read Replica</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">A DB copy that receives writes from the primary and serves reads, increasing read throughput.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Referential Integrity</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Constraint ensuring every foreign key value points to an existing primary key row.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Replication</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Maintaining synchronized copies of data across multiple nodes for fault tolerance and read scaling.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">REST</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Representational State Transfer; stateless HTTP architecture using verbs (GET, POST, PUT, DELETE) on noun resources.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Retry Storm</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Many clients retrying simultaneously after a failure, amplifying load. Mitigated by jitter and exponential backoff.</span></div>
+    </div>
+    <div class="gloss-group" id="gloss-s">
+      <div class="gloss-lhead">S</div>
+      <div class="gloss-entry"><span class="gloss-term">Saga Pattern</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Managing distributed transactions as a sequence of steps, each with a compensating rollback action.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Semantic Versioning</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Version scheme MAJOR.MINOR.PATCH: breaking change bumps major, new feature minor, bug fix patch.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Serialization</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Converting in-memory data to a storable or transmittable byte format (JSON, Avro, Protobuf).</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Service Mesh</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Infrastructure layer (Istio, Linkerd) handling service-to-service auth, retries, load balancing, and observability.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Sharding</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Horizontally partitioning data across multiple DB instances, each holding a distinct subset.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">SOLID</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Five OOP design principles: Single responsibility, Open/closed, Liskov substitution, Interface segregation, Dependency inversion.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">SQL Injection</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Attack embedding malicious SQL into user input that an application executes unescaped against its database.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Stateless</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">A server storing no per-session client state; any replica can handle any request given the same inputs.</span></div>
+    </div>
+    <div class="gloss-group" id="gloss-t">
+      <div class="gloss-lhead">T</div>
+      <div class="gloss-entry"><span class="gloss-term">Tail Latency</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">The slowest fraction of requests (p95, p99, p999). Often more damaging to UX than average latency.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Throughput</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Operations processed per unit time (req/s, rows/s). Distinct from latency; both can independently be poor.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Time-to-Live</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">A value specifying when a record (cache entry, DNS record, session token) expires and should be discarded.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Tokenization</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Breaking text into smaller units (tokens) for LLM processing; roughly 1 token is ~0.75 English words.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Transaction</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">A unit of DB work satisfying ACID; either all operations commit or all roll back together.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Two-Phase Commit</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Distributed protocol coordinating all participants to either commit or abort a transaction atomically.</span></div>
+    </div>
+    <div class="gloss-group" id="gloss-u">
+      <div class="gloss-lhead">U</div>
+      <div class="gloss-entry"><span class="gloss-term">UUID</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Universally Unique Identifier; 128-bit value generated to be globally unique without a central coordinator.</span></div>
+    </div>
+    <div class="gloss-group" id="gloss-v">
+      <div class="gloss-lhead">V</div>
+      <div class="gloss-entry"><span class="gloss-term">Vector Database</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Database optimized for storing and similarity-searching high-dimensional embedding vectors at scale.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Vertical Scaling</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Upgrading a single machine with more CPU, RAM, or disk. Simpler than horizontal scaling but has a hard ceiling.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Virtual Machine</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Software emulation of a full computer system; stronger isolation than containers but heavier to run.</span></div>
+    </div>
+    <div class="gloss-group" id="gloss-w">
+      <div class="gloss-lhead">W</div>
+      <div class="gloss-entry"><span class="gloss-term">Webhook</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Server-to-server HTTP callback triggered by an event; the receiver acts on data pushed to it, rather than polling.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">WebSocket</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Persistent full-duplex TCP connection via HTTP upgrade; enables real-time bidirectional browser-server communication.</span></div>
+      <div class="gloss-entry"><span class="gloss-term">Write-Through Cache</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Writes update cache and database simultaneously; reads are fast and the cache is never stale on write.</span></div>
+    </div>
+    <div class="gloss-group" id="gloss-x">
+      <div class="gloss-lhead">X</div>
+      <div class="gloss-entry"><span class="gloss-term">XSS</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Cross-Site Scripting; injecting malicious scripts into a web page viewed by other users to steal data or sessions.</span></div>
+    </div>
+    <div class="gloss-group" id="gloss-z">
+      <div class="gloss-lhead">Z</div>
+      <div class="gloss-entry"><span class="gloss-term">Zero Downtime Deployment</span><span class="gloss-sep"> &mdash; </span><span class="gloss-def">Deploying a new version while keeping the service continuously available via blue-green, canary, or rolling updates.</span></div>
+    </div>
+  </div>
+  <div class="gloss-no-results">No glossary terms match your search.</div>
+</div>
+
 <!-- MODAL -->
 <div class="modal-overlay" id="modal" onclick="if(event.target.id==='modal')closeModal()">
   <div class="modal" id="modal-content">
@@ -1412,7 +3050,7 @@ monkeypatch.<span class="fn">setattr</span>(db, <span class="str">'get_user'</sp
 </div>
 
 <footer>
-  <div class="footer-text">Built for <span>Prajwal</span> &middot; DevPrep &middot; 69 topics &middot; 8 cheat sheets &middot; 16 problems &middot; 9 system designs &middot; 4 deep-dives</div>
+  <div class="footer-text">Built for <span>Prajwal</span> &middot; DevPrep &middot; 69 topics &middot; 10 cheat sheets &middot; 81 problems &middot; 9 system designs &middot; 4 deep-dives</div>
 </footer>
 
 <script src="script.js"></script>
