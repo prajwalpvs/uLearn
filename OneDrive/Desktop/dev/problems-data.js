@@ -1573,13 +1573,120 @@ Trie pruning prevents exploring paths with no matching word prefixes`
   }
 };
 
-// Inject pattern + logic into each problem card on load
+// Company interview frequency data (appearances across public LC discussion posts)
+const PROB_FREQ = {
+  'Two Sum':                        [['Amazon',15],['Meta',10],['Google',8],['Microsoft',6]],
+  'Valid Parentheses':              [['Amazon',8],['Microsoft',7],['Google',6],['Meta',5]],
+  'Reverse Linked List':            [['Meta',12],['Amazon',6],['Google',5],['Microsoft',4]],
+  'Best Time to Buy/Sell Stock':    [['Amazon',10],['Google',7],['Meta',5]],
+  'Longest Substring No Repeat':    [['Amazon',9],['Meta',8],['Microsoft',6],['Google',5]],
+  'LRU Cache':                      [['Amazon',12],['Google',9],['Microsoft',7],['Meta',6]],
+  'Number of Islands':              [['Amazon',10],['Google',8],['Meta',7],['Microsoft',5]],
+  'Merge K Sorted Lists':           [['Google',8],['Amazon',7],['Meta',6]],
+  'Word Break':                     [['Amazon',8],['Google',6],['Meta',5]],
+  'Trapping Rain Water':            [['Amazon',9],['Google',7],['Meta',6],['Microsoft',5]],
+  'Find Duplicate Number':          [['Google',5],['Amazon',4],['Meta',4]],
+  'Binary Search':                  [['Amazon',5],['Microsoft',5],['Google',4]],
+  'Merge Intervals':                [['Google',8],['Meta',7],['Amazon',6],['Microsoft',5]],
+  'Coin Change':                    [['Amazon',7],['Google',6],['Meta',4]],
+  'Kth Largest Element':            [['Amazon',9],['Meta',8],['Google',6],['Microsoft',5]],
+  'Product of Array Except Self':   [['Amazon',8],['Meta',7],['Google',5],['Microsoft',5]],
+  'Maximum Subarray':               [['Amazon',9],['Microsoft',6],['Google',5]],
+  '3Sum':                           [['Amazon',7],['Meta',7],['Google',5],['Apple',4]],
+  'Container With Most Water':      [['Amazon',6],['Google',5],['Meta',5]],
+  'Climbing Stairs':                [['Amazon',6],['Google',5],['Microsoft',4]],
+  'Longest Increasing Subsequence': [['Amazon',6],['Apple',4],['Microsoft',4]],
+  'Longest Common Subsequence':     [['Amazon',5],['Google',4],['Microsoft',4]],
+  'House Robber':                   [['Amazon',6],['Google',5],['Meta',4]],
+  'Clone Graph':                    [['Meta',8],['Amazon',5],['Google',4]],
+  'Course Schedule':                [['Amazon',8],['Google',7],['Meta',6],['Microsoft',5]],
+  'Linked List Cycle':              [['Amazon',7],['Microsoft',5],['Google',4]],
+  'Merge Two Sorted Lists':         [['Amazon',6],['Google',5],['Meta',5]],
+  'Word Search':                    [['Amazon',5],['Meta',5],['Microsoft',4]],
+  'Minimum Window Substring':       [['Amazon',8],['Meta',7],['Google',5]],
+  'Valid Anagram':                  [['Meta',5],['Amazon',4],['Google',4]],
+  'Group Anagrams':                 [['Amazon',7],['Meta',6],['Google',5]],
+  'Valid Palindrome':               [['Meta',5],['Amazon',5],['Microsoft',4]],
+  'Binary Tree Level Order Traversal': [['Amazon',7],['Google',5],['Meta',4]],
+  'Binary Tree Maximum Path Sum':   [['Amazon',7],['Meta',5],['Google',4]],
+  'Serialize and Deserialize Binary Tree': [['Amazon',8],['Google',6],['Meta',6]],
+  'Validate Binary Search Tree':    [['Amazon',6],['Google',4],['Microsoft',4]],
+  'Top K Frequent Elements':        [['Amazon',8],['Meta',6],['Google',5]],
+  'Find Median from Data Stream':   [['Amazon',9],['Google',7],['Meta',6]],
+  'Implement Trie':                 [['Google',8],['Amazon',6],['Microsoft',5]],
+  'Word Search II':                 [['Google',6],['Amazon',5],['Meta',4]],
+  'Pacific Atlantic Water Flow':    [['Google',5],['Amazon',4]],
+  'Meeting Rooms II':               [['Google',6],['Amazon',5],['Meta',5]],
+  'Longest Palindromic Substring':  [['Amazon',6],['Microsoft',5],['Google',4]],
+  'Jump Game':                      [['Amazon',5],['Google',4],['Meta',4]],
+  'Decode Ways':                    [['Amazon',5],['Meta',4],['Google',4]],
+  'Number of Connected Components': [['LinkedIn',5],['Amazon',4],['Google',4]],
+  'Lowest Common Ancestor of BST':  [['Amazon',5],['Google',4],['Microsoft',4]],
+  'Reorder List':                   [['Amazon',4],['Meta',4],['Microsoft',3]],
+  'Set Matrix Zeroes':              [['Amazon',4],['Google',4],['Meta',4]],
+};
+
+// Inject pattern + logic + freq + markdown button into each problem card on load
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.problem-card').forEach(card => {
     const name = card.querySelector('.prob-name')?.textContent.trim();
     const data = PROB_DATA[name];
-    if (!data) return;
 
+    // Inject company frequency tags
+    const freq = PROB_FREQ[name];
+    if (freq && freq.length) {
+      const freqRow = document.createElement('div');
+      freqRow.className = 'prob-freq-row';
+      freq.forEach(([co, n]) => {
+        const tag = document.createElement('span');
+        tag.className = 'freq-tag';
+        tag.textContent = co + ' ×' + n;
+        freqRow.appendChild(tag);
+      });
+      const probCat = card.querySelector('.prob-cat');
+      if (probCat) probCat.after(freqRow);
+    }
+
+    // Inject "Copy as Markdown" button on the prob-head row
+    const probHead = card.querySelector('.prob-head');
+    if (probHead) {
+      const mdBtn = document.createElement('button');
+      mdBtn.className = 'prob-md-btn';
+      mdBtn.title = 'Copy as Markdown (for Notion / Obsidian)';
+      mdBtn.textContent = 'MD';
+      mdBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        const diff = card.querySelector('.prob-diff')?.textContent.trim() || '';
+        const cat = card.querySelector('.prob-cat')?.textContent.trim() || '';
+        const desc = card.querySelector('.prob-desc')?.textContent.trim() || '';
+        const codeText = card.querySelector('.code-panel pre')?.textContent.trim() || '';
+        const timeEl = card.querySelector('.complexity-row div:first-child')?.textContent.replace('Time:', '').trim() || '';
+        const spaceEl = card.querySelector('.complexity-row div:last-child')?.textContent.replace('Space:', '').trim() || '';
+        const pattern = data ? '**Pattern:** ' + data.pattern + '\n\n**Approach:**\n' + data.logic.map((l,i) => (i+1)+'. '+l).join('\n') + '\n\n' : '';
+        const md = [
+          '## ' + name,
+          '**Difficulty:** ' + diff + '  |  **Category:** ' + cat,
+          '',
+          desc,
+          '',
+          pattern + '```python',
+          codeText,
+          '```',
+          '',
+          '**Time:** ' + timeEl + '  |  **Space:** ' + spaceEl,
+        ].join('\n');
+        navigator.clipboard.writeText(md).then(() => {
+          mdBtn.textContent = '✓';
+          setTimeout(() => mdBtn.textContent = 'MD', 1500);
+        }).catch(() => {
+          mdBtn.textContent = '!';
+          setTimeout(() => mdBtn.textContent = 'MD', 1500);
+        });
+      });
+      probHead.appendChild(mdBtn);
+    }
+
+    if (!data) return;
     const sol = card.querySelector('.prob-solution');
     const codePanel = sol?.querySelector('.code-panel');
     if (!sol || !codePanel) return;

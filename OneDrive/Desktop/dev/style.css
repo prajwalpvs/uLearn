@@ -135,6 +135,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 2r
 .cs-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); color: var(--text); vertical-align: top; }
 .cs-table td code { background: #0d1117; padding: 2px 6px; color: var(--accent); }
 .cs-table tr:hover td { background: rgba(255,255,255,0.02); }
+.cs-section-label { font-family: var(--font-mono); font-size: 0.72rem; color: var(--accent3); text-transform: uppercase; letter-spacing: 0.08em; margin: 1.5rem 0 0.6rem; font-weight: 700; }
 
 /* Problem Filters */
 .problem-filters { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2rem; padding: 0 2rem; }
@@ -378,3 +379,93 @@ footer { border-top: 1px solid var(--border); padding: 2rem; text-align: center;
   .cat-header { font-size: 0.68rem; }
   .iq-q { font-size: 0.78rem; }
 }
+
+/* Drill button */
+.drill-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.drill-btn { background: transparent; border: 1px solid var(--accent2); color: var(--accent2); font-family: var(--font-mono); font-size: 0.75rem; padding: 0.45rem 1.1rem; cursor: pointer; transition: background 0.2s, color 0.2s; }
+.drill-btn:hover { background: var(--accent2); color: #000; }
+.drill-hint { font-family: var(--font-mono); font-size: 0.65rem; color: var(--muted); }
+
+/* Drill overlay */
+.drill-overlay { position: fixed; inset: 0; z-index: 300; background: rgba(0,0,0,0.82); display: flex; align-items: center; justify-content: center; padding: 1rem; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
+.drill-overlay.active { opacity: 1; pointer-events: all; }
+.drill-panel { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent2); max-width: 640px; width: 100%; padding: 2rem; position: relative; }
+.drill-panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+.drill-panel-label { font-family: var(--font-mono); font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent2); }
+.drill-panel-close { background: none; border: none; color: var(--muted); font-size: 1rem; cursor: pointer; padding: 0; line-height: 1; }
+.drill-panel-close:hover { color: var(--text); }
+.drill-question { font-size: 1.05rem; font-weight: 700; line-height: 1.5; margin-bottom: 1.5rem; color: var(--text); }
+.drill-answer-wrap { margin-bottom: 1.5rem; }
+.drill-reveal-btn { background: none; border: 1px solid var(--border); color: var(--muted); font-family: var(--font-mono); font-size: 0.72rem; padding: 0.4rem 0.9rem; cursor: pointer; transition: border-color 0.2s, color 0.2s; margin-bottom: 0.75rem; }
+.drill-reveal-btn:hover { border-color: var(--accent); color: var(--accent); }
+.drill-answer { font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted); line-height: 1.6; display: none; }
+.drill-answer.show { display: block; }
+.drill-footer { display: flex; justify-content: flex-end; }
+.drill-next-btn { background: var(--accent); color: #000; border: none; font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; padding: 0.5rem 1.2rem; cursor: pointer; transition: opacity 0.2s; }
+.drill-next-btn:hover { opacity: 0.88; }
+
+/* Shortcuts overlay */
+.shortcuts-overlay { position: fixed; inset: 0; z-index: 300; background: rgba(0,0,0,0.75); display: flex; align-items: center; justify-content: center; padding: 1rem; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
+.shortcuts-overlay.active { opacity: 1; pointer-events: all; }
+.shortcuts-panel { background: var(--surface); border: 1px solid var(--border); max-width: 420px; width: 100%; padding: 1.75rem; }
+.shortcuts-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; }
+.shortcuts-title { font-family: var(--font-mono); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent); }
+.shortcuts-close { background: none; border: none; color: var(--muted); font-size: 1rem; cursor: pointer; }
+.shortcuts-close:hover { color: var(--text); }
+.shortcuts-grid { display: flex; flex-direction: column; gap: 0.75rem; }
+.shortcut-row { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.78rem; }
+.shortcut-row span { margin-left: auto; color: var(--muted); font-size: 0.72rem; }
+kbd { display: inline-block; background: var(--surface2); border: 1px solid var(--border); color: var(--text); font-family: var(--font-mono); font-size: 0.68rem; padding: 2px 7px; border-radius: 3px; }
+
+/* Modal nav buttons */
+.modal-actions { display: flex; align-items: center; gap: 0.4rem; flex-shrink: 0; }
+.modal-nav-btn { background: none; border: 1px solid var(--border); color: var(--muted); font-size: 0.9rem; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: border-color 0.2s, color 0.2s; }
+.modal-nav-btn:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+.modal-nav-btn:disabled { opacity: 0.3; cursor: default; }
+.modal-copy-btn { background: none; border: 1px solid var(--border); color: var(--muted); font-size: 0.9rem; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: border-color 0.2s, color 0.2s; }
+.modal-copy-btn:hover { border-color: var(--accent3); color: var(--accent3); }
+
+/* Mark-solved checkbox on problem cards */
+.prob-solved-row { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.5rem; }
+.prob-solved-label { font-family: var(--font-mono); font-size: 0.65rem; color: var(--muted); cursor: pointer; display: flex; align-items: center; gap: 0.35rem; }
+.prob-solved-cb { accent-color: var(--accent); cursor: pointer; width: 13px; height: 13px; }
+.problem-card.solved { border-color: rgba(0,255,135,0.35); }
+.problem-card.solved .prob-name { color: var(--accent); }
+
+/* Filter count badge */
+.filter-count { font-family: var(--font-mono); font-size: 0.6rem; color: var(--muted); margin-left: 0.75rem; align-self: center; }
+
+/* Progress bar in stats */
+.progress-row { display: flex; flex-direction: column; gap: 0.25rem; margin-top: 0.5rem; }
+.progress-label { font-family: var(--font-mono); font-size: 0.6rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+.progress-track { height: 4px; background: var(--surface2); border-radius: 2px; overflow: hidden; }
+.progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.4s; }
+
+/* Company frequency tags */
+.prob-freq-row { display: flex; flex-wrap: wrap; gap: 0.3rem; margin: 0.35rem 0 0.1rem; }
+.freq-tag { font-family: var(--font-mono); font-size: 0.58rem; padding: 1px 6px; background: rgba(79,195,247,0.08); color: var(--accent3); border: 1px solid rgba(79,195,247,0.2); white-space: nowrap; }
+
+/* Copy-as-Markdown button on problem card header */
+.prob-md-btn { background: none; border: 1px solid var(--border); color: var(--muted); font-family: var(--font-mono); font-size: 0.55rem; font-weight: 700; padding: 2px 6px; cursor: pointer; margin-left: auto; flex-shrink: 0; transition: border-color 0.2s, color 0.2s; }
+.prob-md-btn:hover { border-color: var(--accent2); color: var(--accent2); }
+
+/* Related topic chips in modal */
+.modal-related { border-top: 1px solid var(--border); margin-top: 1rem; padding-top: 1rem; }
+.related-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
+.related-chip { background: var(--surface2); border: 1px solid var(--border); color: var(--muted); font-family: var(--font-mono); font-size: 0.7rem; padding: 0.3rem 0.75rem; cursor: pointer; transition: border-color 0.2s, color 0.2s; }
+.related-chip:hover { border-color: var(--accent); color: var(--accent); }
+
+/* Glossary category filter bar */
+.gloss-cat-bar { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+.gloss-cat-btn { background: none; border: 1px solid var(--border); color: var(--muted); font-family: var(--font-mono); font-size: 0.65rem; padding: 0.28rem 0.75rem; cursor: pointer; transition: border-color 0.2s, color 0.2s, background 0.2s; }
+.gloss-cat-btn:hover { border-color: var(--accent); color: var(--accent); }
+.gloss-cat-btn.active { background: var(--accent); color: #000; border-color: var(--accent); font-weight: 700; }
+.gloss-cat-btn--beginner { border-color: rgba(0,255,135,0.3); color: var(--accent); }
+.gloss-cat-btn--beginner:hover { background: rgba(0,255,135,0.12); border-color: var(--accent); }
+.gloss-cat-btn--beginner.active { background: var(--accent); color: #000; }
+
+/* Glossary copy button */
+.gloss-entry { position: relative; }
+.gloss-copy-btn { position: absolute; right: 0.2rem; top: 50%; transform: translateY(-50%); background: none; border: none; color: transparent; font-size: 0.75rem; cursor: pointer; padding: 0 0.25rem; transition: color 0.15s; }
+.gloss-entry:hover .gloss-copy-btn { color: var(--muted); }
+.gloss-copy-btn:hover { color: var(--accent) !important; }

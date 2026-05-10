@@ -178,6 +178,153 @@ const TOPIC_DATA = {
       { name: 'How HTTPS works (comic)', url: 'https://howhttps.works/' }
     ]
   },
+  'binary-numbers': {
+    icon: '🔢', title: 'Binary & Number Systems', cat: 'CS Fundamentals',
+    overview: 'Computers store everything as 0s and 1s. Understanding binary, hexadecimal, ASCII, and Unicode is the foundation that makes every other computing concept make sense — from memory addresses to color values to text encoding.',
+    concepts: [
+      '<strong>Binary (Base 2)</strong> — Uses only 0 and 1. Each digit is a bit. 8 bits = 1 byte, which can hold values 0–255.',
+      '<strong>Hexadecimal (Base 16)</strong> — Digits 0–9 and A–F. Each hex digit = 4 bits. Used in memory addresses and color codes (e.g., #FF5733).',
+      '<strong>Decimal to Binary</strong> — Divide by 2 repeatedly and collect remainders. Example: 13 → 1101 in binary.',
+      '<strong>ASCII</strong> — A standard that maps numbers to characters. "A" = 65, "a" = 97, "0" = 48. Covers the first 128 characters.',
+      '<strong>Unicode & UTF-8</strong> — Extends ASCII to support all world languages and emoji. UTF-8 uses 1–4 bytes per character and is backward-compatible with ASCII.',
+      '<strong>RGB Color</strong> — Each pixel is 3 bytes: Red, Green, Blue (0–255 each). White = (255,255,255), Black = (0,0,0), and hex #FF0000 = pure red.',
+      '<strong>Integer Overflow</strong> — When a value exceeds what a type can hold. A signed 8-bit int holds -128 to 127; going past 127 wraps around.',
+      '<strong>Floating-Point Imprecision</strong> — Decimals are stored as fraction × 2^exponent (IEEE 754). Some values like 0.1 cannot be represented exactly.'
+    ],
+    qas: [
+      { q: 'Why does 0.1 + 0.2 not equal 0.3 in most languages?', a: 'Floating-point numbers are stored in binary (base 2). 0.1 has no exact binary representation — just like 1/3 has no exact decimal representation. The result is tiny rounding errors. Use integer arithmetic (cents instead of dollars) or round for display.' },
+      { q: 'What is the maximum value of an unsigned 8-bit integer?', a: '255. An 8-bit field has 2^8 = 256 possible values: 0 through 255.' },
+      { q: 'Why do programmers often use hexadecimal instead of binary?', a: 'Hex is more compact. Each hex digit represents exactly 4 bits, so a full byte is just two hex digits (e.g., 0xFF instead of 11111111). Much easier to read and type.' }
+    ],
+    resources: [
+      { name: 'CS50 Week 0 — Binary lecture', url: 'https://cs50.harvard.edu/x/2025/weeks/0/' },
+      { name: 'Number Systems — Khan Academy', url: 'https://www.khanacademy.org/computing/computers-and-internet/xcae6f4a7ff015e7d:digital-information/xcae6f4a7ff015e7d:binary-numbers/a/bits-and-binary' }
+    ]
+  },
+  'how-computers-work': {
+    icon: '💻', title: 'How Computers Work', cat: 'CS Fundamentals',
+    overview: 'Understanding the journey from source code to running program — and how a CPU, RAM, and operating system work together — gives you the mental model to debug hard problems, optimize performance, and write better code.',
+    concepts: [
+      '<strong>Source Code</strong> — Human-readable instructions (Python, C, JS). The computer cannot run this directly.',
+      '<strong>Compiler</strong> — Translates source code into machine code in one step (C, Go, Rust). The compiler checks for errors before producing an executable.',
+      '<strong>Interpreter</strong> — Runs source code line-by-line without pre-compilation (Python, Ruby). Slower but more flexible.',
+      '<strong>Machine Code</strong> — Binary instructions the CPU understands. Specific to each CPU architecture (x86, ARM).',
+      '<strong>Compilation Steps</strong> — Preprocessing → Compiling → Assembling → Linking. Linker combines your code with libraries.',
+      '<strong>CPU</strong> — Executes instructions: fetch, decode, execute. Modern CPUs have multiple cores and caches (L1, L2, L3).',
+      '<strong>RAM</strong> — Temporary fast storage for running programs. When you open an app, its code and data are loaded into RAM.',
+      '<strong>Operating System</strong> — Manages hardware resources (CPU time, RAM, I/O) and provides abstractions (files, processes, sockets) to programs.'
+    ],
+    qas: [
+      { q: 'What is the difference between a compiled and interpreted language?', a: 'Compiled: source code → machine code before running (faster execution, finds errors early). Interpreted: executed line-by-line at runtime (slower, more flexible, errors only at that line). Some languages (Java, Python) use a middle ground — compiled to bytecode, then run on a virtual machine.' },
+      { q: 'What happens when you run a Python script?', a: 'CPython compiles your .py file to bytecode (.pyc), then the Python VM interprets that bytecode line by line. You never see machine code directly.' },
+      { q: 'What is the difference between RAM and storage (SSD/HDD)?', a: 'RAM is fast but temporary — cleared on power off, holds running programs. Storage is slow but persistent — holds files. A program must be loaded from storage into RAM before the CPU can run it.' }
+    ],
+    resources: [
+      { name: 'CS50 Week 1 — How C compiles', url: 'https://cs50.harvard.edu/x/2025/weeks/1/' },
+      { name: 'How computers work — Khan Academy', url: 'https://www.khanacademy.org/computing/code-org/computers-and-the-internet' }
+    ]
+  },
+  'recursion': {
+    icon: '🔄', title: 'Recursion', cat: 'CS Fundamentals',
+    overview: 'Recursion is when a function solves a problem by calling itself on a smaller version of the same problem. It is one of the most important — and initially confusing — concepts in computer science. Once it clicks, entire categories of problems become easier.',
+    concepts: [
+      '<strong>Base Case</strong> — The condition that stops recursion. Without it, the function calls itself forever and causes a stack overflow.',
+      '<strong>Recursive Case</strong> — The part where the function calls itself with a smaller/simpler input, working toward the base case.',
+      '<strong>Call Stack</strong> — Each recursive call adds a frame to the call stack. Stack frames are popped as calls return.',
+      '<strong>Stack Overflow</strong> — Too many recursive calls fill the stack. Usually means a missing or unreachable base case.',
+      '<strong>Factorial</strong> — n! = n × (n-1)!; base case: 0! = 1. Classic first example.',
+      '<strong>Fibonacci</strong> — fib(n) = fib(n-1) + fib(n-2); base: fib(0)=0, fib(1)=1. Naive recursion is O(2ⁿ) — shows why memoization matters.',
+      '<strong>Tree Traversal</strong> — Recursion is natural for trees: process node, recurse on left child, recurse on right child.',
+      '<strong>Divide & Conquer</strong> — Merge sort and binary search are recursive: split the problem, solve each half, combine.'
+    ],
+    qas: [
+      { q: 'How do you write a recursive function?', a: '1) Define the base case — smallest input with a known answer. 2) Define the recursive case — express the answer in terms of the same function on a smaller input. Example: factorial(n) = n * factorial(n-1) with base case factorial(0) = 1.' },
+      { q: 'When should recursion be avoided?', a: 'When the recursion depth is very large (risk of stack overflow) or when you are repeatedly solving the same subproblems without memoization (exponential time). Many recursive algorithms can be rewritten iteratively with a stack or converted to DP.' },
+      { q: 'Why is recursive Fibonacci so slow?', a: 'fib(5) calls fib(4) and fib(3). fib(4) calls fib(3) and fib(2). fib(3) is computed twice. This duplication grows exponentially — O(2ⁿ). Fix with memoization (cache results) or bottom-up DP (O(n) time, O(1) space).' }
+    ],
+    resources: [
+      { name: 'CS50 Week 3 — Recursion', url: 'https://cs50.harvard.edu/x/2025/weeks/3/' },
+      { name: 'Recursion visualization', url: 'https://visualgo.net/en/recursion' }
+    ]
+  },
+  'debugging': {
+    icon: '🐛', title: 'Debugging', cat: 'CS Fundamentals',
+    overview: 'Debugging is the skill of finding and fixing errors in code. Experienced developers are fast debuggers — not because they write perfect code, but because they have systematic tools and habits for tracking down bugs quickly.',
+    concepts: [
+      '<strong>Syntax Errors</strong> — Caught by the compiler or interpreter before running. Misspelled keywords, missing brackets, wrong indentation.',
+      '<strong>Runtime Errors</strong> — Occur during execution. Division by zero, null pointer, index out of bounds. Often have a stack trace.',
+      '<strong>Logic Errors</strong> — Code runs without crashing but produces wrong results. Hardest to find — requires systematic testing.',
+      '<strong>Print Debugging</strong> — Add print statements to inspect variable values at different points. Simple and universally available.',
+      '<strong>Debugger</strong> — IDE tool that lets you pause execution at breakpoints, step through code line by line, and inspect all variables in memory.',
+      '<strong>Step Over / Step Into</strong> — Step over: execute the next line without entering function calls. Step into: enter the function call to debug inside it.',
+      '<strong>Stack Trace</strong> — When a program crashes, the stack trace shows the chain of function calls that led to the crash. Read from bottom (where execution started) to top (where it crashed).',
+      '<strong>Rubber Duck Debugging</strong> — Explain your code out loud (to a rubber duck, colleague, or AI). Articulating the problem often reveals the answer.'
+    ],
+    qas: [
+      { q: 'What is a stack trace and how do you read it?', a: 'A stack trace shows all active function calls at the moment of the crash, from the outermost call to the inner one that failed. Start at the top — that is where the error occurred. The lines below show how the code got there. Look for your own code in the trace (not library code) — that is usually where the bug is.' },
+      { q: 'How do you debug a problem you cannot reproduce?', a: 'Add more logging around the suspected area. Add assertions to catch bad state early. Check if it is environment-specific (production vs local) — look for config differences. Use distributed tracing if it is a multi-service issue.' },
+      { q: 'What is the difference between a debugger and print statements?', a: 'Print debugging is quick and works anywhere. A debugger lets you pause execution and inspect the full program state (all variables, call stack) without editing code. Debuggers are much more powerful for complex bugs but require setup.' }
+    ],
+    resources: [
+      { name: 'CS50 Week 2 — Debugging', url: 'https://cs50.harvard.edu/x/2025/weeks/2/' },
+      { name: 'Chrome DevTools debugging guide', url: 'https://developer.chrome.com/docs/devtools/javascript/' }
+    ]
+  },
+  'bitwise': {
+    icon: '🔣', title: 'Bitwise Operations', cat: 'CS Fundamentals',
+    overview: 'Bitwise operators work directly on the individual bits of integers. They appear in coding interviews, network programming, cryptography, and performance-critical code. Understanding them also deepens your understanding of how computers represent data.',
+    concepts: [
+      '<strong>AND (&)</strong> — Both bits must be 1. x & y. Used to check or clear specific bits. Example: 5 & 3 = 101 & 011 = 001 = 1.',
+      '<strong>OR (|)</strong> — At least one bit must be 1. x | y. Used to set specific bits. Example: 5 | 3 = 101 | 011 = 111 = 7.',
+      '<strong>XOR (^)</strong> — Bits must differ. x ^ y. Same inputs = 0; different = 1. Example: 5 ^ 3 = 101 ^ 011 = 110 = 6. XOR of a number with itself = 0.',
+      '<strong>NOT (~)</strong> — Flips all bits. ~x = -(x+1) in most languages (two\'s complement). Example: ~5 = -6.',
+      '<strong>Left Shift (<<)</strong> — Shift bits left, filling with 0s. x << n = x × 2ⁿ. Example: 1 << 3 = 8.',
+      '<strong>Right Shift (>>)</strong> — Shift bits right. x >> n = x ÷ 2ⁿ (integer division). Example: 16 >> 2 = 4.',
+      '<strong>Check if bit is set</strong> — (x >> n) & 1. Returns 1 if the nth bit is set, 0 otherwise.',
+      '<strong>Set a bit</strong> — x | (1 << n). Forces bit n to 1.',
+      '<strong>Clear a bit</strong> — x & ~(1 << n). Forces bit n to 0.',
+      '<strong>Toggle a bit</strong> — x ^ (1 << n). Flips bit n.',
+      '<strong>Power of 2 check</strong> — x & (x-1) == 0 (and x > 0). If x is a power of 2, it has exactly one bit set.',
+      '<strong>Two\'s Complement</strong> — How negative numbers are stored. Flip all bits and add 1. Allows the same addition hardware to work for negative numbers.'
+    ],
+    qas: [
+      { q: 'How do you check if a number is even or odd using bitwise ops?', a: 'x & 1. If the last bit is 0, the number is even; if it is 1, it is odd. This is faster than x % 2 and works the same way.' },
+      { q: 'What is XOR useful for in algorithms?', a: 'XOR has a key property: x ^ x = 0 and x ^ 0 = x. This makes it perfect for finding a single non-duplicated element in an array where all others appear twice — XOR all elements together and duplicates cancel out.' },
+      { q: 'What does x & (x-1) do?', a: 'It clears the lowest set bit of x. If the result is 0, x had only one set bit — so x is a power of 2. This is also used to count set bits: loop while x != 0, each iteration doing x = x & (x-1) removes one set bit.' }
+    ],
+    resources: [
+      { name: 'W3Schools — C Bitwise Operators', url: 'https://www.w3schools.com/c/c_operators_bitwise.php' },
+      { name: 'Bit Manipulation tricks', url: 'https://graphics.stanford.edu/~seander/bithacks.html' }
+    ]
+  },
+  'regex': {
+    icon: '🔍', title: 'Regular Expressions', cat: 'CS Fundamentals',
+    overview: 'Regular expressions (regex) are patterns for matching and manipulating text. Every developer uses them — for validation, parsing, search-and-replace, and log analysis. The syntax looks cryptic at first but follows a small set of rules.',
+    concepts: [
+      '<strong>Literal characters</strong> — Match themselves exactly. <code>cat</code> matches the string "cat".',
+      '<strong>. (dot)</strong> — Matches any single character except newline. <code>c.t</code> matches "cat", "cut", "c3t".',
+      '<strong>* + ?</strong> — Quantifiers. <code>*</code> = 0 or more, <code>+</code> = 1 or more, <code>?</code> = 0 or 1 (optional).',
+      '<strong>{n} {n,m}</strong> — Exact or range repetition. <code>\\d{3}</code> = exactly 3 digits.',
+      '<strong>[ ] character class</strong> — Match one of these chars. <code>[aeiou]</code> matches any vowel. <code>[a-z]</code> = any lowercase letter.',
+      '<strong>^ $ anchors</strong> — <code>^</code> = start of string, <code>$</code> = end. <code>^\\d+$</code> matches strings that are only digits.',
+      '<strong>\\d \\w \\s</strong> — Shorthand classes. <code>\\d</code> = digit [0-9], <code>\\w</code> = word char [a-zA-Z0-9_], <code>\\s</code> = whitespace.',
+      '<strong>| alternation</strong> — OR. <code>cat|dog</code> matches "cat" or "dog".',
+      '<strong>( ) groups</strong> — Capture a portion for reuse or extraction. <code>(\\d{4})-(\\d{2})</code> captures year and month.',
+      '<strong>Greedy vs lazy</strong> — By default quantifiers are greedy (match as much as possible). Add <code>?</code> to make lazy: <code>.*?</code>.',
+      '<strong>Lookahead / lookbehind</strong> — Assert context without consuming chars. <code>(?=...)</code> positive lookahead.',
+      '<strong>Flags</strong> — <code>i</code> = case-insensitive, <code>g</code> = global (find all), <code>m</code> = multiline (^ and $ match each line).'
+    ],
+    qas: [
+      { q: 'How do you validate an email address with regex?', a: 'A simple pattern: <code>/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/</code>. It checks: no whitespace or @ before the @, an @ symbol, domain, dot, TLD. Full RFC 5322 email validation with regex is extremely complex — for production use a library or simple check + server-side confirmation.' },
+      { q: 'What is the difference between greedy and lazy matching?', a: 'Greedy (default): <code>.*</code> matches as much as possible. On "<div>hello</div><div>world</div>", <code><div>.*</div></code> matches the whole string (first <div> to last </div>). Lazy: <code>.*?</code> matches as little as possible — gives you each <div> block separately.' },
+      { q: 'How do you use regex in Python?', a: 'Import the re module. Key functions: re.search(pattern, string) — find first match anywhere. re.match() — match at start only. re.findall() — return all non-overlapping matches as a list. re.sub(pattern, replacement, string) — replace matches. re.compile(pattern) — pre-compile for performance when reusing.' }
+    ],
+    resources: [
+      { name: 'W3Schools — RegEx Tutorial', url: 'https://www.w3schools.com/python/python_regex.asp' },
+      { name: 'Regex101 — online tester with explanation', url: 'https://regex101.com/' },
+      { name: 'RegexOne — interactive exercises', url: 'https://regexone.com/' }
+    ]
+  },
   'system-design': {
     icon: '🏗️', title: 'System Design', cat: 'Backend & Architecture',
     overview: 'System design interviews test how you architect large-scale systems. There\'s no single right answer — interviewers want to see how you reason about tradeoffs, capacity, scalability, and reliability.',
@@ -316,6 +463,82 @@ const TOPIC_DATA = {
     resources: [
       { name: 'Building Evolutionary Architectures', url: 'https://evolutionaryarchitecture.com/' },
       { name: 'Domain-Driven Design Reference', url: 'https://www.domainlanguage.com/ddd/reference/' }
+    ]
+  },
+  'flask': {
+    icon: '🌶️', title: 'Flask & Web Frameworks', cat: 'Backend & Architecture',
+    overview: 'Flask is a lightweight Python web framework. Learning Flask teaches you how the web works at a practical level — HTTP requests and responses, URL routing, server-side rendering with templates, and session management. The concepts transfer to all web frameworks.',
+    concepts: [
+      '<strong>Route</strong> — Maps a URL path to a Python function. @app.route("/about") makes /about call your function.',
+      '<strong>Decorator</strong> — Python syntax (@) that wraps a function. Flask uses @app.route to register URL handlers without modifying your function.',
+      '<strong>Request Object</strong> — Contains everything about the incoming HTTP request: method (GET/POST), form data, query parameters, cookies, headers.',
+      '<strong>Response</strong> — What your route returns. Can be a string, rendered HTML template, JSON, or a redirect.',
+      '<strong>Jinja2 Templates</strong> — HTML files with {{ variable }} and {% for %} / {% if %} blocks. Flask renders them server-side, filling in dynamic data before sending HTML to the browser.',
+      '<strong>Sessions</strong> — Server-side state tied to a user across requests. Flask stores session data in a signed cookie by default. Used for login state.',
+      '<strong>Cookies</strong> — Small key-value pairs stored in the browser. Sent with every request to that domain. Used for sessions, tracking, preferences.',
+      '<strong>AJAX</strong> — JavaScript making HTTP requests from the browser without reloading the page. fetch() or XMLHttpRequest. The response is usually JSON.'
+    ],
+    qas: [
+      { q: 'What is the difference between GET and POST?', a: 'GET requests data (parameters in URL, visible, cacheable, safe to repeat). POST submits data (in request body, not in URL, not cached, can have side effects like creating a record). Use POST for forms that change data; GET for reading.' },
+      { q: 'How do sessions work in Flask?', a: 'Flask stores session data in a signed cookie (using your app.secret_key). The browser sends this cookie with every request. Flask reads and verifies it to restore session state. Since the cookie is signed (not encrypted), do not store sensitive data — anyone can decode it but not forge it.' },
+      { q: 'What is the difference between a redirect and rendering a template?', a: 'render_template() returns HTML for the current request (same URL). redirect() tells the browser to make a new GET request to a different URL (the URL changes). Use redirect after a form POST to prevent re-submission on refresh (Post/Redirect/Get pattern).' }
+    ],
+    resources: [
+      { name: 'CS50 Week 9 — Flask', url: 'https://cs50.harvard.edu/x/2025/weeks/9/' },
+      { name: 'Flask official documentation', url: 'https://flask.palletsprojects.com/en/stable/quickstart/' }
+    ]
+  },
+  'django': {
+    icon: '🎸', title: 'Django', cat: 'Backend & Architecture',
+    overview: 'Django is Python\'s most popular full-stack web framework — "batteries included". It provides an ORM, admin panel, authentication, URL routing, and templating out of the box. Understanding Django is essential for Python web developers.',
+    concepts: [
+      '<strong>MTV Pattern</strong> — Django\'s version of MVC: Model (database), Template (HTML), View (business logic). Views are functions or classes that handle requests.',
+      '<strong>ORM</strong> — Object-Relational Mapper. Define Python classes → Django creates and queries database tables. No raw SQL needed for basic operations.',
+      '<strong>Model</strong> — A Python class inheriting from models.Model. Each attribute = a DB column. CharField, IntegerField, ForeignKey, etc.',
+      '<strong>Migration</strong> — Tracks model changes. <code>manage.py makemigrations</code> creates migration files; <code>migrate</code> applies them to the DB.',
+      '<strong>URL Dispatcher</strong> — urls.py maps URL patterns to views. path("about/", views.about) routes /about to the about view.',
+      '<strong>View</strong> — Handles a request and returns a response. Function-based views (def) are simpler; class-based views (CBV) have built-in CRUD helpers.',
+      '<strong>Template</strong> — HTML with Django template language. {{ variable }}, {% if %}, {% for %}, {% block %} for inheritance.',
+      '<strong>Admin Panel</strong> — Auto-generated CRUD interface at /admin. Register a model in admin.py and get a full management UI for free.',
+      '<strong>Django REST Framework (DRF)</strong> — Third-party package to build REST APIs. Serializers, ViewSets, Routers, Authentication.',
+      '<strong>Middleware</strong> — Hook into every request/response. Used for auth, logging, CORS, CSRF protection.',
+      '<strong>CSRF Protection</strong> — Django auto-adds CSRF tokens to forms to prevent cross-site request forgery attacks. Required in every POST form.'
+    ],
+    qas: [
+      { q: 'What is the difference between Flask and Django?', a: 'Flask is micro — give you just routing and no more. You pick and add your own ORM, auth, etc. Django is full-stack — ORM, admin, auth, forms, CSRF protection all built in. Use Flask for APIs and microservices; use Django for full web apps with databases.' },
+      { q: 'What is a Django migration and why does it matter?', a: 'A migration is a Python file that records a database schema change (adding a column, creating a table). Running migrate applies these changes to the DB. It is version control for your database schema — everyone on the team runs the same migrations to stay in sync.' },
+      { q: 'How does the Django ORM prevent SQL injection?', a: 'Django always parameterises queries — it never interpolates user input directly into SQL strings. User.objects.filter(name=user_input) generates a safe parameterised query. Raw SQL with Model.objects.raw() or cursor.execute() is also safe if you use parameter placeholders (%s) rather than string formatting.' }
+    ],
+    resources: [
+      { name: 'W3Schools — Django Tutorial', url: 'https://www.w3schools.com/django/index.php' },
+      { name: 'Django official documentation', url: 'https://docs.djangoproject.com/en/stable/' },
+      { name: 'Django Girls Tutorial', url: 'https://tutorial.djangogirls.org/' }
+    ]
+  },
+  'nodejs': {
+    icon: '🟩', title: 'Node.js', cat: 'Backend & Architecture',
+    overview: 'Node.js is JavaScript running on the server — powered by V8 (Chrome\'s engine) with a non-blocking I/O model. It lets JavaScript developers build fast APIs, tools, and real-time apps without switching languages.',
+    concepts: [
+      '<strong>Event Loop</strong> — Node runs on a single thread but handles concurrency through an event loop. I/O operations are non-blocking — callbacks fire when they complete, freeing the thread for other work.',
+      '<strong>Non-blocking I/O</strong> — Instead of waiting for a file read or DB query to finish, Node registers a callback and moves on. When the I/O completes, the callback is queued.',
+      '<strong>npm</strong> — Node Package Manager. The world\'s largest software registry. <code>npm install</code>, <code>package.json</code>, <code>node_modules</code>.',
+      '<strong>CommonJS modules</strong> — <code>require("fs")</code> and <code>module.exports</code>. Original Node module system. ES Modules (<code>import/export</code>) are now also supported.',
+      '<strong>Express.js</strong> — Minimal web framework for Node. Define routes with app.get("/path", handler). Middleware with app.use(). The most widely used Node web framework.',
+      '<strong>Middleware</strong> — Functions that process requests before they reach route handlers. Used for logging, auth, body parsing, CORS.',
+      '<strong>Streams</strong> — Read/write data incrementally (chunks) instead of loading everything into memory. Ideal for file transfers and large data.',
+      '<strong>process & global</strong> — <code>process.env</code> for environment variables, <code>process.argv</code> for CLI args. <code>__dirname</code> and <code>__filename</code> give the current file path.',
+      '<strong>Async patterns</strong> — Callbacks (old style) → Promises (<code>.then()</code>) → async/await (modern). All are ways to handle asynchronous operations.',
+      '<strong>fs, http, path</strong> — Built-in modules. <code>fs</code> for files, <code>http</code> to create a raw server, <code>path</code> for file paths across OSes.'
+    ],
+    qas: [
+      { q: 'How does Node.js handle many concurrent requests with a single thread?', a: 'The event loop. When a request needs I/O (DB query, file read), Node delegates it to the OS/libuv and immediately moves on to handle the next request. When the I/O finishes, its callback is queued and executed when the event loop is free. This makes Node great for I/O-bound work but not for CPU-heavy tasks (which block the single thread).' },
+      { q: 'When would you choose Node.js over Python for a backend?', a: 'Node excels at high-concurrency real-time apps (chat, gaming, live feeds) where many connections are open simultaneously. Python (Django/Flask/FastAPI) is often preferred for data processing, ML integration, or when the team knows Python better. The choice usually comes down to team skill and use case, not raw performance.' },
+      { q: 'What is the difference between require and import in Node.js?', a: 'require() is CommonJS (the original Node module system) — synchronous, dynamic, can be called anywhere. import is ES Modules — static, must be at the top level, enables tree-shaking. Modern Node supports both. Use .mjs extension or "type": "module" in package.json for ES modules.' }
+    ],
+    resources: [
+      { name: 'W3Schools — Node.js Tutorial', url: 'https://www.w3schools.com/nodejs/default.asp' },
+      { name: 'Node.js official docs', url: 'https://nodejs.org/en/docs' },
+      { name: 'Express.js official docs', url: 'https://expressjs.com/' }
     ]
   },
   'git': {
@@ -478,6 +701,29 @@ const TOPIC_DATA = {
     resources: [
       { name: 'TypeScript Handbook', url: 'https://www.typescriptlang.org/docs/handbook/intro.html' },
       { name: 'Type Challenges', url: 'https://github.com/type-challenges/type-challenges' }
+    ]
+  },
+  'ml-basics': {
+    icon: '🤖', title: 'Machine Learning Basics', cat: 'ML / AI Engineering',
+    overview: 'Machine learning lets programs learn patterns from data instead of following explicit rules. Understanding these core concepts — supervised learning, decision trees, and neural networks — gives you the foundation to understand how AI systems, including LLMs, actually work.',
+    concepts: [
+      '<strong>Supervised Learning</strong> — Train on labelled examples (input → expected output). The model learns to predict labels for new inputs. Examples: spam detection, image classification.',
+      '<strong>Unsupervised Learning</strong> — Find hidden patterns in unlabelled data. Clustering (k-means), dimensionality reduction (PCA).',
+      '<strong>Decision Tree</strong> — A flowchart of yes/no questions. At each node, split on the feature that best separates classes. Easy to understand and visualize.',
+      '<strong>Training vs Testing</strong> — Split data: train the model on training set, measure accuracy on unseen test set. Never evaluate on training data — it will always look perfect.',
+      '<strong>Overfitting</strong> — Model memorises training data and fails on new data. Reduce with more data, simpler model, regularisation, or dropout.',
+      '<strong>Neural Network</strong> — Layers of connected nodes (neurons) that learn weights through backpropagation. More layers = deeper network = deep learning.',
+      '<strong>Reinforcement Learning</strong> — Agent takes actions, receives rewards or penalties. Learns through trial and error (explore vs exploit). Used in game-playing AIs.',
+      '<strong>Minimax</strong> — Algorithm for two-player zero-sum games. Recursively explores all possible game states, maximising your score while minimising the opponent\'s.'
+    ],
+    qas: [
+      { q: 'What is the difference between supervised and unsupervised learning?', a: 'Supervised: you provide labelled training data (X → y). Model learns to predict y from X. Unsupervised: no labels. Model finds patterns, clusters, or structure in X on its own.' },
+      { q: 'What is overfitting and how do you fix it?', a: 'Overfitting is when a model performs well on training data but poorly on new data — it has memorised the noise rather than learning the signal. Fixes: more training data, simpler model, regularisation (L1/L2), dropout (for neural nets), or early stopping.' },
+      { q: 'How does a neural network learn?', a: 'Forward pass: input data flows through layers, producing a prediction. Loss function measures the error. Backpropagation computes how much each weight contributed to the error. Gradient descent adjusts weights to reduce error. Repeat many times (epochs) over the training set.' }
+    ],
+    resources: [
+      { name: 'CS50 AI Week', url: 'https://cs50.harvard.edu/x/2025/weeks/ai/' },
+      { name: 'fast.ai — Practical Deep Learning', url: 'https://course.fast.ai/' }
     ]
   },
   'llm-fundamentals': {
@@ -829,6 +1075,85 @@ const TOPIC_DATA = {
     resources: [
       { name: 'PostgreSQL Tutorial', url: 'https://www.postgresqltutorial.com/' },
       { name: 'MySQL vs PostgreSQL comparison', url: 'https://www.bytebase.com/blog/postgres-vs-mysql/' }
+    ]
+  },
+  'html-css': {
+    icon: '🌐', title: 'HTML & CSS', cat: 'Programming Languages',
+    overview: 'HTML provides the structure and content of web pages; CSS controls their visual appearance. Together they are the foundation of every website. Every developer — regardless of specialism — benefits from understanding how they work.',
+    concepts: [
+      '<strong>HTML Tags</strong> — Elements like &lt;div&gt;, &lt;p&gt;, &lt;h1&gt;, &lt;a&gt;, &lt;img&gt;, &lt;form&gt; that define page structure. Tags have opening and closing: &lt;p&gt;text&lt;/p&gt;.',
+      '<strong>Attributes</strong> — Extra info inside a tag: &lt;a href="url"&gt; or &lt;img src="photo.jpg" alt="description"&gt;.',
+      '<strong>DOM</strong> — Document Object Model. The browser parses HTML into a tree of nodes. JavaScript uses it to read and modify the page.',
+      '<strong>Semantic HTML</strong> — Use &lt;header&gt;, &lt;nav&gt;, &lt;main&gt;, &lt;article&gt;, &lt;footer&gt; for meaning, not just &lt;div&gt;. Helps accessibility and SEO.',
+      '<strong>CSS Selectors</strong> — Target elements: tag (p), class (.btn), ID (#header), attribute ([type="text"]), combinator (div > p).',
+      '<strong>Box Model</strong> — Every element is a box: content → padding → border → margin. box-sizing: border-box makes sizing intuitive.',
+      '<strong>Flexbox & Grid</strong> — CSS layout systems. Flexbox for one-dimensional layouts (row or column). Grid for two-dimensional (rows and columns).',
+      '<strong>Specificity</strong> — When multiple rules target the same element, the most specific wins: ID > class > tag. !important overrides all.'
+    ],
+    qas: [
+      { q: 'What is the difference between class and ID in HTML/CSS?', a: 'An ID is unique — only one element per page should have a given ID. A class can be used on multiple elements. IDs have higher CSS specificity. Use classes for reusable styles; use IDs for unique elements like page anchors or JavaScript hooks.' },
+      { q: 'What does the DOM mean?', a: 'Document Object Model. When a browser loads HTML, it parses it into a tree structure in memory. JavaScript can traverse and manipulate this tree — adding/removing elements, changing styles, responding to events. document.getElementById() and querySelector() are entry points.' },
+      { q: 'What is the difference between display: block, inline, and inline-block?', a: 'Block elements (div, p) take the full width and start on a new line. Inline elements (span, a) flow with text and only take their content width. Inline-block is a mix — flows inline but can have width/height/padding like a block.' }
+    ],
+    resources: [
+      { name: 'CS50 Week 8 — HTML, CSS, JS', url: 'https://cs50.harvard.edu/x/2025/weeks/8/' },
+      { name: 'MDN Web Docs — HTML basics', url: 'https://developer.mozilla.org/en-US/docs/Learn/HTML/Introduction_to_HTML' }
+    ]
+  },
+  'c-language': {
+    icon: '🔵', title: 'C Programming', cat: 'Programming Languages',
+    overview: 'C is the language that shaped modern computing. Operating systems, databases, compilers, and countless languages (Python, Java, PHP) are written in C. Learning C teaches you what is really happening under the hood — pointers, manual memory, and the compilation model.',
+    concepts: [
+      '<strong>Compiled Language</strong> — C source code is compiled to native machine code (no interpreter). The compiler checks types and produces a fast binary.',
+      '<strong>Variables & Types</strong> — Strongly typed: int, char, float, double. You must declare the type before use. C does not have automatic type conversion.',
+      '<strong>Pointer</strong> — A variable that stores a memory address. int *p = &x; stores the address of x. *p dereferences (reads/writes the value at that address).',
+      '<strong>Memory Address</strong> — Every variable lives at a specific location in RAM. &x gives you the address of x. printf("%p", &x) prints it as hex.',
+      '<strong>malloc / free</strong> — Manually allocate heap memory with malloc(size) and release it with free(ptr). Forgetting free causes memory leaks.',
+      '<strong>Array</strong> — Contiguous block of same-type elements. Arrays in C are just pointers to the first element — arr[i] == *(arr + i).',
+      '<strong>String</strong> — An array of chars ending with a null terminator \'\\0\'. "hello" is stored as {h,e,l,l,o,\\0}.',
+      '<strong>Struct</strong> — Group related variables under one name. struct Point { int x; int y; }. Like an object without methods.',
+      '<strong>Enum</strong> — Named integer constants. enum Color { RED, GREEN, BLUE }; GREEN == 1. Makes code more readable than magic numbers.',
+      '<strong>File I/O</strong> — fopen(), fread()/fwrite(), fclose(). Files must be explicitly opened and closed; forgetting fclose causes data loss.',
+      '<strong>Preprocessor</strong> — Runs before compilation. #include imports headers. #define creates macros. #ifdef guards prevent double-inclusion.',
+      '<strong>Undefined Behaviour</strong> — C lets you do dangerous things (buffer overflow, reading freed memory). The compiler assumes you never trigger UB — bugs can be silent and catastrophic.'
+    ],
+    qas: [
+      { q: 'What is a pointer and why is it important?', a: 'A pointer stores the memory address of another variable. It lets you: pass large data to functions without copying it (pass by reference), allocate memory dynamically (malloc), and build data structures like linked lists. All languages have references under the hood — C just makes them explicit.' },
+      { q: 'What is the difference between stack and heap allocation in C?', a: 'Stack: automatic. Variables declared inside a function live on the stack and are freed when the function returns. Fast, limited size (~1–8 MB). Heap: manual. malloc() allocates on the heap; you must call free() when done. Unlimited size (limited by RAM). Forgetting free = memory leak; using after free = undefined behaviour.' },
+      { q: 'Why should you learn C even if you write Python or JavaScript?', a: 'C teaches you what every other language hides: memory layout, pointers, compilation, undefined behaviour. Once you understand C, concepts like Python\'s reference counting, Java\'s JVM, and JavaScript\'s V8 engine become much clearer. It also makes low-level interview questions about memory and performance much easier.' }
+    ],
+    resources: [
+      { name: 'W3Schools — C Tutorial', url: 'https://www.w3schools.com/c/index.php' },
+      { name: 'CS50 Week 1 — C', url: 'https://cs50.harvard.edu/x/2025/weeks/1/' },
+      { name: 'The C Programming Language (K&R)', url: 'https://www.amazon.com/Programming-Language-2nd-Brian-Kernighan/dp/0131103628' }
+    ]
+  },
+  'numpy-pandas': {
+    icon: '🐼', title: 'NumPy & Pandas', cat: 'Programming Languages',
+    overview: 'NumPy and Pandas are the two most important Python data libraries. NumPy provides fast multi-dimensional arrays; Pandas provides DataFrames for tabular data. Together they power data analysis, machine learning pipelines, and ETL scripts.',
+    concepts: [
+      '<strong>NumPy ndarray</strong> — N-dimensional array of a single data type. Far faster than Python lists for numerical work (operations in C under the hood).',
+      '<strong>Vectorisation</strong> — Apply operations to entire arrays without Python loops. <code>arr * 2</code> doubles every element; <code>arr[arr > 5]</code> filters in one line.',
+      '<strong>Broadcasting</strong> — NumPy automatically expands arrays with different shapes for element-wise operations. <code>matrix + row_vector</code> adds the vector to every row.',
+      '<strong>Common NumPy ops</strong> — np.zeros(), np.ones(), np.arange(), np.linspace(), np.reshape(), np.dot(), np.sum(axis=0), np.mean(), np.std().',
+      '<strong>Pandas Series</strong> — 1D labelled array. Like a column in a spreadsheet. Has an index (row labels) and a name.',
+      '<strong>Pandas DataFrame</strong> — 2D table with named columns and row index. The core data structure for tabular analysis.',
+      '<strong>Reading data</strong> — pd.read_csv(), pd.read_json(), pd.read_excel(). Write with df.to_csv().',
+      '<strong>Selecting data</strong> — df["col"] or df.col selects a column. df.loc[row_label, col_label] label-based. df.iloc[0, 1] integer position-based.',
+      '<strong>Filtering</strong> — Boolean indexing: <code>df[df["age"] > 25]</code>. Multiple conditions: <code>df[(df["age"] > 25) & (df["city"] == "London")]</code>.',
+      '<strong>groupby</strong> — Split-apply-combine. <code>df.groupby("city")["sales"].sum()</code> sums sales per city.',
+      '<strong>merge / join</strong> — pd.merge(df1, df2, on="id", how="left") — like SQL JOIN. how: inner, left, right, outer.',
+      '<strong>Handling nulls</strong> — df.isnull().sum() counts nulls. df.dropna() removes rows. df.fillna(value) replaces nulls.'
+    ],
+    qas: [
+      { q: 'Why is NumPy faster than a Python list for numerical work?', a: 'Python lists store references to Python objects (with overhead per element). NumPy arrays store raw numbers in contiguous memory — just like a C array. Operations are implemented in C and run on the entire array at once (vectorised), bypassing Python\'s interpreter overhead for every element.' },
+      { q: 'What is the difference between df.loc and df.iloc?', a: 'loc uses labels (row index values, column names): df.loc[0, "name"] — get row with index label 0, column "name". iloc uses integer positions (0-based): df.iloc[0, 1] — first row, second column. They differ when the index is not the default 0,1,2,... range.' },
+      { q: 'How do you handle missing values in Pandas?', a: 'First check: df.isnull().sum() shows nulls per column. Then decide strategy: dropna() removes any row with nulls (loses data). fillna(value) fills with a constant, mean (df["col"].mean()), or forward-fill (method="ffill"). The right choice depends on why the data is missing.' }
+    ],
+    resources: [
+      { name: 'W3Schools — NumPy Tutorial', url: 'https://www.w3schools.com/python/numpy/default.asp' },
+      { name: 'W3Schools — Pandas Tutorial', url: 'https://www.w3schools.com/python/pandas/default.asp' },
+      { name: 'Pandas official docs', url: 'https://pandas.pydata.org/docs/user_guide/index.html' }
     ]
   },
   'fine-tuning-vs-rag': {
@@ -1228,6 +1553,29 @@ const TOPIC_DATA = {
     resources: [
       { name: 'OWASP Top 10', url: 'https://owasp.org/www-project-top-ten/' },
       { name: 'PortSwigger Web Security Academy (free)', url: 'https://portswigger.net/web-security' }
+    ]
+  },
+  'cryptography': {
+    icon: '🔑', title: 'Cryptography Basics', cat: 'Security Deep-Dive',
+    overview: 'Cryptography is the foundation of secure communication. Every time you log in, send a message, or visit an HTTPS site, cryptography is working behind the scenes. Every developer should understand hashing, encryption, and digital signatures.',
+    concepts: [
+      '<strong>Hashing</strong> — One-way transformation of data to a fixed-size digest. SHA-256, SHA-3. Same input always gives same output; tiny input change → completely different output. Cannot be reversed.',
+      '<strong>Password Hashing</strong> — Never store plain passwords. Hash them with bcrypt or Argon2 (which include salt + slow key stretching to resist brute force).',
+      '<strong>Salt</strong> — A random value added to a password before hashing. Prevents two users with the same password from having the same hash. Defeats rainbow tables.',
+      '<strong>Symmetric Encryption</strong> — Same key encrypts and decrypts. Fast. AES is the standard. Problem: how do you share the key securely?',
+      '<strong>Asymmetric Encryption</strong> — Two keys: public key (share with everyone) and private key (keep secret). What public key encrypts, only private key can decrypt. RSA, ECC.',
+      '<strong>TLS / HTTPS</strong> — Uses asymmetric crypto to exchange a shared secret key, then switches to fast symmetric encryption for the session.',
+      '<strong>Digital Signature</strong> — Hash the data, encrypt with private key. Anyone with your public key can verify the hash — proving it came from you.',
+      '<strong>Caesar Cipher</strong> — Shift each letter by a fixed amount. The simplest cipher. Trivially broken — historical context for why modern crypto is needed.'
+    ],
+    qas: [
+      { q: 'What is the difference between hashing and encryption?', a: 'Hashing is one-way — you cannot recover the original input. Used for passwords and data integrity. Encryption is two-way — with the right key you can decrypt. Used for confidential communication. Never use encryption for passwords; always use hashing.' },
+      { q: 'Why can\'t you just reverse a hash to get the password?', a: 'Hash functions are designed to be one-way — computationally infeasible to reverse. They also produce the same-length output for any input, so information is deliberately destroyed. An attacker must try every possible input (brute force) and compare hashes.' },
+      { q: 'How does HTTPS protect your data?', a: 'The server sends its public key (in a certificate signed by a Certificate Authority). Your browser encrypts a random session key with that public key. Only the server\'s private key can decrypt it. Now both sides have the same session key and use fast symmetric AES encryption for all traffic.' }
+    ],
+    resources: [
+      { name: 'CS50 Week 2 — Cryptography intro', url: 'https://cs50.harvard.edu/x/2025/weeks/2/' },
+      { name: 'How HTTPS works (comic)', url: 'https://howhttps.works/' }
     ]
   },
   'tls-ssl': {
@@ -1706,15 +2054,44 @@ const TOPIC_DATA = {
 
 };
 
+let currentTopicKey = null;
+const _topicKeys = Object.keys(TOPIC_DATA);
+
+function updateModalNavBtns() {
+  const idx = _topicKeys.indexOf(currentTopicKey);
+  const prev = document.getElementById('modal-prev');
+  const next = document.getElementById('modal-next');
+  if (prev) prev.disabled = idx <= 0;
+  if (next) next.disabled = idx < 0 || idx >= _topicKeys.length - 1;
+}
+
+function navigateTopic(dir) {
+  if (!currentTopicKey) return;
+  const idx = _topicKeys.indexOf(currentTopicKey);
+  const newIdx = idx + dir;
+  if (newIdx >= 0 && newIdx < _topicKeys.length) openTopic(_topicKeys[newIdx]);
+}
+
+function copyTopicLink() {
+  const url = location.origin + location.pathname + '#topic=' + currentTopicKey;
+  navigator.clipboard.writeText(url).then(() => {
+    const btn = document.getElementById('modal-copy-link');
+    if (btn) { btn.title = 'Copied!'; setTimeout(() => btn.title = 'Copy link', 1500); }
+  });
+}
+
 function openTopic(key) {
   const t = TOPIC_DATA[key];
   if (!t) {
     showComingSoon(key);
     return;
   }
+  currentTopicKey = key;
+  updateModalNavBtns();
   document.getElementById("m-icon").textContent = t.icon;
   document.getElementById("m-title").textContent = t.title;
-  document.getElementById("m-cat").textContent = t.cat;
+  const meta = TOPIC_META[key];
+  document.getElementById("m-cat").textContent = t.cat + (meta?.time ? '  ·  ' + meta.time : '');
 
   let html = "";
   if (t.overview) {
@@ -1736,6 +2113,17 @@ function openTopic(key) {
     html += '<div class="modal-section"><div class="modal-h">Learn More</div><div class="modal-resources">';
     t.resources.forEach(r => html += '<a href="' + r.url + '" target="_blank" rel="noopener">' + r.name + '</a>');
     html += "</div></div>";
+  }
+  if (meta?.related?.length) {
+    const validRelated = meta.related.filter(k => TOPIC_DATA[k]);
+    if (validRelated.length) {
+      html += '<div class="modal-section modal-related"><div class="modal-h">Related Topics</div><div class="related-chips">';
+      validRelated.forEach(k => {
+        const rt = TOPIC_DATA[k];
+        html += '<button class="related-chip" onclick="openTopic(\'' + k + '\')">' + rt.icon + ' ' + rt.title + '</button>';
+      });
+      html += '</div></div>';
+    }
   }
   document.getElementById("m-body").innerHTML = html;
   document.getElementById("modal").classList.add("show");
@@ -1784,6 +2172,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (location.hash.startsWith('#topic=')) openTopic(location.hash.slice(7));
 });
 
+const _savedCollapsed = JSON.parse(localStorage.getItem('devprep-collapsed') || '[]');
 const collapsedCats = new Set();
 
 // Search
@@ -1843,15 +2232,22 @@ if (glossSearch) {
 document.addEventListener("keydown", (e) => {
   const active = document.activeElement;
   const inInput = active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA');
+  const modalOpen = document.getElementById('modal')?.classList.contains('show');
 
   if (e.key === "Escape") {
+    if (document.getElementById('drill-overlay')?.classList.contains('active')) { closeDrill(); return; }
+    if (document.getElementById('shortcuts-overlay')?.classList.contains('active')) { closeShortcuts(); return; }
     closeModal();
-    if (active === searchInput) {
-      searchInput.value = '';
-      searchInput.dispatchEvent(new Event('input'));
-      searchInput.blur();
-    }
+    if (active === searchInput) { searchInput.value = ''; searchInput.dispatchEvent(new Event('input')); searchInput.blur(); }
+    if (active === document.getElementById('gloss-search')) { const gs = document.getElementById('gloss-search'); gs.value = ''; gs.dispatchEvent(new Event('input')); gs.blur(); }
     return;
+  }
+
+  if (e.key === '?' && !inInput) { e.preventDefault(); openShortcuts(); return; }
+
+  if (modalOpen && !inInput) {
+    if (e.key === 'ArrowLeft') { e.preventDefault(); navigateTopic(-1); return; }
+    if (e.key === 'ArrowRight') { e.preventDefault(); navigateTopic(1); return; }
   }
 
   if ((e.key === '/' || (e.ctrlKey && e.key === 'k')) && !inInput) {
@@ -1934,16 +2330,367 @@ document.querySelectorAll('.cat-header').forEach(header => {
   arrow.textContent = '▾';
   header.appendChild(arrow);
   header.classList.add('collapsible');
+  header.setAttribute('aria-expanded', 'true');
+
+  const headerKey = header.textContent.trim().replace(/[·▾\d]/g, '').trim();
+  if (_savedCollapsed.includes(headerKey)) {
+    collapsedCats.add(header);
+    grid.style.display = 'none';
+    header.classList.add('collapsed');
+    header.setAttribute('aria-expanded', 'false');
+  }
 
   header.addEventListener('click', () => {
     if (collapsedCats.has(header)) {
       collapsedCats.delete(header);
       grid.style.display = '';
       header.classList.remove('collapsed');
+      header.setAttribute('aria-expanded', 'true');
     } else {
       collapsedCats.add(header);
       grid.style.display = 'none';
       header.classList.add('collapsed');
+      header.setAttribute('aria-expanded', 'false');
     }
+    const keys = Array.from(collapsedCats).map(h => h.textContent.trim().replace(/[·▾\d]/g, '').trim());
+    localStorage.setItem('devprep-collapsed', JSON.stringify(keys));
   });
 });
+
+// ── Shortcuts panel ──────────────────────────────────────────────────
+function openShortcuts() { document.getElementById('shortcuts-overlay')?.classList.add('active'); }
+function closeShortcuts() { document.getElementById('shortcuts-overlay')?.classList.remove('active'); }
+
+// ── Drill mode ───────────────────────────────────────────────────────
+let DRILL_QS = [];
+let drillIdx = -1;
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.iq-card').forEach(card => {
+    const q = card.querySelector('.iq-q')?.textContent.trim();
+    const a = card.querySelector('.iq-answer p')?.textContent.trim();
+    const cat = card.closest('.iq-grid')?.previousElementSibling?.textContent.replace(/[·▾\d]/g, '').trim() || 'Behavioral';
+    if (q && a) DRILL_QS.push({ q, a, cat });
+  });
+
+  // Insert data-filter attrs on filter buttons
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    const match = btn.getAttribute('onclick')?.match(/filterProblems\(this,'([^']+)'\)/);
+    if (match) btn.setAttribute('data-filter', match[1]);
+  });
+
+  // Restore problem filter from sessionStorage
+  const savedFilter = sessionStorage.getItem('devprep-filter');
+  if (savedFilter && savedFilter !== 'all') {
+    const btn = document.querySelector(`.filter-btn[data-filter="${savedFilter}"]`);
+    if (btn) filterProblems(btn, savedFilter);
+  }
+
+  // Insert filter count span
+  const filtersDiv = document.querySelector('.problem-filters');
+  if (filtersDiv) {
+    const countSpan = document.createElement('span');
+    countSpan.className = 'filter-count';
+    countSpan.id = 'filter-count';
+    filtersDiv.appendChild(countSpan);
+    updateFilterCount();
+  }
+
+  // Insert mark-solved checkboxes on problem cards
+  const solvedSet = new Set(JSON.parse(localStorage.getItem('devprep-solved') || '[]'));
+  document.querySelectorAll('.problem-card').forEach(card => {
+    const name = card.querySelector('.prob-name')?.textContent.trim();
+    if (!name) return;
+    if (solvedSet.has(name)) card.classList.add('solved');
+    const row = document.createElement('div');
+    row.className = 'prob-solved-row';
+    const cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.className = 'prob-solved-cb';
+    cb.checked = solvedSet.has(name);
+    const lbl = document.createElement('label');
+    lbl.className = 'prob-solved-label';
+    lbl.appendChild(cb);
+    lbl.appendChild(document.createTextNode('Mark solved'));
+    cb.addEventListener('change', () => {
+      if (cb.checked) solvedSet.add(name); else solvedSet.delete(name);
+      card.classList.toggle('solved', cb.checked);
+      localStorage.setItem('devprep-solved', JSON.stringify([...solvedSet]));
+      updateFilterCount();
+    });
+    row.appendChild(lbl);
+    card.appendChild(row);
+  });
+  updateFilterCount();
+});
+
+function updateFilterCount() {
+  const span = document.getElementById('filter-count');
+  if (!span) return;
+  const total = document.querySelectorAll('.problem-card:not(.hidden)').length;
+  const solved = document.querySelectorAll('.problem-card:not(.hidden).solved').length;
+  span.textContent = total + ' shown · ' + solved + ' solved';
+}
+
+// Patch filterProblems to also persist + update count
+const _origFilterProblems = filterProblems;
+filterProblems = function(btn, category) {
+  _origFilterProblems(btn, category);
+  sessionStorage.setItem('devprep-filter', category);
+  updateFilterCount();
+};
+
+function startDrill() {
+  if (!DRILL_QS.length) return;
+  drillIdx = Math.floor(Math.random() * DRILL_QS.length);
+  showDrillQuestion();
+  document.getElementById('drill-overlay')?.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function showDrillQuestion() {
+  const item = DRILL_QS[drillIdx];
+  if (!item) return;
+  document.getElementById('drill-question').textContent = item.q;
+  document.getElementById('drill-cat-label').textContent = item.cat;
+  document.getElementById('drill-answer').textContent = item.a;
+  document.getElementById('drill-answer').classList.remove('show');
+  const rb = document.getElementById('drill-reveal-btn');
+  if (rb) rb.style.display = '';
+}
+
+function revealDrillAnswer() {
+  document.getElementById('drill-answer').classList.add('show');
+  const rb = document.getElementById('drill-reveal-btn');
+  if (rb) rb.style.display = 'none';
+}
+
+function nextDrillQuestion() {
+  if (!DRILL_QS.length) return;
+  let next;
+  do { next = Math.floor(Math.random() * DRILL_QS.length); } while (DRILL_QS.length > 1 && next === drillIdx);
+  drillIdx = next;
+  showDrillQuestion();
+}
+
+function closeDrill() {
+  document.getElementById('drill-overlay')?.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+// ── Glossary: copy button + category filter ──────────────────────────
+const GLOSS_CATS = {
+  // Distributed Systems
+  'CAP Theorem':'Distributed','Consistency':'Distributed','Consistent Hashing':'Distributed',
+  'Eventual Consistency':'Distributed','Gossip Protocol':'Distributed','Leader Election':'Distributed',
+  'Quorum':'Distributed','Replication':'Distributed','Saga Pattern':'Distributed',
+  'Sharding':'Distributed','Two-Phase Commit':'Distributed','Vector Clock':'Distributed',
+  'PACELC':'Distributed','Outbox Pattern':'Distributed','Fan-out':'Distributed',
+  'Dead Letter Queue':'Distributed','Backpressure':'Distributed','Partitioning':'Distributed',
+  'Snowflake ID':'Distributed','Compaction':'Distributed','Actor Model':'Distributed',
+  'Tombstone':'Distributed','Single Point of Failure (SPOF)':'Distributed',
+  'ZooKeeper':'Distributed','MapReduce':'Distributed','Kafka':'Distributed',
+  // Databases
+  'ACID':'Databases','B-Tree':'Databases','Connection Pool':'Databases',
+  'CQRS':'Databases','Data Lake':'Databases','Data Warehouse':'Databases',
+  'ETL':'Databases','Foreign Key':'Databases','Indexing':'Databases',
+  'Isolation Level':'Databases','MVCC':'Databases','N+1 Problem':'Databases',
+  'Normalization':'Databases','NoSQL':'Databases','ORM':'Databases',
+  'Pagination':'Databases','Polyglot Persistence':'Databases','Primary Key':'Databases',
+  'Query Planner':'Databases','Read Replica':'Databases','Referential Integrity':'Databases',
+  'Transaction':'Databases','Upsert':'Databases','Graph Database':'Databases',
+  'Key-Value Store':'Databases','LRU Cache':'Databases','Inverted Index':'Databases',
+  'HNSW':'Databases','Vector Database':'Databases','LSM-Tree':'Databases',
+  'WAL':'Databases','Materialized View':'Databases','Atomicity':'Databases',
+  // Networking
+  'API':'Networking','CDN':'Networking','DNS':'Networking',
+  'GraphQL':'Networking','gRPC':'Networking','HTTP/2':'Networking',
+  'Long Polling':'Networking','Polling':'Networking','Protocol Buffers':'Networking',
+  'REST':'Networking','SSE':'Networking','Webhook':'Networking','WebSocket':'Networking',
+  'Head-of-Line Blocking':'Networking','JSON':'Networking','Marshalling':'Networking',
+  'Serialization':'Networking','TLS':'Networking','Circuit Breaker':'Networking',
+  'Exponential Backoff':'Networking','Rate Limiting':'Networking','Retry Storm':'Networking',
+  'Load Balancer':'Networking','Latency':'Networking','Throughput':'Networking',
+  'Tail Latency':'Networking','Hot Spot':'Networking','Upstream / Downstream':'Networking',
+  'Stateless':'Networking',
+  // Security
+  'CSRF':'Security','HMAC':'Security','JWT':'Security','OAuth 2.0':'Security',
+  'OIDC':'Security','SQL Injection':'Security','XSS':'Security','Tokenization':'Security',
+  // DevOps / Cloud
+  'Agile':'DevOps','Blue-Green Deployment':'DevOps','Branching Strategy':'DevOps',
+  'Canary Release':'DevOps','Container':'DevOps','DevOps':'DevOps',
+  'Feature Flag':'DevOps','FaaS':'DevOps','Infrastructure as Code':'DevOps',
+  'Kubernetes':'DevOps','Observability':'DevOps','Rolling Deployment':'DevOps',
+  'Semantic Versioning':'DevOps','Sidecar Pattern':'DevOps','Service Mesh':'DevOps',
+  'Technical Debt':'DevOps','Zero Downtime Deployment':'DevOps','Cold Start':'DevOps',
+  'Tracing (Distributed)':'DevOps','Service Discovery':'DevOps','Virtual Machine':'DevOps',
+  // ML / AI
+  'Embedding':'ML/AI','LoRA':'ML/AI','RAG':'ML/AI',
+  'Batch Processing':'ML/AI','Stream Processing':'ML/AI',
+  // Algorithms / CS
+  'Adjacency List':'Algorithms','Amortized Analysis':'Algorithms','Amdahl\'s Law':'Algorithms',
+  'BFS / DFS':'Algorithms','Big-O Notation':'Algorithms','Binary Search':'Algorithms',
+  'Bloom Filter':'Algorithms','Dynamic Programming':'Algorithms','FIFO':'Algorithms',
+  'Garbage Collection':'Algorithms','Goroutine':'Algorithms','Hash Function':'Algorithms',
+  'Heap (data structure)':'Algorithms','JIT Compilation':'Algorithms','LIFO':'Algorithms',
+  'Memoization':'Algorithms','NP-Hard':'Algorithms','Queue':'Algorithms',
+  'Union-Find':'Algorithms','Worker Thread':'Algorithms','Mutex':'Algorithms',
+  'Race Condition':'Algorithms','Deadlock':'Algorithms','Asynchronous':'Algorithms',
+  // Software Engineering — patterns, principles, architecture concepts
+  'Abstraction':'SWE','Closure':'SWE','CRUD':'SWE','Declarative':'SWE',
+  'Dependency Injection':'SWE','DRY':'SWE','Encapsulation':'SWE','Event Loop':'SWE',
+  'Event Sourcing':'SWE','Functional Programming':'SWE','Horizontal Scaling':'SWE',
+  'Hysteresis':'SWE','Idempotency':'SWE','Immutability':'SWE','Job Queue':'SWE',
+  'Message Queue':'SWE','Microservices':'SWE','Middleware':'SWE','Monolith':'SWE',
+  'Namespace':'SWE','Pub/Sub':'SWE','SOLID':'SWE','Sticky Session':'SWE',
+  'UUID':'SWE','YAGNI':'SWE','Vertical Scaling':'SWE',
+};
+const GLOSS_FILTER_CATS = ['Beginner','Distributed','Databases','Networking','Security','DevOps','ML/AI','Algorithms','SWE'];
+
+// Terms suitable for beginners — foundational concepts with no assumed prior knowledge
+const GLOSS_BEGINNER = new Set([
+  'API','Abstraction','Agile','Big-O Notation','Binary Search','Branching Strategy',
+  'CDN','CRUD','Container','Declarative','DevOps','DNS','DRY','Encapsulation',
+  'Feature Flag','FIFO','Foreign Key','Hash Function','Horizontal Scaling',
+  'Immutability','Indexing','JSON','JWT','Key-Value Store','Latency','LIFO',
+  'Load Balancer','Message Queue','Middleware','Microservices','Monolith',
+  'N+1 Problem','Namespace','Normalization','NoSQL','OAuth 2.0','ORM',
+  'Pagination','Polling','Primary Key','Queue','Rate Limiting','REST',
+  'Semantic Versioning','Serialization','Single Point of Failure (SPOF)',
+  'SOLID','SQL Injection','Stateless','Technical Debt','Throughput',
+  'Time-to-Live (TTL)','TLS','Transaction','Upstream / Downstream',
+  'Upsert','UUID','Vertical Scaling','Virtual Machine',
+  'Webhook','WebSocket','XSS','YAGNI',
+]);
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Inject copy button + data-cat + data-level on every gloss-entry
+  document.querySelectorAll('.gloss-entry').forEach(entry => {
+    const termEl = entry.querySelector('.gloss-term');
+    const defEl = entry.querySelector('.gloss-def');
+    if (!termEl) return;
+    const term = termEl.textContent.trim();
+    const def = defEl?.textContent.trim() || '';
+    const cat = GLOSS_CATS[term] || 'General';
+    entry.setAttribute('data-cat', cat);
+    if (GLOSS_BEGINNER.has(term)) entry.setAttribute('data-level', 'beginner');
+
+    const copyBtn = document.createElement('button');
+    copyBtn.className = 'gloss-copy-btn';
+    copyBtn.title = 'Copy term and definition';
+    copyBtn.textContent = '⎘';
+    copyBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      navigator.clipboard.writeText(term + ' — ' + def).then(() => {
+        copyBtn.textContent = '✓';
+        setTimeout(() => copyBtn.textContent = '⎘', 1200);
+      });
+    });
+    entry.appendChild(copyBtn);
+  });
+
+  // Build category filter buttons above the alpha bar
+  const glossSection = document.getElementById('glossary');
+  const alphaBar = glossSection?.querySelector('.gloss-alpha-bar');
+  if (alphaBar) {
+    const catBar = document.createElement('div');
+    catBar.className = 'gloss-cat-bar';
+    const allBtn = document.createElement('button');
+    allBtn.className = 'gloss-cat-btn active';
+    allBtn.textContent = 'All';
+    allBtn.addEventListener('click', () => setGlossCat(null, allBtn));
+    catBar.appendChild(allBtn);
+    GLOSS_FILTER_CATS.forEach(cat => {
+      const btn = document.createElement('button');
+      btn.className = cat === 'Beginner' ? 'gloss-cat-btn gloss-cat-btn--beginner' : 'gloss-cat-btn';
+      btn.textContent = cat;
+      btn.addEventListener('click', () => setGlossCat(cat, btn));
+      catBar.appendChild(btn);
+    });
+    alphaBar.before(catBar);
+  }
+});
+
+function setGlossCat(cat, activeBtn) {
+  document.querySelectorAll('.gloss-cat-btn').forEach(b => b.classList.remove('active'));
+  activeBtn.classList.add('active');
+  const gs = document.getElementById('gloss-search');
+  if (gs && gs.value) { gs.value = ''; gs.dispatchEvent(new Event('input')); }
+  document.querySelectorAll('.gloss-entry').forEach(entry => {
+    let hide = false;
+    if (cat === 'Beginner') hide = entry.getAttribute('data-level') !== 'beginner';
+    else if (cat !== null) hide = entry.getAttribute('data-cat') !== cat;
+    entry.classList.toggle('hidden', hide);
+  });
+  document.querySelectorAll('.gloss-group').forEach(group => {
+    group.classList.toggle('hidden', !group.querySelector('.gloss-entry:not(.hidden)'));
+  });
+  const gnr = document.querySelector('.gloss-no-results');
+  if (gnr) gnr.classList.toggle('visible', !document.querySelector('.gloss-entry:not(.hidden)'));
+}
+
+// ── Topic metadata: mastery time + related topics ────────────────────
+const TOPIC_META = {
+  'data-structures':      { time: '≈ 60 min', related: ['algorithms','oop-patterns'] },
+  'algorithms':           { time: '≈ 90 min', related: ['data-structures','dynamic-programming'] },
+  'oop-patterns':         { time: '≈ 60 min', related: ['data-structures','software-architecture'] },
+  'concurrency':          { time: '≈ 45 min', related: ['operating-systems','distributed-systems'] },
+  'operating-systems':    { time: '≈ 50 min', related: ['concurrency','computer-architecture'] },
+  'computer-architecture':{ time: '≈ 45 min', related: ['operating-systems','compilers'] },
+  'compilers':            { time: '≈ 40 min', related: ['computer-architecture','computation-theory'] },
+  'computation-theory':   { time: '≈ 40 min', related: ['compilers','algorithms'] },
+  'system-design':        { time: '≈ 75 min', related: ['distributed-systems','databases','caching'] },
+  'databases':            { time: '≈ 60 min', related: ['sql','nosql','system-design'] },
+  'sql':                  { time: '≈ 45 min', related: ['databases','nosql'] },
+  'nosql':                { time: '≈ 40 min', related: ['databases','caching','distributed-systems'] },
+  'caching':              { time: '≈ 35 min', related: ['databases','system-design','distributed-systems'] },
+  'message-queues':       { time: '≈ 40 min', related: ['distributed-systems','microservices','system-design'] },
+  'microservices':        { time: '≈ 50 min', related: ['system-design','message-queues','docker'] },
+  'software-architecture':{ time: '≈ 55 min', related: ['oop-patterns','microservices','system-design'] },
+  'rest-apis':            { time: '≈ 35 min', related: ['networking','graphql','system-design'] },
+  'graphql':              { time: '≈ 30 min', related: ['rest-apis','databases'] },
+  'networking':           { time: '≈ 45 min', related: ['security','distributed-systems','rest-apis'] },
+  'distributed-systems':  { time: '≈ 70 min', related: ['system-design','databases','networking'] },
+  'security':             { time: '≈ 50 min', related: ['networking','cryptography','auth-authorization'] },
+  'cryptography':         { time: '≈ 30 min', related: ['security','tls-ssl','networking-web','binary-numbers'] },
+  'auth-authorization':   { time: '≈ 35 min', related: ['security','rest-apis'] },
+  'docker':               { time: '≈ 35 min', related: ['kubernetes','microservices','cicd'] },
+  'kubernetes':           { time: '≈ 50 min', related: ['docker','microservices','cicd'] },
+  'cicd':                 { time: '≈ 35 min', related: ['docker','kubernetes','git'] },
+  'git':                  { time: '≈ 30 min', related: ['cicd'] },
+  'cloud-platforms':      { time: '≈ 45 min', related: ['kubernetes','docker','distributed-systems'] },
+  'infrastructure-as-code':{ time: '≈ 35 min', related: ['cloud-platforms','kubernetes','cicd'] },
+  'monitoring':           { time: '≈ 35 min', related: ['distributed-systems','cloud-platforms','microservices'] },
+  'python':               { time: '≈ 40 min', related: ['algorithms','machine-learning','data-structures'] },
+  'javascript':           { time: '≈ 45 min', related: ['typescript','react','nodejs'] },
+  'typescript':           { time: '≈ 35 min', related: ['javascript','react'] },
+  'go':                   { time: '≈ 40 min', related: ['distributed-systems','microservices','concurrency'] },
+  'java':                 { time: '≈ 40 min', related: ['oop-patterns','concurrency','data-structures'] },
+  'machine-learning':     { time: '≈ 75 min', related: ['deep-learning','probability-statistics','linear-algebra'] },
+  'deep-learning':        { time: '≈ 70 min', related: ['machine-learning','nlp','linear-algebra'] },
+  'nlp':                  { time: '≈ 55 min', related: ['deep-learning','machine-learning','information-theory'] },
+  'mlops':                { time: '≈ 40 min', related: ['machine-learning','docker','kubernetes','cicd'] },
+  'data-warehousing':     { time: '≈ 45 min', related: ['databases','etl-elt','data-lake'] },
+  'etl-elt':              { time: '≈ 35 min', related: ['data-warehousing','data-lake','data-pipelines'] },
+  'data-lake':            { time: '≈ 35 min', related: ['data-warehousing','etl-elt'] },
+  'data-pipelines':       { time: '≈ 40 min', related: ['message-queues','distributed-systems','etl-elt'] },
+  'probability-statistics':{ time: '≈ 50 min', related: ['machine-learning','discrete-math','information-theory'] },
+  'linear-algebra':       { time: '≈ 50 min', related: ['machine-learning','deep-learning','discrete-math'] },
+  'discrete-math':        { time: '≈ 50 min', related: ['algorithms','computation-theory','probability-statistics'] },
+  'information-theory':   { time: '≈ 40 min', related: ['probability-statistics','nlp','cryptography'] },
+  'react':                { time: '≈ 40 min', related: ['javascript','typescript','web-performance'] },
+  'web-performance':      { time: '≈ 35 min', related: ['react','networking','caching'] },
+  'binary-numbers':       { time: '≈ 20 min', related: ['how-computers-work','memory-management','cryptography'] },
+  'how-computers-work':   { time: '≈ 25 min', related: ['binary-numbers','memory-management','algorithms'] },
+  'recursion':            { time: '≈ 30 min', related: ['algorithms','data-structures','memory-management'] },
+  'debugging':            { time: '≈ 20 min', related: ['algorithms','testing','oop-patterns'] },
+  'html-css':             { time: '≈ 40 min', related: ['javascript','react','web-performance'] },
+  'flask':                { time: '≈ 35 min', related: ['apis','databases-sql','html-css','networking-web'] },
+  'ml-basics':            { time: '≈ 45 min', related: ['llm-fundamentals','prompt-engineering','algorithms'] },
+  'bitwise':              { time: '≈ 25 min', related: ['binary-numbers','algorithms','how-computers-work'] },
+  'c-language':           { time: '≈ 50 min', related: ['how-computers-work','memory-management','cpp','binary-numbers'] },
+  'regex':                { time: '≈ 25 min', related: ['algorithms','python','javascript'] },
+  'django':               { time: '≈ 45 min', related: ['flask','databases-sql','apis','python'] },
+  'nodejs':               { time: '≈ 40 min', related: ['javascript','apis','flask','django'] },
+  'numpy-pandas':         { time: '≈ 40 min', related: ['python','machine-learning','etl-elt'] },
+};
