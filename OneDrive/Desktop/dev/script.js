@@ -21,6 +21,14 @@ function toggleSol(el) {
   sol.classList.toggle('show');
   el.textContent = sol.classList.contains('show') ? '\u25be hide solution' : '\u25b8 show solution';
 }
+function filterProblems(btn, category) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.problem-card').forEach(card => {
+    const probCat = card.querySelector('.prob-cat')?.textContent || '';
+    card.classList.toggle('hidden', category !== 'all' && !probCat.toLowerCase().includes(category));
+  });
+}
 function toggleSD(el) {
   const detail = el.nextElementSibling;
   detail.classList.toggle('show');
@@ -44,7 +52,8 @@ const TOPIC_DATA = {
     qas: [
       { q: 'When would you use a linked list over an array?', a: 'When you need frequent inserts/deletes in the middle (O(1) if you have the pointer), and you don\'t need random access. Linked lists have overhead per node (the pointer itself).' },
       { q: 'How does a hash map handle collisions?', a: 'Two main strategies: chaining (each bucket is a linked list) or open addressing (probe to next slot). Modern hash maps resize when load factor exceeds ~0.75 to maintain O(1) average performance.' },
-      { q: 'When is a balanced tree preferred over a hash map?', a: 'When you need ordered iteration, range queries (e.g., all keys between 10 and 50), or guaranteed O(log n) worst case. Hash maps lose ordering.' }
+      { q: 'When is a balanced tree preferred over a hash map?', a: 'When you need ordered iteration, range queries (e.g., all keys between 10 and 50), or guaranteed O(log n) worst case. Hash maps lose ordering.' },
+      { q: 'What is a Trie and when would you use one?', a: 'A tree where each node stores one character; words sharing a prefix share the same path. O(m) insert/lookup (m = word length). Use for autocomplete, prefix search, spell-checkers, and IP routing tables. More space-efficient with a compressed (Patricia) trie.' }
     ],
     resources: [
       { name: 'Visualgo — Data Structure Visualizations', url: 'https://visualgo.net/' },
@@ -68,7 +77,8 @@ const TOPIC_DATA = {
     qas: [
       { q: 'When should I use BFS vs DFS?', a: 'BFS for shortest path in unweighted graphs and level-order traversal. DFS for "does a path exist?", topological sort, cycle detection, and when memory is tight (BFS queue can be huge).' },
       { q: 'How do I recognize a DP problem?', a: 'Look for: optimal substructure (combining subproblem solutions) and overlapping subproblems (same subproblem solved many times). Classic signs: "find the minimum/maximum number of...", "in how many ways can you...".' },
-      { q: 'What\'s the difference between memoization and tabulation?', a: 'Both are DP. Memoization is top-down recursion + cache. Tabulation is bottom-up iteration with a table (often faster, uses less stack memory).' }
+      { q: 'What\'s the difference between memoization and tabulation?', a: 'Both are DP. Memoization is top-down recursion + cache. Tabulation is bottom-up iteration with a table (often faster, uses less stack memory).' },
+      { q: 'How do you tell backtracking from DP?', a: 'If subproblems overlap (same computation repeated), DP\'s cache eliminates redundancy — use DP. If the solution space is a decision tree and you need to enumerate all possibilities while pruning invalid branches, use backtracking. DP minimizes work; backtracking explores exhaustively.' }
     ],
     resources: [
       { name: 'NeetCode — Patterns Course', url: 'https://neetcode.io/' },
@@ -186,7 +196,8 @@ const TOPIC_DATA = {
     qas: [
       { q: 'How would you approach a system design interview?', a: '1) Clarify requirements (functional + non-functional). 2) Estimate scale. 3) Define APIs. 4) High-level diagram. 5) Deep dive into 1-2 components. 6) Discuss bottlenecks and tradeoffs.' },
       { q: 'When would you choose SQL vs NoSQL?', a: 'SQL: complex queries, joins, transactions, ACID. NoSQL: flexible schema, massive scale, eventual consistency OK. Many systems use both (polyglot persistence).' },
-      { q: 'How do you scale a read-heavy system?', a: '(1) Add caching (Redis). (2) Add read replicas. (3) Use a CDN for static content. (4) Denormalize hot data. (5) Add search index.' }
+      { q: 'How do you scale a read-heavy system?', a: '(1) Add caching (Redis). (2) Add read replicas. (3) Use a CDN for static content. (4) Denormalize hot data. (5) Add search index.' },
+      { q: 'How would you design for 99.99% availability?', a: 'Four nines = 52 min downtime/year. Eliminate every single point of failure: redundant load balancers, multi-AZ DB with automatic failover, stateless app servers. Use health checks so traffic is automatically rerouted. Define RTO (recovery time) and RPO (data loss tolerance) before picking replication strategy.' }
     ],
     resources: [
       { name: 'System Design Primer (GitHub)', url: 'https://github.com/donnemartin/system-design-primer' },
@@ -210,7 +221,8 @@ const TOPIC_DATA = {
     qas: [
       { q: 'When should you add an index?', a: 'On columns frequently used in WHERE, JOIN, or ORDER BY. Don\'t index every column — each index slows down INSERT/UPDATE/DELETE.' },
       { q: 'Explain ACID.', a: 'Atomicity: all-or-nothing. Consistency: data follows all rules. Isolation: concurrent transactions don\'t interfere. Durability: committed data survives crashes.' },
-      { q: 'What\'s the N+1 query problem?', a: 'You fetch N records, then loop through making a query for each — N+1 queries instead of 2. Fix with eager loading (JOIN), batching, or DataLoader pattern.' }
+      { q: 'What\'s the N+1 query problem?', a: 'You fetch N records, then loop through making a query for each — N+1 queries instead of 2. Fix with eager loading (JOIN), batching, or DataLoader pattern.' },
+      { q: 'How do you run a schema migration safely in production?', a: 'Expand-then-contract: (1) Add new column as nullable. (2) Backfill old rows in batches. (3) Deploy code that writes to both old and new columns. (4) Make column NOT NULL once fully backfilled. (5) Drop old column in a later deploy. Never rename a column in one step — it breaks in-flight code.' }
     ],
     resources: [
       { name: 'Use The Index, Luke!', url: 'https://use-the-index-luke.com/' },
@@ -254,7 +266,8 @@ const TOPIC_DATA = {
     qas: [
       { q: 'How do you handle cache invalidation?', a: 'TTL (simple, may serve stale), write-through (consistent but slower writes), explicit invalidation (delete on write), or event-driven (publish on update). Often a mix.' },
       { q: 'What\'s a cache stampede?', a: 'Popular cache entry expires → hundreds of requests miss simultaneously and hammer the DB. Solutions: lock (only one request fetches), refresh-ahead, add jitter to TTLs.' },
-      { q: 'When does caching hurt more than it helps?', a: 'When data changes often relative to read frequency, when correctness is critical, when cache hit rate is low, or when invalidation logic is too complex.' }
+      { q: 'When does caching hurt more than it helps?', a: 'When data changes often relative to read frequency, when correctness is critical, when cache hit rate is low, or when invalidation logic is too complex.' },
+      { q: 'How do you prevent a cache stampede on a popular key?', a: 'Three strategies: (1) Mutex lock — only one request rebuilds the cache, others wait. (2) Probabilistic early refresh — start rebuilding before expiry using a random dice roll proportional to remaining TTL. (3) TTL jitter — add random offset (±10–20%) so keys don\'t all expire at the same instant.' }
     ],
     resources: [
       { name: 'Redis Documentation', url: 'https://redis.io/docs/' },
@@ -315,7 +328,9 @@ const TOPIC_DATA = {
       '<strong>Rebase</strong> — Replays your commits on top of another branch. Linear history.',
       '<strong>Cherry-pick</strong> — Apply one specific commit from another branch.',
       '<strong>Stash</strong> — Temporarily save uncommitted work.',
-      '<strong>Reflog</strong> — Local log of all HEAD changes. Recover "lost" commits with this.'
+      '<strong>Reflog</strong> — Local log of all HEAD changes. Recover "lost" commits with this.',
+      '<strong>Interactive Rebase</strong> — git rebase -i HEAD~n. Squash, reorder, reword, or drop commits before sharing.',
+      '<strong>Tags</strong> — Permanent named pointer to a commit. Annotated tags (git tag -a v1.0) store author + message. Used for versioned releases.'
     ],
     qas: [
       { q: 'What\'s the difference between merge and rebase?', a: 'Merge preserves history with a merge commit (non-linear). Rebase rewrites commits to apply on top of another branch (linear). Never rebase shared/public branches.' },
@@ -337,7 +352,9 @@ const TOPIC_DATA = {
       '<strong>grep</strong> — Search text. -r recursive, -i case-insensitive, -n line numbers.',
       '<strong>find</strong> — Locate files by name, size, mtime.',
       '<strong>SSH</strong> — Remote shell. Use key-based auth.',
-      '<strong>Cron</strong> — Schedule tasks.'
+      '<strong>Cron</strong> — Schedule tasks.',
+      '<strong>Process Signals</strong> — kill -15 (SIGTERM, graceful shutdown), kill -9 (SIGKILL, force). ps aux lists all processes. Use trap in bash scripts to handle SIGTERM cleanly.',
+      '<strong>Environment Variables</strong> — export VAR=value. Loaded from ~/.bashrc (interactive) or ~/.profile (login). printenv lists all; unset removes one.'
     ],
     qas: [
       { q: 'How do you find which process is using port 8080?', a: 'lsof -i :8080 or netstat -tulpn | grep 8080 or ss -tulpn | grep 8080.' },
@@ -359,7 +376,9 @@ const TOPIC_DATA = {
       '<strong>Layer</strong> — Each Dockerfile instruction creates a cached layer. Order matters.',
       '<strong>Volume</strong> — Persistent storage outside the container\'s lifecycle.',
       '<strong>Multi-stage build</strong> — Use one stage to build, copy artifacts to a smaller final image.',
-      '<strong>Container vs VM</strong> — Containers share host kernel (lightweight). VMs run full OS (heavyweight).'
+      '<strong>Container vs VM</strong> — Containers share host kernel (lightweight). VMs run full OS (heavyweight).',
+      '<strong>Networking</strong> — bridge (default, isolated), host (shares host network stack), none. docker-compose services reach each other by service name via a shared bridge network.',
+      '<strong>Health Check</strong> — HEALTHCHECK CMD ... in Dockerfile. Docker marks a container unhealthy if the command fails; orchestrators like Kubernetes use it to restart or stop routing traffic.'
     ],
     qas: [
       { q: 'What\'s the difference between CMD and ENTRYPOINT?', a: 'ENTRYPOINT is the executable that always runs. CMD provides default arguments. Best practice: ENTRYPOINT ["python"] + CMD ["app.py"].' },
@@ -381,7 +400,9 @@ const TOPIC_DATA = {
       '<strong>Ingress</strong> — HTTP routing into the cluster.',
       '<strong>ConfigMap / Secret</strong> — Inject config or sensitive data into pods.',
       '<strong>StatefulSet</strong> — For stateful apps (DBs). Stable identity + storage.',
-      '<strong>Helm</strong> — Package manager for K8s. Reusable templated manifests (charts).'
+      '<strong>Helm</strong> — Package manager for K8s. Reusable templated manifests (charts).',
+      '<strong>Resource Requests & Limits</strong> — requests: minimum CPU/RAM guaranteed. limits: hard ceiling. Set both to prevent noisy-neighbor pods starving others and to enable accurate scheduling.',
+      '<strong>Liveness & Readiness Probes</strong> — Liveness: restart container if it stops responding. Readiness: remove from load balancer until the app is ready to serve. Never conflate the two.'
     ],
     qas: [
       { q: 'What\'s the difference between Deployment and StatefulSet?', a: 'Deployment: pods are interchangeable, no stable identity. Use for stateless apps. StatefulSet: pods get stable names (app-0, app-1), stable network IDs, persistent volume per pod. Use for DBs.' },
@@ -435,50 +456,6 @@ const TOPIC_DATA = {
     resources: [
       { name: 'Continuous Delivery (book)', url: 'https://continuousdelivery.com/' },
       { name: 'GitHub Actions docs', url: 'https://docs.github.com/en/actions' }
-    ]
-  },
-  'python-deep-dive': {
-    icon: '🐍', title: 'Python Deep-Dive', cat: 'Programming Languages',
-    overview: 'Python is your daily driver — going beyond the basics into decorators, generators, async, and the GIL is what separates a Python user from a Python engineer.',
-    concepts: [
-      '<strong>Decorators</strong> — Functions that modify functions. @app.route, @staticmethod, @cache.',
-      '<strong>Generators</strong> — Lazy iterators using yield. Memory-efficient for large sequences.',
-      '<strong>Context Managers</strong> — with statement. __enter__/__exit__ or @contextmanager.',
-      '<strong>GIL</strong> — Global Interpreter Lock. Only one thread runs Python bytecode at a time.',
-      '<strong>asyncio</strong> — Cooperative concurrency. async def, await, event loop.',
-      '<strong>Dunder methods</strong> — __init__, __repr__, __eq__, __iter__, etc.',
-      '<strong>Mutable default args</strong> — Classic gotcha: def f(x=[]) reuses the same list.'
-    ],
-    qas: [
-      { q: 'What\'s a decorator and when would you write one?', a: 'A function that takes a function and returns a function. Use cases: logging, timing, caching, auth checks, registering routes.' },
-      { q: 'When would you use a generator over a list?', a: 'When the dataset is large or infinite, or when you only need to iterate once. Generators yield values lazily — don\'t store the whole sequence in memory.' },
-      { q: 'Explain async/await in Python.', a: 'asyncio is a single-threaded event loop. async def declares a coroutine; await yields control back. Great for I/O-bound code. Doesn\'t help CPU-bound — that needs multiprocessing.' }
-    ],
-    resources: [
-      { name: 'Real Python tutorials', url: 'https://realpython.com/' },
-      { name: 'Fluent Python (book)', url: 'https://www.oreilly.com/library/view/fluent-python-2nd/9781492056348/' }
-    ]
-  },
-  'javascript': {
-    icon: '🟨', title: 'JavaScript', cat: 'Programming Languages',
-    overview: 'JavaScript runs in every browser and on most servers (Node.js). Its quirks — type coercion, this binding, the event loop — trip up everyone.',
-    concepts: [
-      '<strong>var / let / const</strong> — var is function-scoped (avoid). let/const are block-scoped.',
-      '<strong>Hoisting</strong> — var declarations hoisted to top of scope.',
-      '<strong>Closures</strong> — Functions remember their lexical scope even when invoked elsewhere.',
-      '<strong>this binding</strong> — Depends on how function is called. Arrow functions inherit this from outer scope.',
-      '<strong>Event loop</strong> — Single-threaded. Call stack + task queue + microtask queue.',
-      '<strong>Promises</strong> — Async values. .then(), .catch(), or async/await.',
-      '<strong>Type coercion</strong> — == coerces, === doesn\'t. Always use ===.'
-    ],
-    qas: [
-      { q: 'Explain the event loop.', a: 'JS is single-threaded. When async tasks complete, callbacks go to the task queue. The event loop pulls from the queue when the call stack is empty. Microtasks (Promise callbacks) drain before regular tasks.' },
-      { q: 'What is a closure?', a: 'A function that references variables from its outer scope, even after that scope finished executing. Useful for data privacy and currying.' },
-      { q: 'var vs let vs const?', a: 'var: function-scoped, hoisted, allows redeclaration. let: block-scoped, no redeclaration. const: block-scoped, can\'t reassign. Modern JS: never use var.' }
-    ],
-    resources: [
-      { name: 'You Don\'t Know JS (free)', url: 'https://github.com/getify/You-Dont-Know-JS' },
-      { name: 'JavaScript.info', url: 'https://javascript.info/' }
     ]
   },
   'typescript': {
@@ -633,28 +610,6 @@ const TOPIC_DATA = {
     resources: [
       { name: 'MTEB Leaderboard', url: 'https://huggingface.co/spaces/mteb/leaderboard' },
       { name: 'Sentence-Transformers docs', url: 'https://www.sbert.net/' }
-    ]
-  },
-  'cap-theorem': {
-    icon: '🎭', title: 'CAP Theorem', cat: 'Distributed Systems',
-    overview: 'CAP says: in a distributed system that experiences a network partition, you must choose between Consistency and Availability.',
-    concepts: [
-      '<strong>Consistency</strong> — Every read sees the most recent write.',
-      '<strong>Availability</strong> — Every request gets a non-error response.',
-      '<strong>Partition tolerance</strong> — System works despite network failures.',
-      '<strong>CP system</strong> — Refuses requests during partition to stay consistent. ZooKeeper, etcd.',
-      '<strong>AP system</strong> — Accepts requests, returns possibly stale data. Cassandra, DynamoDB.',
-      '<strong>PACELC</strong> — Even without partitions, you trade Latency vs Consistency.',
-      '<strong>Tunable consistency</strong> — Cassandra lets you pick per-query.'
-    ],
-    qas: [
-      { q: 'Is Postgres CP or AP?', a: 'Single-node Postgres doesn\'t apply to CAP. With sync replication: CP. With async replication: AP-leaning. The answer depends on your replication setup.' },
-      { q: 'Give an example of when AP makes more sense.', a: 'Shopping cart: better to accept items even if replicas are stale, then merge later. Social feed: stale posts are fine. DNS: serves stale records during partitions.' },
-      { q: 'What is PACELC?', a: 'Extension of CAP. If Partition: A or C. Else (no partition): Latency or Consistency. DynamoDB is PA/EL — availability during partitions, latency otherwise.' }
-    ],
-    resources: [
-      { name: 'CAP Twelve Years Later (Brewer)', url: 'https://www.infoq.com/articles/cap-twelve-years-later-how-the-rules-have-changed/' },
-      { name: 'Designing Data-Intensive Applications', url: 'https://dataintensive.net/' }
     ]
   },
   'consensus-algorithms': {
@@ -1425,31 +1380,6 @@ const TOPIC_DATA = {
       { name: 'OPA (Open Policy Agent)', url: 'https://www.openpolicyagent.org/docs/latest/' }
     ]
   },
-  'react': {
-    icon: '⚛️', title: 'React', cat: 'Frontend & Mobile',
-    overview: 'React is the most popular frontend library. Component-based, declarative, with a rich ecosystem. Understanding hooks, state management, and the rendering model is essential.',
-    concepts: [
-      '<strong>Components</strong> — Reusable UI building blocks. Function components are the modern standard.',
-      '<strong>JSX</strong> — JavaScript XML. HTML-like syntax that compiles to React.createElement calls.',
-      '<strong>Hooks</strong> — useState, useEffect, useContext, useRef, useMemo, useCallback.',
-      '<strong>useState</strong> — Local component state. Triggers re-render on change.',
-      '<strong>useEffect</strong> — Side effects (API calls, subscriptions). Runs after render.',
-      '<strong>Props</strong> — Data passed from parent to child. Immutable within the child.',
-      '<strong>Context</strong> — Pass data through component tree without prop drilling.',
-      '<strong>Virtual DOM</strong> — React\'s diffing algorithm. Minimizes real DOM updates.',
-      '<strong>Server Components (RSC)</strong> — Render on the server. Zero JS sent to client. Next.js 13+.',
-      '<strong>Suspense</strong> — Declarative loading states. Combined with lazy() for code-splitting.'
-    ],
-    qas: [
-      { q: 'When does useEffect run?', a: 'After every render by default. With [a, b]: only when a or b change. With []: only on mount (cleanup on unmount). Common mistake: forgetting dependencies causes stale closures.' },
-      { q: 'What\'s the difference between state and props?', a: 'Props: passed from parent, read-only. State: owned by the component, mutable via useState. Both trigger re-renders on change. State is for data that changes; props flow data down.' },
-      { q: 'When should you use useMemo and useCallback?', a: 'useMemo: cache expensive computations. useCallback: cache function references (prevents child re-renders via React.memo). Don\'t premature-optimize — use when expensive calculations or stable references are needed.' }
-    ],
-    resources: [
-      { name: 'React official docs', url: 'https://react.dev/' },
-      { name: 'React Patterns', url: 'https://reactpatterns.com/' }
-    ]
-  },
   'vue-angular': {
     icon: '💚', title: 'Vue / Angular', cat: 'Frontend & Mobile',
     overview: 'Vue offers simplicity and progressive adoption. Angular is a full-featured framework with TypeScript, DI, and opinions about everything. Both are excellent alternatives to React.',
@@ -1810,6 +1740,7 @@ function openTopic(key) {
   document.getElementById("m-body").innerHTML = html;
   document.getElementById("modal").classList.add("show");
   document.body.style.overflow = "hidden";
+  history.pushState({ topic: key }, '', '#topic=' + key);
 }
 
 function showComingSoon(key) {
@@ -1829,11 +1760,13 @@ function showComingSoon(key) {
     '</div></div>';
   document.getElementById("modal").classList.add("show");
   document.body.style.overflow = "hidden";
+  history.pushState({ topic: key }, '', '#topic=' + key);
 }
 
 function closeModal() {
   document.getElementById("modal").classList.remove("show");
   document.body.style.overflow = "";
+  if (location.hash.startsWith('#topic=')) history.replaceState(null, '', location.pathname + location.search);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -1848,16 +1781,19 @@ document.addEventListener("DOMContentLoaded", () => {
     card.setAttribute("data-topic", key);
     card.addEventListener("click", () => openTopic(key));
   });
+  if (location.hash.startsWith('#topic=')) openTopic(location.hash.slice(7));
 });
+
+const collapsedCats = new Set();
 
 // Search
 const searchInput = document.getElementById('search-input');
 const topicCards = document.querySelectorAll('.topic-card');
-const topicsGrid = document.querySelector('.topics-grid');
 const noResults = document.createElement('div');
 noResults.className = 'no-results';
 noResults.textContent = 'No topics match — try a different term.';
-if (topicsGrid) topicsGrid.appendChild(noResults);
+const topicsSection = document.getElementById('topics');
+if (topicsSection) topicsSection.appendChild(noResults);
 
 if (searchInput) {
   searchInput.addEventListener('input', () => {
@@ -1871,7 +1807,26 @@ if (searchInput) {
       card.classList.toggle('hidden', !match);
       if (match) visible++;
     });
+    document.querySelectorAll('#topics .cat-header').forEach(header => {
+      const grid = header.nextElementSibling;
+      const hasVisible = grid && grid.querySelector('.topic-card:not(.hidden)');
+      if (!q) {
+        header.style.display = '';
+        if (grid) grid.style.display = collapsedCats.has(header) ? 'none' : '';
+      } else {
+        header.style.display = hasVisible ? '' : 'none';
+        if (grid) grid.style.display = hasVisible ? '' : 'none';
+      }
+    });
     noResults.classList.toggle('visible', visible === 0 && q.length > 0);
+  });
+}
+
+// Glossary search
+const glossSearch = document.getElementById('gloss-search');
+if (glossSearch) {
+  glossSearch.addEventListener('input', () => {
+    const q = glossSearch.value.trim().toLowerCase();
     document.querySelectorAll('.gloss-entry').forEach(entry => {
       const term = entry.querySelector('.gloss-term')?.textContent.toLowerCase() || '';
       const def = entry.querySelector('.gloss-def')?.textContent.toLowerCase() || '';
@@ -1904,4 +1859,91 @@ document.addEventListener("keydown", (e) => {
     searchInput?.focus();
     document.getElementById('topics')?.scrollIntoView({ behavior: 'smooth' });
   }
+});
+
+// Scroll-spy active nav
+const navAnchors = document.querySelectorAll('.nav-links a[href^="#"]');
+const spySections = Array.from(document.querySelectorAll('#topics, #cheatsheets, #problems, #systemdesign, #concepts, #interview, #glossary'));
+
+function updateActiveNav() {
+  const scrollY = window.scrollY + window.innerHeight * 0.25;
+  let current = spySections[0];
+  spySections.forEach(section => {
+    if (section.offsetTop <= scrollY) current = section;
+  });
+  navAnchors.forEach(link => {
+    link.classList.toggle('active', link.getAttribute('href') === '#' + current.id);
+  });
+}
+
+window.addEventListener('scroll', updateActiveNav, { passive: true });
+updateActiveNav();
+
+// Scroll progress bar + back-to-top
+const progressBar = document.getElementById('scroll-progress');
+const backToTop = document.getElementById('back-to-top');
+
+backToTop?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+function updateScrollUI() {
+  const scrollY = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  if (progressBar) progressBar.style.width = (docHeight > 0 ? (scrollY / docHeight) * 100 : 0) + '%';
+  backToTop?.classList.toggle('visible', scrollY > 600);
+}
+
+window.addEventListener('scroll', updateScrollUI, { passive: true });
+updateScrollUI();
+
+// Copy button on code panels
+document.querySelectorAll('.code-panel').forEach(panel => {
+  const btn = document.createElement('button');
+  btn.className = 'copy-btn';
+  btn.textContent = 'Copy';
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+    const code = panel.querySelector('pre')?.textContent || '';
+    navigator.clipboard.writeText(code).then(() => {
+      btn.textContent = 'Copied ✓';
+      setTimeout(() => btn.textContent = 'Copy', 1500);
+    }).catch(() => {
+      btn.textContent = 'Error';
+      setTimeout(() => btn.textContent = 'Copy', 1500);
+    });
+  });
+  panel.appendChild(btn);
+});
+
+// Category counts + collapse/expand
+document.querySelectorAll('.cat-header').forEach(header => {
+  const grid = header.nextElementSibling;
+  const isTopics = grid && grid.classList.contains('topics-grid');
+  const isIQ = grid && grid.classList.contains('iq-grid');
+  if (!grid || (!isTopics && !isIQ)) return;
+
+  if (isTopics) {
+    const count = grid.querySelectorAll('.topic-card').length;
+    const countSpan = document.createElement('span');
+    countSpan.className = 'cat-count';
+    countSpan.textContent = '· ' + count;
+    header.appendChild(countSpan);
+  }
+
+  const arrow = document.createElement('span');
+  arrow.className = 'cat-arrow';
+  arrow.textContent = '▾';
+  header.appendChild(arrow);
+  header.classList.add('collapsible');
+
+  header.addEventListener('click', () => {
+    if (collapsedCats.has(header)) {
+      collapsedCats.delete(header);
+      grid.style.display = '';
+      header.classList.remove('collapsed');
+    } else {
+      collapsedCats.add(header);
+      grid.style.display = 'none';
+      header.classList.add('collapsed');
+    }
+  });
 });
