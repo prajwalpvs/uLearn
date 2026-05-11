@@ -469,3 +469,32 @@ kbd { display: inline-block; background: var(--surface2); border: 1px solid var(
 .gloss-copy-btn { position: absolute; right: 0.2rem; top: 50%; transform: translateY(-50%); background: none; border: none; color: transparent; font-size: 0.75rem; cursor: pointer; padding: 0 0.25rem; transition: color 0.15s; }
 .gloss-entry:hover .gloss-copy-btn { color: var(--muted); }
 .gloss-copy-btn:hover { color: var(--accent) !important; }
+
+/* Practice & Prep Resources */
+.resource-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 0.5rem; }
+.resource-card { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent3); padding: 1.1rem 1.25rem; }
+.resource-group-title { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; color: var(--text); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.9rem; }
+.resource-links { display: flex; flex-direction: column; gap: 0.75rem; }
+.resource-item { display: flex; gap: 0.65rem; align-items: flex-start; }
+.resource-abbr { font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700; background: var(--surface2); border: 1px solid var(--border); color: var(--accent3); padding: 2px 5px; min-width: 26px; text-align: center; flex-shrink: 0; margin-top: 2px; letter-spacing: 0.03em; }
+.resource-info { display: flex; flex-direction: column; gap: 0.1rem; }
+.resource-site-name { font-family: var(--font-mono); font-size: 0.78rem; color: var(--text); text-decoration: none; font-weight: 600; transition: color 0.15s; line-height: 1.3; }
+.resource-site-name:hover { color: var(--accent); }
+.resource-desc { font-family: var(--font-mono); font-size: 0.65rem; color: var(--muted); line-height: 1.45; }
+@media (max-width: 900px) { .resource-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 580px) { .resource-grid { grid-template-columns: 1fr; } }
+
+/* Topic mastery */
+.topic-card.studied { border: 1px solid rgba(0,255,135,0.35); }
+.topic-card.studied .topic-name { color: var(--accent); }
+.topic-studied-btn {
+  position: absolute; bottom: 0.65rem; right: 0.75rem;
+  font-family: var(--font-mono); font-size: 0.56rem; letter-spacing: 0.03em;
+  color: var(--muted); background: none; border: 1px solid transparent;
+  padding: 2px 6px; cursor: pointer;
+  opacity: 0; transition: opacity 0.15s, color 0.15s, border-color 0.15s;
+}
+.topic-card:hover .topic-studied-btn { opacity: 1; }
+.topic-card.studied .topic-studied-btn { opacity: 1; color: var(--accent); border-color: rgba(0,255,135,0.35); }
+.topic-studied-btn:hover { color: var(--accent) !important; border-color: var(--accent) !important; }
+.stat-mini { font-family: var(--font-mono); font-size: 0.58rem; color: var(--muted); margin-top: 3px; opacity: 0.8; }

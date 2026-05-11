@@ -178,7 +178,7 @@ const TOPIC_DATA = {
       { name: 'How HTTPS works (comic)', url: 'https://howhttps.works/' }
     ]
   },
-  'binary-numbers': {
+  'binary-number-systems': {
     icon: '🔢', title: 'Binary & Number Systems', cat: 'CS Fundamentals',
     overview: 'Computers store everything as 0s and 1s. Understanding binary, hexadecimal, ASCII, and Unicode is the foundation that makes every other computing concept make sense — from memory addresses to color values to text encoding.',
     concepts: [
@@ -270,7 +270,7 @@ const TOPIC_DATA = {
       { name: 'Chrome DevTools debugging guide', url: 'https://developer.chrome.com/docs/devtools/javascript/' }
     ]
   },
-  'bitwise': {
+  'bitwise-operations': {
     icon: '🔣', title: 'Bitwise Operations', cat: 'CS Fundamentals',
     overview: 'Bitwise operators work directly on the individual bits of integers. They appear in coding interviews, network programming, cryptography, and performance-critical code. Understanding them also deepens your understanding of how computers represent data.',
     concepts: [
@@ -297,7 +297,7 @@ const TOPIC_DATA = {
       { name: 'Bit Manipulation tricks', url: 'https://graphics.stanford.edu/~seander/bithacks.html' }
     ]
   },
-  'regex': {
+  'regular-expressions': {
     icon: '🔍', title: 'Regular Expressions', cat: 'CS Fundamentals',
     overview: 'Regular expressions (regex) are patterns for matching and manipulating text. Every developer uses them — for validation, parsing, search-and-replace, and log analysis. The syntax looks cryptic at first but follows a small set of rules.',
     concepts: [
@@ -465,7 +465,7 @@ const TOPIC_DATA = {
       { name: 'Domain-Driven Design Reference', url: 'https://www.domainlanguage.com/ddd/reference/' }
     ]
   },
-  'flask': {
+  'flask-web-frameworks': {
     icon: '🌶️', title: 'Flask & Web Frameworks', cat: 'Backend & Architecture',
     overview: 'Flask is a lightweight Python web framework. Learning Flask teaches you how the web works at a practical level — HTTP requests and responses, URL routing, server-side rendering with templates, and session management. The concepts transfer to all web frameworks.',
     concepts: [
@@ -703,7 +703,7 @@ const TOPIC_DATA = {
       { name: 'Type Challenges', url: 'https://github.com/type-challenges/type-challenges' }
     ]
   },
-  'ml-basics': {
+  'machine-learning-basics': {
     icon: '🤖', title: 'Machine Learning Basics', cat: 'ML / AI Engineering',
     overview: 'Machine learning lets programs learn patterns from data instead of following explicit rules. Understanding these core concepts — supervised learning, decision trees, and neural networks — gives you the foundation to understand how AI systems, including LLMs, actually work.',
     concepts: [
@@ -1100,7 +1100,7 @@ const TOPIC_DATA = {
       { name: 'MDN Web Docs — HTML basics', url: 'https://developer.mozilla.org/en-US/docs/Learn/HTML/Introduction_to_HTML' }
     ]
   },
-  'c-language': {
+  'c-programming': {
     icon: '🔵', title: 'C Programming', cat: 'Programming Languages',
     overview: 'C is the language that shaped modern computing. Operating systems, databases, compilers, and countless languages (Python, Java, PHP) are written in C. Learning C teaches you what is really happening under the hood — pointers, manual memory, and the compilation model.',
     concepts: [
@@ -1555,7 +1555,7 @@ const TOPIC_DATA = {
       { name: 'PortSwigger Web Security Academy (free)', url: 'https://portswigger.net/web-security' }
     ]
   },
-  'cryptography': {
+  'cryptography-basics': {
     icon: '🔑', title: 'Cryptography Basics', cat: 'Security Deep-Dive',
     overview: 'Cryptography is the foundation of secure communication. Every time you log in, send a message, or visit an HTTPS site, cryptography is working behind the scenes. Every developer should understand hashing, encryption, and digital signatures.',
     concepts: [
@@ -2157,6 +2157,12 @@ function closeModal() {
   if (location.hash.startsWith('#topic=')) history.replaceState(null, '', location.pathname + location.search);
 }
 
+const studiedSet = new Set(JSON.parse(localStorage.getItem('devprep-studied') || '[]'));
+function updateTopicProgress() {
+  const el = document.getElementById('topics-studied-stat');
+  if (el) el.textContent = studiedSet.size ? studiedSet.size + ' studied' : '';
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".topic-card").forEach(card => {
     const name = card.querySelector(".topic-name").textContent;
@@ -2168,7 +2174,52 @@ document.addEventListener("DOMContentLoaded", () => {
       .replace(/^-|-$/g, "");
     card.setAttribute("data-topic", key);
     card.addEventListener("click", () => openTopic(key));
+
+    if (studiedSet.has(key)) card.classList.add('studied');
+    const studiedBtn = document.createElement('button');
+    studiedBtn.className = 'topic-studied-btn';
+    studiedBtn.textContent = studiedSet.has(key) ? '✓ studied' : 'mark studied';
+    studiedBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      if (studiedSet.has(key)) {
+        studiedSet.delete(key);
+        card.classList.remove('studied');
+        studiedBtn.textContent = 'mark studied';
+      } else {
+        studiedSet.add(key);
+        card.classList.add('studied');
+        studiedBtn.textContent = '✓ studied';
+      }
+      localStorage.setItem('devprep-studied', JSON.stringify([...studiedSet]));
+      updateTopicProgress();
+    });
+    card.appendChild(studiedBtn);
   });
+
+  const topicsStat = document.querySelector('.stat');
+  if (topicsStat) {
+    const mini = document.createElement('div');
+    mini.className = 'stat-mini';
+    mini.id = 'topics-studied-stat';
+    topicsStat.appendChild(mini);
+  }
+  updateTopicProgress();
+
+  document.querySelectorAll('.stat-num').forEach(el => {
+    const target = parseInt(el.textContent, 10);
+    if (!isNaN(target) && target > 0) {
+      el.textContent = '0';
+      const start = performance.now();
+      const dur = 1200;
+      const tick = now => {
+        const p = Math.min((now - start) / dur, 1);
+        el.textContent = Math.round((1 - Math.pow(1 - p, 3)) * target);
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    }
+  });
+
   if (location.hash.startsWith('#topic=')) openTopic(location.hash.slice(7));
 });
 
@@ -2639,58 +2690,91 @@ const TOPIC_META = {
   'computer-architecture':{ time: '≈ 45 min', related: ['operating-systems','compilers'] },
   'compilers':            { time: '≈ 40 min', related: ['computer-architecture','computation-theory'] },
   'computation-theory':   { time: '≈ 40 min', related: ['compilers','algorithms'] },
-  'system-design':        { time: '≈ 75 min', related: ['distributed-systems','databases','caching'] },
-  'databases':            { time: '≈ 60 min', related: ['sql','nosql','system-design'] },
-  'sql':                  { time: '≈ 45 min', related: ['databases','nosql'] },
-  'nosql':                { time: '≈ 40 min', related: ['databases','caching','distributed-systems'] },
-  'caching':              { time: '≈ 35 min', related: ['databases','system-design','distributed-systems'] },
+  'system-design':        { time: '≈ 75 min', related: ['distributed-systems','databases-sql','caching'] },
+  'databases-sql':        { time: '≈ 60 min', related: ['sql-variants','system-design','caching'] },
+  'sql':                  { time: '≈ 45 min', related: ['databases-sql','nosql'] },
+  'nosql':                { time: '≈ 40 min', related: ['databases-sql','caching','distributed-systems'] },
+  'caching':              { time: '≈ 35 min', related: ['databases-sql','system-design','distributed-systems'] },
   'message-queues':       { time: '≈ 40 min', related: ['distributed-systems','microservices','system-design'] },
   'microservices':        { time: '≈ 50 min', related: ['system-design','message-queues','docker'] },
   'software-architecture':{ time: '≈ 55 min', related: ['oop-patterns','microservices','system-design'] },
-  'rest-apis':            { time: '≈ 35 min', related: ['networking','graphql','system-design'] },
-  'graphql':              { time: '≈ 30 min', related: ['rest-apis','databases'] },
-  'networking':           { time: '≈ 45 min', related: ['security','distributed-systems','rest-apis'] },
-  'distributed-systems':  { time: '≈ 70 min', related: ['system-design','databases','networking'] },
-  'security':             { time: '≈ 50 min', related: ['networking','cryptography','auth-authorization'] },
-  'cryptography':         { time: '≈ 30 min', related: ['security','tls-ssl','networking-web','binary-numbers'] },
-  'auth-authorization':   { time: '≈ 35 min', related: ['security','rest-apis'] },
+  'rest-apis':            { time: '≈ 35 min', related: ['networking-web','graphql','system-design'] },
+  'graphql':              { time: '≈ 30 min', related: ['rest-apis','databases-sql'] },
+  'networking-web':       { time: '≈ 45 min', related: ['security-basics','distributed-systems','rest-apis'] },
+  'distributed-systems':  { time: '≈ 70 min', related: ['system-design','databases-sql','networking-web'] },
+  'security-basics':      { time: '≈ 50 min', related: ['networking-web','cryptography-basics','auth-authorization'] },
+  'cryptography-basics':  { time: '≈ 30 min', related: ['security-basics','tls-ssl','networking-web','binary-number-systems'] },
+  'auth-authorization':   { time: '≈ 35 min', related: ['security-basics','rest-apis'] },
   'docker':               { time: '≈ 35 min', related: ['kubernetes','microservices','cicd'] },
   'kubernetes':           { time: '≈ 50 min', related: ['docker','microservices','cicd'] },
   'cicd':                 { time: '≈ 35 min', related: ['docker','kubernetes','git'] },
   'git':                  { time: '≈ 30 min', related: ['cicd'] },
-  'cloud-platforms':      { time: '≈ 45 min', related: ['kubernetes','docker','distributed-systems'] },
-  'infrastructure-as-code':{ time: '≈ 35 min', related: ['cloud-platforms','kubernetes','cicd'] },
-  'monitoring':           { time: '≈ 35 min', related: ['distributed-systems','cloud-platforms','microservices'] },
-  'python':               { time: '≈ 40 min', related: ['algorithms','machine-learning','data-structures'] },
+  'cloud-awsgcpazure':      { time: '≈ 45 min', related: ['kubernetes','docker','distributed-systems'] },
+  'infrastructure-as-code':{ time: '≈ 35 min', related: ['cloud-awsgcpazure','kubernetes','cicd'] },
+  'observability':        { time: '≈ 35 min', related: ['distributed-systems','cloud-awsgcpazure','microservices'] },
+  'python-deep-dive':     { time: '≈ 40 min', related: ['algorithms','machine-learning-basics','data-structures'] },
   'javascript':           { time: '≈ 45 min', related: ['typescript','react','nodejs'] },
   'typescript':           { time: '≈ 35 min', related: ['javascript','react'] },
   'go':                   { time: '≈ 40 min', related: ['distributed-systems','microservices','concurrency'] },
   'java':                 { time: '≈ 40 min', related: ['oop-patterns','concurrency','data-structures'] },
-  'machine-learning':     { time: '≈ 75 min', related: ['deep-learning','probability-statistics','linear-algebra'] },
-  'deep-learning':        { time: '≈ 70 min', related: ['machine-learning','nlp','linear-algebra'] },
-  'nlp':                  { time: '≈ 55 min', related: ['deep-learning','machine-learning','information-theory'] },
-  'mlops':                { time: '≈ 40 min', related: ['machine-learning','docker','kubernetes','cicd'] },
-  'data-warehousing':     { time: '≈ 45 min', related: ['databases','etl-elt','data-lake'] },
-  'etl-elt':              { time: '≈ 35 min', related: ['data-warehousing','data-lake','data-pipelines'] },
-  'data-lake':            { time: '≈ 35 min', related: ['data-warehousing','etl-elt'] },
-  'data-pipelines':       { time: '≈ 40 min', related: ['message-queues','distributed-systems','etl-elt'] },
-  'probability-statistics':{ time: '≈ 50 min', related: ['machine-learning','discrete-math','information-theory'] },
-  'linear-algebra':       { time: '≈ 50 min', related: ['machine-learning','deep-learning','discrete-math'] },
+  'deep-learning':        { time: '≈ 70 min', related: ['machine-learning-basics','nlp','linear-algebra'] },
+  'nlp':                  { time: '≈ 55 min', related: ['deep-learning','machine-learning-basics','information-theory'] },
+  'mlops':                { time: '≈ 40 min', related: ['machine-learning-basics','docker','kubernetes','cicd'] },
+  'data-warehousing':     { time: '≈ 45 min', related: ['databases-sql','etl-vs-elt','lakes-vs-lakehouses'] },
+  'etl-vs-elt':           { time: '≈ 35 min', related: ['data-warehousing','lakes-vs-lakehouses','streaming'] },
+  'lakes-vs-lakehouses':  { time: '≈ 35 min', related: ['data-warehousing','etl-vs-elt'] },
+  'streaming':            { time: '≈ 40 min', related: ['message-queues','distributed-systems','etl-vs-elt'] },
+  'probability-statistics':{ time: '≈ 50 min', related: ['machine-learning-basics','discrete-math','information-theory'] },
+  'linear-algebra':       { time: '≈ 50 min', related: ['machine-learning-basics','deep-learning','discrete-math'] },
   'discrete-math':        { time: '≈ 50 min', related: ['algorithms','computation-theory','probability-statistics'] },
-  'information-theory':   { time: '≈ 40 min', related: ['probability-statistics','nlp','cryptography'] },
+  'information-theory':   { time: '≈ 40 min', related: ['probability-statistics','nlp','cryptography-basics'] },
   'react':                { time: '≈ 40 min', related: ['javascript','typescript','web-performance'] },
-  'web-performance':      { time: '≈ 35 min', related: ['react','networking','caching'] },
-  'binary-numbers':       { time: '≈ 20 min', related: ['how-computers-work','memory-management','cryptography'] },
-  'how-computers-work':   { time: '≈ 25 min', related: ['binary-numbers','memory-management','algorithms'] },
+  'web-performance':      { time: '≈ 35 min', related: ['react','networking-web','caching'] },
+  'binary-number-systems':       { time: '≈ 20 min', related: ['how-computers-work','memory-management','cryptography-basics'] },
+  'how-computers-work':   { time: '≈ 25 min', related: ['binary-number-systems','memory-management','algorithms'] },
   'recursion':            { time: '≈ 30 min', related: ['algorithms','data-structures','memory-management'] },
   'debugging':            { time: '≈ 20 min', related: ['algorithms','testing','oop-patterns'] },
   'html-css':             { time: '≈ 40 min', related: ['javascript','react','web-performance'] },
-  'flask':                { time: '≈ 35 min', related: ['apis','databases-sql','html-css','networking-web'] },
-  'ml-basics':            { time: '≈ 45 min', related: ['llm-fundamentals','prompt-engineering','algorithms'] },
-  'bitwise':              { time: '≈ 25 min', related: ['binary-numbers','algorithms','how-computers-work'] },
-  'c-language':           { time: '≈ 50 min', related: ['how-computers-work','memory-management','cpp','binary-numbers'] },
-  'regex':                { time: '≈ 25 min', related: ['algorithms','python','javascript'] },
-  'django':               { time: '≈ 45 min', related: ['flask','databases-sql','apis','python'] },
-  'nodejs':               { time: '≈ 40 min', related: ['javascript','apis','flask','django'] },
-  'numpy-pandas':         { time: '≈ 40 min', related: ['python','machine-learning','etl-elt'] },
+  'flask-web-frameworks':                { time: '≈ 35 min', related: ['apis','databases-sql','html-css','networking-web'] },
+  'machine-learning-basics':            { time: '≈ 45 min', related: ['llm-fundamentals','prompt-engineering','algorithms'] },
+  'bitwise-operations':              { time: '≈ 25 min', related: ['binary-number-systems','algorithms','how-computers-work'] },
+  'c-programming':        { time: '≈ 50 min', related: ['how-computers-work','memory-management','c','binary-number-systems'] },
+  'regular-expressions':  { time: '≈ 25 min', related: ['algorithms','python-deep-dive','javascript'] },
+  'django':               { time: '≈ 45 min', related: ['flask-web-frameworks','databases-sql','apis','python-deep-dive'] },
+  'nodejs':               { time: '≈ 40 min', related: ['javascript','apis','flask-web-frameworks','django'] },
+  'numpy-pandas':         { time: '≈ 40 min', related: ['python-deep-dive','machine-learning-basics','etl-vs-elt'] },
+  'testing':              { time: '≈ 35 min', related: ['debugging','cicd','oop-patterns'] },
+  'rust':                 { time: '≈ 50 min', related: ['memory-management','concurrency','c-programming'] },
+  'c':                    { time: '≈ 55 min', related: ['c-programming','memory-management','concurrency'] },
+  'sql-variants':         { time: '≈ 35 min', related: ['databases-sql','data-warehousing','system-design'] },
+  'vue-angular':          { time: '≈ 40 min', related: ['javascript','typescript','react'] },
+  'state-management':     { time: '≈ 30 min', related: ['react','javascript','oop-patterns'] },
+  'ssr-vs-csr-vs-ssg':    { time: '≈ 25 min', related: ['react','web-performance','networking-web'] },
+  'mobile-architecture':  { time: '≈ 40 min', related: ['state-management','networking-web','system-design'] },
+  'cap-theorem':          { time: '≈ 25 min', related: ['distributed-systems','databases-sql','eventual-consistency'] },
+  'consensus-algorithms': { time: '≈ 35 min', related: ['distributed-systems','leader-election','replication'] },
+  'sharding-partitioning':{ time: '≈ 30 min', related: ['databases-sql','distributed-systems','system-design'] },
+  'replication':          { time: '≈ 30 min', related: ['databases-sql','distributed-systems','cap-theorem'] },
+  'eventual-consistency': { time: '≈ 25 min', related: ['cap-theorem','distributed-systems','databases-sql'] },
+  'distributed-transactions':{ time: '≈ 35 min', related: ['distributed-systems','databases-sql','consensus-algorithms'] },
+  'leader-election':      { time: '≈ 25 min', related: ['distributed-systems','consensus-algorithms','replication'] },
+  'tls-ssl':              { time: '≈ 30 min', related: ['security-basics','networking-web','cryptography-basics'] },
+  'oauth-20-oidc':        { time: '≈ 35 min', related: ['security-basics','auth-authorization','apis'] },
+  'zero-trust':           { time: '≈ 30 min', related: ['security-basics','networking-web','cloud-awsgcpazure'] },
+  'secrets-management':   { time: '≈ 25 min', related: ['security-basics','cloud-awsgcpazure','cicd'] },
+  'sast-dast-sca':        { time: '≈ 30 min', related: ['security-basics','cicd','testing'] },
+  'container-security':   { time: '≈ 30 min', related: ['docker','kubernetes','security-basics'] },
+  'iac-security':         { time: '≈ 25 min', related: ['security-basics','cloud-awsgcpazure','cicd'] },
+  'llm-fundamentals':     { time: '≈ 45 min', related: ['machine-learning-basics','prompt-engineering','rag-architecture'] },
+  'rag-architecture':     { time: '≈ 40 min', related: ['llm-fundamentals','vector-databases','embeddings'] },
+  'vector-databases':     { time: '≈ 30 min', related: ['rag-architecture','embeddings','databases-sql'] },
+  'langchain-llamaindex': { time: '≈ 35 min', related: ['llm-fundamentals','rag-architecture','prompt-engineering'] },
+  'prompt-engineering':   { time: '≈ 30 min', related: ['llm-fundamentals','machine-learning-basics','fine-tuning-vs-rag'] },
+  'fine-tuning-vs-rag':   { time: '≈ 35 min', related: ['llm-fundamentals','prompt-engineering','machine-learning-basics'] },
+  'embeddings':           { time: '≈ 30 min', related: ['vector-databases','rag-architecture','machine-learning-basics'] },
+  'llm-evaluation':       { time: '≈ 30 min', related: ['llm-fundamentals','machine-learning-basics','testing'] },
+  'ai-safety-guardrails': { time: '≈ 25 min', related: ['llm-fundamentals','security-basics','prompt-engineering'] },
+  'apache-spark':         { time: '≈ 45 min', related: ['streaming','etl-vs-elt','distributed-systems'] },
+  'airflow-prefect-dagster':{ time: '≈ 35 min', related: ['etl-vs-elt','apache-spark','cicd'] },
+  'dbt-data-modeling':    { time: '≈ 30 min', related: ['data-warehousing','sql-variants','etl-vs-elt'] },
 };

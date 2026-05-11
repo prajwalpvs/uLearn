@@ -3999,6 +3999,13 @@ monkeypatch.<span class="fn">setattr</span>(db, <span class="str">'get_user'</sp
     <div class="company-card">
       <div class="company-name">Amazon</div>
       <div class="company-tag">14 Leadership Principles</div>
+      <div class="company-section-h">Hiring Process</div>
+      <ul class="company-list">
+        <li>Apply online &rarr; Online Assessment (SDE &amp; technical roles) &rarr; Phone Screen &rarr; Interview Loop</li>
+        <li>Loop: 4&ndash;6 rounds; one dedicated Bar Raiser per loop who is independent of the hiring team</li>
+        <li>Optional &ldquo;Candid Chats&rdquo; with employee group members during the process</li>
+        <li>Remote interviews available; no fixed public timeline published</li>
+      </ul>
       <div class="company-section-h">Interview Format</div>
       <ul class="company-list">
         <li>4–6 rounds, each owned by a &ldquo;Bar Raiser&rdquo; who is independent of the hiring team</li>
@@ -4024,6 +4031,13 @@ monkeypatch.<span class="fn">setattr</span>(db, <span class="str">'get_user'</sp
     <div class="company-card">
       <div class="company-name">Google</div>
       <div class="company-tag">Structured Hiring Committee</div>
+      <div class="company-section-h">Hiring Process</div>
+      <ul class="company-list">
+        <li>Apply &rarr; Recruiter Call &rarr; Technical Phone Screen &rarr; Onsite Loop (4&ndash;5 rounds)</li>
+        <li>After loop: packet reviewed by a Hiring Committee &mdash; no single interviewer has veto power</li>
+        <li>L5+ roles require an additional staff-level reviewer and VP approval</li>
+        <li>Timeline: typically 6&ndash;8 weeks from application to offer</li>
+      </ul>
       <div class="company-section-h">Interview Format</div>
       <ul class="company-list">
         <li>4–5 rounds: coding (2), system design (1), Googleyness &amp; leadership (1), role-specific (1)</li>
@@ -4049,6 +4063,13 @@ monkeypatch.<span class="fn">setattr</span>(db, <span class="str">'get_user'</sp
     <div class="company-card">
       <div class="company-name">Meta</div>
       <div class="company-tag">Move Fast Culture</div>
+      <div class="company-section-h">Hiring Process</div>
+      <ul class="company-list">
+        <li>Apply &rarr; Recruiter Call &rarr; Optional Online Assessment (90 min, proctored) &rarr; Technical Screen (35&ndash;40 min, CoderPad)</li>
+        <li>Full Loop: 2 coding (45 min each) + 1 system design (45 min) + 1 behavioral (45 min)</li>
+        <li>Hiring Committee &mdash; separate from interviewers &mdash; makes the final decision; resume screen rejects ~90%</li>
+        <li>Timeline: 4 weeks to 5 months depending on role, level, and team availability</li>
+      </ul>
       <div class="company-section-h">Interview Format</div>
       <ul class="company-list">
         <li>5–6 rounds: 2 coding, 1 system design, 1 behavioral, 1 product sense (for E5+), 1 leadership</li>
@@ -4074,6 +4095,13 @@ monkeypatch.<span class="fn">setattr</span>(db, <span class="str">'get_user'</sp
     <div class="company-card">
       <div class="company-name">Microsoft</div>
       <div class="company-tag">Growth Mindset</div>
+      <div class="company-section-h">Hiring Process</div>
+      <ul class="company-list">
+        <li>Apply &rarr; Recruiter Screen &rarr; Online Coding Test (Codility or similar) &rarr; Interview Loop (2&ndash;4 rounds)</li>
+        <li>Final round: As-Appropriate (AA) interview with a senior leader who has veto power</li>
+        <li>Loop targets: technical skills, problem-solving, collaboration, and growth mindset equally</li>
+        <li>Timeline: 4&ndash;6 weeks from application to offer</li>
+      </ul>
       <div class="company-section-h">Interview Format</div>
       <ul class="company-list">
         <li>4–6 rounds, including an &ldquo;as-appropriate&rdquo; (AA) interview with a senior leader at the end</li>
@@ -4099,6 +4127,13 @@ monkeypatch.<span class="fn">setattr</span>(db, <span class="str">'get_user'</sp
     <div class="company-card">
       <div class="company-name">Apple</div>
       <div class="company-tag">Craftsmanship &amp; Detail</div>
+      <div class="company-section-h">Hiring Process</div>
+      <ul class="company-list">
+        <li>Apply &rarr; Recruiter Screen &rarr; 1&ndash;2 Phone/Virtual Rounds &rarr; Onsite Loop (4&ndash;8 rounds)</li>
+        <li>Hiring Manager &amp; team debrief decides &mdash; no formal hiring committee unlike Google or Meta</li>
+        <li>Format varies by org: some use whiteboard, some take-home, some pair programming</li>
+        <li>Timeline: average 29 days (4&ndash;6 weeks) from application to offer</li>
+      </ul>
       <div class="company-section-h">Interview Format</div>
       <ul class="company-list">
         <li>5–8 rounds across multiple days &mdash; Apple loops are famously long</li>
@@ -4124,6 +4159,13 @@ monkeypatch.<span class="fn">setattr</span>(db, <span class="str">'get_user'</sp
     <div class="company-card">
       <div class="company-name">Netflix</div>
       <div class="company-tag">Freedom &amp; Responsibility</div>
+      <div class="company-section-h">Hiring Process</div>
+      <ul class="company-list">
+        <li>Apply &rarr; Recruiter Call &rarr; Hiring Manager Screen &rarr; Technical Screen &rarr; Onsite Loop (4&ndash;6 rounds)</li>
+        <li>Unanimous panel agreement required to move forward &mdash; one &ldquo;no&rdquo; can block an offer</li>
+        <li>Culture alignment is evaluated at every stage, not just the dedicated culture round (Keeper Test applies)</li>
+        <li>Timeline: 14&ndash;21 days from recruiter contact to decision &mdash; fast by FAANG standards</li>
+      </ul>
       <div class="company-section-h">Interview Format</div>
       <ul class="company-list">
         <li>5–7 rounds: system design (weighted heavily), coding, behavioral, and culture alignment</li>
@@ -4156,6 +4198,172 @@ monkeypatch.<span class="fn">setattr</span>(db, <span class="str">'get_user'</sp
     <div class="iq-card"><div class="iq-num">04</div><div class="iq-q">How would you design a notification system that sends billions of notifications per day?</div><span class="iq-toggle" onclick="toggleIQ(this)">&#9658; show answer</span><div class="iq-answer"><p class="iq-ans">Components: (1) API layer — accepts notification requests, validates, publishes to queue. (2) Message queue (Kafka) — decouples producers from consumers, handles spikes, enables retry. (3) Worker pools per channel — email (SendGrid), push (APNs/FCM), SMS (Twilio). Each worker pulls from its topic. (4) Notification DB — stores sent history, deduplication IDs, user preferences. (5) User preferences service — opt-out, quiet hours, channel priority. Key concerns: deduplication (idempotency key), retry with exponential backoff, priority queues for time-sensitive alerts, rate limiting to not spam users.</p></div></div>
   </div>
 
+  <div class="cat-header">Practice &amp; Prep Resources</div>
+  <div class="resource-grid">
+
+    <div class="resource-card">
+      <div class="resource-group-title">💻 Coding Practice</div>
+      <div class="resource-links">
+        <div class="resource-item">
+          <span class="resource-abbr">LC</span>
+          <div class="resource-info">
+            <a href="https://leetcode.com" target="_blank" rel="noopener" class="resource-site-name">LeetCode</a>
+            <div class="resource-desc">DSA problems, company-tagged questions, SQL tracks</div>
+          </div>
+        </div>
+        <div class="resource-item">
+          <span class="resource-abbr">HR</span>
+          <div class="resource-info">
+            <a href="https://www.hackerrank.com" target="_blank" rel="noopener" class="resource-site-name">HackerRank</a>
+            <div class="resource-desc">Coding challenges, SQL, Java, Python certifications</div>
+          </div>
+        </div>
+        <div class="resource-item">
+          <span class="resource-abbr">CW</span>
+          <div class="resource-info">
+            <a href="https://www.codewars.com" target="_blank" rel="noopener" class="resource-site-name">Codewars</a>
+            <div class="resource-desc">Kata challenges ranked by difficulty, great for daily practice</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="resource-card">
+      <div class="resource-group-title">🎙️ Mock Interviews</div>
+      <div class="resource-links">
+        <div class="resource-item">
+          <span class="resource-abbr">PR</span>
+          <div class="resource-info">
+            <a href="https://www.pramp.com" target="_blank" rel="noopener" class="resource-site-name">Pramp</a>
+            <div class="resource-desc">Free peer-to-peer mock interviews — coding &amp; behavioral</div>
+          </div>
+        </div>
+        <div class="resource-item">
+          <span class="resource-abbr">II</span>
+          <div class="resource-info">
+            <a href="https://interviewing.io" target="_blank" rel="noopener" class="resource-site-name">interviewing.io</a>
+            <div class="resource-desc">Anonymous mock interviews with engineers from top companies</div>
+          </div>
+        </div>
+        <div class="resource-item">
+          <span class="resource-abbr">BI</span>
+          <div class="resource-info">
+            <a href="https://biginterview.com" target="_blank" rel="noopener" class="resource-site-name">Big Interview</a>
+            <div class="resource-desc">Behavioral interview practice with AI feedback</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="resource-card">
+      <div class="resource-group-title">🏗️ System Design &amp; Concepts</div>
+      <div class="resource-links">
+        <div class="resource-item">
+          <span class="resource-abbr">SD</span>
+          <div class="resource-info">
+            <a href="https://github.com/donnemartin/system-design-primer" target="_blank" rel="noopener" class="resource-site-name">System Design Primer</a>
+            <div class="resource-desc">GitHub guide — scalability, databases, caching, everything</div>
+          </div>
+        </div>
+        <div class="resource-item">
+          <span class="resource-abbr">TH</span>
+          <div class="resource-info">
+            <a href="https://www.techinterviewhandbook.org" target="_blank" rel="noopener" class="resource-site-name">Tech Interview Handbook</a>
+            <div class="resource-desc">Resume, coding, behavioral — full interview prep guide</div>
+          </div>
+        </div>
+        <div class="resource-item">
+          <span class="resource-abbr">SQ</span>
+          <div class="resource-info">
+            <a href="https://sqlzoo.net" target="_blank" rel="noopener" class="resource-site-name">SQLZoo</a>
+            <div class="resource-desc">Interactive SQL practice — great for data engineering roles</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="resource-card">
+      <div class="resource-group-title">🔎 Company Research</div>
+      <div class="resource-links">
+        <div class="resource-item">
+          <span class="resource-abbr">GD</span>
+          <div class="resource-info">
+            <a href="https://www.glassdoor.com" target="_blank" rel="noopener" class="resource-site-name">Glassdoor</a>
+            <div class="resource-desc">Real interview questions, salaries, company reviews</div>
+          </div>
+        </div>
+        <div class="resource-item">
+          <span class="resource-abbr">LV</span>
+          <div class="resource-info">
+            <a href="https://www.levels.fyi" target="_blank" rel="noopener" class="resource-site-name">Levels.fyi</a>
+            <div class="resource-desc">Salary benchmarks by company, role, and location</div>
+          </div>
+        </div>
+        <div class="resource-item">
+          <span class="resource-abbr">LI</span>
+          <div class="resource-info">
+            <a href="https://www.linkedin.com/learning/" target="_blank" rel="noopener" class="resource-site-name">LinkedIn Learning</a>
+            <div class="resource-desc">Courses on tech skills, certifications, and soft skills</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="resource-card">
+      <div class="resource-group-title">🗣️ Behavioral &amp; Soft Skills</div>
+      <div class="resource-links">
+        <div class="resource-item">
+          <span class="resource-abbr">ST</span>
+          <div class="resource-info">
+            <a href="https://www.themuse.com/advice/star-interview-method" target="_blank" rel="noopener" class="resource-site-name">STAR Method Guide</a>
+            <div class="resource-desc">Structure every behavioral answer: Situation, Task, Action, Result</div>
+          </div>
+        </div>
+        <div class="resource-item">
+          <span class="resource-abbr">IW</span>
+          <div class="resource-info">
+            <a href="https://grow.google/certificates/interview-warmup/" target="_blank" rel="noopener" class="resource-site-name">Interview Warmup</a>
+            <div class="resource-desc">Google's free AI tool — practice answers, see real-time transcript analysis</div>
+          </div>
+        </div>
+        <div class="resource-item">
+          <span class="resource-abbr">YT</span>
+          <div class="resource-info">
+            <a href="https://www.youtube.com/@JeffHSipe" target="_blank" rel="noopener" class="resource-site-name">Jeff H Sipe — YouTube</a>
+            <div class="resource-desc">Ex-Google recruiter shares real tips on behavioral interviews</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="resource-card">
+      <div class="resource-group-title">☁️ Data &amp; Cloud Learning</div>
+      <div class="resource-links">
+        <div class="resource-item">
+          <span class="resource-abbr">DE</span>
+          <div class="resource-info">
+            <a href="https://github.com/DataTalksClub/data-engineering-zoomcamp" target="_blank" rel="noopener" class="resource-site-name">DE Zoomcamp</a>
+            <div class="resource-desc">Free end-to-end data engineering bootcamp — Airflow, Spark, dbt, BigQuery</div>
+          </div>
+        </div>
+        <div class="resource-item">
+          <span class="resource-abbr">AW</span>
+          <div class="resource-info">
+            <a href="https://skillbuilder.aws" target="_blank" rel="noopener" class="resource-site-name">AWS Skill Builder</a>
+            <div class="resource-desc">Free AWS training courses, hands-on labs, and certification prep</div>
+          </div>
+        </div>
+        <div class="resource-item">
+          <span class="resource-abbr">DB</span>
+          <div class="resource-info">
+            <a href="https://learn.getdbt.com" target="_blank" rel="noopener" class="resource-site-name">dbt Learn</a>
+            <div class="resource-desc">Free dbt fundamentals course — modern ELT, SQL transformations</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
 
 </div>
 
